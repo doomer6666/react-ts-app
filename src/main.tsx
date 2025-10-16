@@ -1,9 +1,10 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './App.tsx';
+import NewsFeed from './pages/NewsFeed.tsx';
+import mockNews from './mocks/mockNews.ts';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <NewsFeed news={mockNews} />
   </StrictMode>,
 );

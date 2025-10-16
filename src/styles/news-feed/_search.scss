@@ -1,0 +1,43 @@
+.news-feed {
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 15px;
+        background: #181622;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border: 1px solid #34293e;
+        width: 100%;
+
+        .search-bar {
+            flex: 1;
+            max-width: 450px;
+            position: relative;
+
+            input {
+                width: 100%;
+                padding: 10px 15px 10px 40px;
+                border: 1px solid #34293e;
+                background-color: #100d16;
+                border-radius: 6px;
+                font-size: 14px;
+                outline: none;
+                color: #cdc1b4;
+                font-family: "Spectral", serif;
+
+                &:focus {
+                    border-color: #9175b6;
+                }
+            }
+
+            .search-icon {
+                position: absolute;
+                left: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #9175b6;
+            }
+        }
+    }
+}
