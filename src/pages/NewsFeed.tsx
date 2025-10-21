@@ -1,21 +1,10 @@
 import { useState, type FC } from 'react';
-import type INewsFeed from '../types/NewsFeed/INewsFeed';
 import MainLayout from '../layouts/MainLayout';
+import Post from '../components/Post';
+import type FeedProps from '../types/IFeed';
 
-const NewsFeed: FC<INewsFeed> = ({ news }) => {
+const NewsFeed: FC<FeedProps> = ({ posts }) => {
   const [activeItem, setActiveItem] = useState('feed');
-  const [activeCommentsId, setActiveCommentsId] = useState(0);
-
-  const handleOpenComments = (id: number): void => {
-    {
-      if (activeCommentsId === id) {
-        setActiveCommentsId(0);
-      } else {
-        setActiveCommentsId(id);
-      }
-    }
-  };
-
   return (
     <MainLayout
       activeItem={activeItem}
@@ -30,44 +19,8 @@ const NewsFeed: FC<INewsFeed> = ({ news }) => {
           </div>
         </div>
         <div className="feed">
-          {news.map((item) => (
-            <div className="post">
-              <div className="post-header">
-                <div className="post-avatar">М</div>
-                <div>
-                  <div className="post-user">{item.user}</div>
-                  <div className="post-time">2 часа назад</div>
-                </div>
-              </div>
-              <div className="post-content">
-                <div className="post-text">{item.text}</div>
-                <div className="post-image">
-                  <img src={item.image} />
-                </div>
-              </div>
-              <div className="post-footer">
-                <div className="post-action action-like">
-                  <div className="post-action-icon">❤️</div>
-                  <div>{item.likes}</div>
-                </div>
-                <div className="post-action action-comment">
-                  <div
-                    className="post-action-icon"
-                    onClick={() => handleOpenComments(item.id)}
-                  >
-                    💬
-                  </div>
-                  <div>{item.comments.length}</div>
-                </div>
-              </div>
-              {activeCommentsId === item.id && (
-                <ul className="comment-list">
-                  {item.comments.map((comment) => (
-                    <li key={comment}>{comment}</li>
-                  ))}
-                </ul>
-              )}
-            </div>
+          {posts.map((item) => (
+            <Post item={item} />
           ))}
         </div>
       </div>

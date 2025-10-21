@@ -1,13 +1,15 @@
 import type { FC } from 'react';
 import type INavigationBar from '../types/INavigationBar';
+import { useNavigate } from 'react-router-dom';
 
 const NavigationBar: FC<INavigationBar> = ({ activeItem, setActiveItem }) => {
+  const navigate = useNavigate();
   const items = [
-    { key: 'profile', name: 'Профиль', icon: '👤' },
-    { key: 'feed', name: 'Лента', icon: '🔱' },
-    { key: 'message', name: 'Сообщения', icon: '✉️' },
-    { key: 'music', name: 'Музыка', icon: '🎵' },
-    { key: 'settings', name: 'Настройки', icon: '⚙️' },
+    { key: 'profile', name: 'Профиль', icon: '/profile.svg' },
+    { key: 'feed', name: 'Лента', icon: '/feed.svg' },
+    { key: 'message', name: 'Сообщения', icon: '/chat.svg' },
+    { key: 'music', name: 'Музыка', icon: '/music.svg' },
+    { key: 'settings', name: 'Настройки', icon: '/setting.svg' },
   ];
 
   return (
@@ -17,9 +19,14 @@ const NavigationBar: FC<INavigationBar> = ({ activeItem, setActiveItem }) => {
         <div
           key={item.key}
           className={`menu-item ${item.key === activeItem ? 'active' : ''}`}
-          onClick={() => setActiveItem(item.key)}
+          onClick={() => {
+            setActiveItem(item.key);
+            navigate(`/${item.key}`);
+          }}
         >
-          <div className="menu-icon">{item.icon}</div>
+          <div className="menu-icon">
+            <img src={item.icon} />
+          </div>
           <div className="menu-text">{item.name}</div>
         </div>
       ))}
