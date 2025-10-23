@@ -1,12 +1,36 @@
 import { useState, type FC } from 'react';
+import useSWR from 'swr';
+import { fetcher } from '../api/fetcher';
 import MainLayout from '../layouts/MainLayout';
 import ProfileHeader from '../features/profile/ProfileHeader';
 import PostComposer from '../features/profile/PostComposer';
 import Post from '../components/Post';
-import type ProfileProps from '../types/IUser';
+import type { IUser } from '../types/IUser';
+import mockUserData from '../mocks/mockUserData.ts';
 
-const Profile: FC<ProfileProps> = ({ user }) => {
+const Profile: FC = () => {
   const [activeItem, setActiveItem] = useState('profile');
+
+  const {data, error, isLoading} = useSWR<IUser>(
+    '/auth/profile/',
+    fetcher,
+    {
+      revalidateOnFocus: true,
+      shouldRetryOnError: false,
+    }
+  );
+
+  if (isLoading) {
+  }
+
+  if (error) {
+  }
+
+  if (!data) {
+  }
+  
+  const user: IUser = data ?? mockUserData;
+
   return (
     <MainLayout
       activeItem={activeItem}

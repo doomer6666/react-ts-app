@@ -6,7 +6,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Sign from './pages/Sign.tsx';
 import Registration from './pages/Registration.tsx';
 import Profile from './pages/Profile.tsx';
-import mockUserData from './mocks/mockUserData.ts';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -15,7 +14,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<Sign />} />
         <Route path="/registration" element={<Registration />} />
         <Route path="/feed" element={<NewsFeed posts={mockNews} />} />
-        <Route path="/profile" element={<Profile user={mockUserData} />} />
+        <Route path="/profile" element={<Profile/>} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
