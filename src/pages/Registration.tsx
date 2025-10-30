@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import type ISignUp from '../types/ISignUp';
 import Cubes from '../components/animations/Cubes';
-import axios from 'axios';
 import useSWRMutation from 'swr/mutation';
-import api from '../api/axiosInstance';
+import poster from '../api/poster';
+import type ISignIn from '../types/ISignIn';
 
 const Registration = () => {
   const schema = yup.object({
@@ -36,21 +36,18 @@ const Registration = () => {
       .oneOf([yup.ref('password')], 'Пароли не совппадают'),
   });
 
-  const postData = async (url: string, { arg }: { arg: ISignUp }) => {
-    const response = await api.post(url, arg);
-    return response.data;
-  };
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ISignUp>({ resolver: yupResolver(schema) });
 
-  const { trigger, isMutating, error, data } = useSWRMutation(
-    '/auth/register/',
-    postData,
-  );
+  const { trigger, isMutating, error } = useSWRMutation<
+    ISignIn,
+    Error,
+    string,
+    ISignUp
+  >('/auth/register/', poster);
 
   const navigate = useNavigate();
 
@@ -58,7 +55,7 @@ const Registration = () => {
     try {
       console.log(formData);
       await trigger(formData);
-      navigate('profile');
+      navigate('/profile');
     } catch (e) {
       console.error('Error submitting form:', e);
     }
@@ -143,9 +140,9 @@ const Registration = () => {
           </div>
 
           <button type="submit" className="btn">
-            ЗАРЕГИСТРИРОВАТЬСЯ
+            {!isMutating ? 'ЗАРЕГИСТРИРОВАТЬСЯ' : 'РЕГИСТРАЦИЯ...'}
           </button>
-
+          {error && <div>Ошибка регистрации</div>}
           <div className="policy-text">
             Регистрируясь, вы соглашаетесь с{' '}
             <a href="#">Условиями использования</a> и{' '}
