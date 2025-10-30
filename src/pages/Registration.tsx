@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import type ISignUp from '../types/ISignUp';
 import Cubes from '../components/animations/Cubes';
+import axios from 'axios';
+import useSWRMutation from 'swr/mutation';
+import api from '../api/axiosInstance';
 
 const Registration = () => {
   const schema = yup.object({
@@ -33,16 +36,32 @@ const Registration = () => {
       .oneOf([yup.ref('password')], 'Пароли не совппадают'),
   });
 
+  const postData = async (url: string, { arg }: { arg: ISignUp }) => {
+    const response = await api.post(url, arg);
+    return response.data;
+  };
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ISignUp>({ resolver: yupResolver(schema) });
 
+  const { trigger, isMutating, error, data } = useSWRMutation(
+    '/auth/register/',
+    postData,
+  );
+
   const navigate = useNavigate();
 
-  const onSubmit = async (data: ISignUp) => {
-    console.log(data);
+  const onSubmit = async (formData: ISignUp) => {
+    try {
+      console.log(formData);
+      await trigger(formData);
+      navigate('profile');
+    } catch (e) {
+      console.error('Error submitting form:', e);
+    }
   };
 
   return (
