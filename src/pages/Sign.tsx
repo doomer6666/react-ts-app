@@ -33,7 +33,6 @@ const Sign = () => {
       try {
         console.log(formData);
         await trigger(formData);
-        console.log('penis');
         navigate('/profile');
       } catch (e) {
         console.error('Error submitting form:', e);

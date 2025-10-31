@@ -6,8 +6,6 @@ import ProfileHeader from '../features/profile/ProfileHeader';
 import PostComposer from '../features/profile/PostComposer';
 import Post from '../components/Post';
 import type { IUser } from '../types/IUser';
-import mockUserData from '../mocks/mockUserData.ts';
-import type { IPost } from '../types/IPost.ts';
 
 const Profile: FC = () => {
   const [activeItem, setActiveItem] = useState('profile');
@@ -40,9 +38,15 @@ const Profile: FC = () => {
             <PostComposer />
             <div className="feed">
               {isLoading && <div>Загрузка...</div>}
-              {user.posts.map((item) => (
-                <Post item={item} />
-              ))}
+              {user.posts
+                .sort(
+                  (a, b) =>
+                    new Date(b.postTime).getTime() -
+                    new Date(a.postTime).getTime(),
+                )
+                .map((item) => (
+                  <Post item={item} />
+                ))}
             </div>
 
             {/*вернуться когда будет логика <div className="post-options">
