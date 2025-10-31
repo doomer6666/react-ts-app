@@ -7,29 +7,25 @@ import PostComposer from '../features/profile/PostComposer';
 import Post from '../components/Post';
 import type { IUser } from '../types/IUser';
 import mockUserData from '../mocks/mockUserData.ts';
+import type { IPost } from '../types/IPost.ts';
 
 const Profile: FC = () => {
   const [activeItem, setActiveItem] = useState('profile');
 
-  const {data, error, isLoading} = useSWR<IUser>(
-    '/auth/profile/',
-    fetcher,
-    {
-      revalidateOnFocus: true,
-      shouldRetryOnError: false,
-    }
-  );
-
-  if (isLoading) {
-  }
+  const { data, error, isLoading } = useSWR<IUser>('/profile/', fetcher, {
+    revalidateOnFocus: true,
+    shouldRetryOnError: false,
+  });
 
   if (error) {
+    return <div>Ошибка, зайдите позже</div>;
   }
 
   if (!data) {
+    return;
   }
-  
-  const user: IUser = data ?? mockUserData;
+
+  const user: IUser = data;
 
   return (
     <MainLayout
@@ -43,6 +39,7 @@ const Profile: FC = () => {
           <div className="profile-feed">
             <PostComposer />
             <div className="feed">
+              {isLoading && <div>Загрузка...</div>}
               {user.posts.map((item) => (
                 <Post item={item} />
               ))}

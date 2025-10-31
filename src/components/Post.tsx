@@ -17,9 +17,11 @@ const Post: FC<PostProps> = ({ item }) => {
       </div>
       <div className="post-content">
         <div className="post-text">{item.text}</div>
-        <div className="post-image">
-          <img src={item.image} />
-        </div>
+        {item.image && (
+          <div className="post-image">
+            <img src={item.image} />
+          </div>
+        )}
       </div>
       <div className="post-footer">
         <div className="post-action action-like">

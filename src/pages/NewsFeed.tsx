@@ -1,10 +1,18 @@
 import { useState, type FC } from 'react';
 import MainLayout from '../layouts/MainLayout';
 import Post from '../components/Post';
-import type FeedProps from '../types/IFeed';
+import useSWR from 'swr';
+import { fetcher } from '../api/fetcher';
+import type { IPost } from '../types/IPost';
 
-const NewsFeed: FC<FeedProps> = ({ posts }) => {
+const NewsFeed: FC = () => {
   const [activeItem, setActiveItem] = useState('feed');
+
+  const { data, error, isLoading } = useSWR<IPost[]>('/posts/', fetcher, {
+    revalidateOnFocus: true,
+    shouldRetryOnError: false,
+  });
+
   return (
     <MainLayout
       activeItem={activeItem}
@@ -19,7 +27,7 @@ const NewsFeed: FC<FeedProps> = ({ posts }) => {
           </div>
         </div>
         <div className="feed">
-          {posts.map((item) => (
+          {data?.map((item) => (
             <Post item={item} />
           ))}
         </div>

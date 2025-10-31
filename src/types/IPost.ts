@@ -3,7 +3,7 @@ export interface IPost {
   user: string;
   postTime: string;
   text: string;
-  image: string;
+  image?: string;
   likes: number;
   comments: string[];
 }
