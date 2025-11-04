@@ -11,8 +11,8 @@ import { useState } from 'react';
 
 const PostComposer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null);
-  const [uploadedInfo, setUploadedInfo] = useState<any>(null);
+  const [uploadedInfo, setUploadedInfo] = useState<{ filepath?: string } | null>(null);
+
   const schema = yup.object({
     content: yup
       .string()
@@ -31,14 +31,22 @@ const PostComposer = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<IPostComposer>({ resolver: yupResolver(schema) });
 
   const composerSubmit = async (formData: IPostComposer) => {
     try {
-      await trigger(formData);
-      console.log(formData);
+      const payload: IPostComposer = {
+        content: formData.content,
+        imgUrl: uploadedInfo?.filepath || undefined,
+      };
+
+      await trigger(payload);
+      console.log("Отправлено:", payload);
+      reset();
+      setUploadedInfo(null);
     } catch {
-      console.error('Ошибка отправки');
+      console.error("Ошибка отправки");
     }
   };
 
@@ -53,8 +61,23 @@ const PostComposer = () => {
           id="content"
           {...register('content')}
         />
-        {errors.content && <p className="error">{errors.content.message}</p>}
       </div>
+
+      {errors.content && <p className="error">{errors.content.message}</p>}
+
+      {uploadedInfo?.filepath && (
+        <div className="composer-image-preview">
+          <img src={"http://localhost:8000/"+uploadedInfo.filepath} alt="preview" />
+          <button
+            type="button"
+            className="remove-image"
+            onClick={() => setUploadedInfo(null)}
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
       <div className="composer-actions">
         <div className="composer-tools">
           <button className="composer-tool file-upload" onClick={() => setIsModalOpen(true)} type="button">
@@ -67,21 +90,20 @@ const PostComposer = () => {
           {!isMutating ? 'Опубликовать' : 'Опубликовано'}
         </button>
       </div>
+
+      {/* Модалка для загрузки фото */}
       <Modal
         isOpen={isModalOpen}
         title="Загрузить фото"
-        confirmText="Загрузить"
+        confirmText="Готово"
         cancelText="Отмена"
-        onConfirm={() => {
-          alert("Удалено!");
-          setIsModalOpen(false);
-        }}
+        onConfirm={() => setIsModalOpen(false)}
         onClose={() => setIsModalOpen(false)}
       >
         <PhotoUploader
           onUploadComplete={(data) => {
             console.log("Загружено:", data);
-            setUploadedInfo(data);
+            setUploadedInfo({ filepath: data.filepath });
           }}
         />
       </Modal>

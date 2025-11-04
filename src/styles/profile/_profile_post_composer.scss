@@ -1,0 +1,144 @@
+.post-composer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #1e1c2a;
+  padding: 16px;
+  border-radius: 12px;
+
+  .composer-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+
+    .composer-avatar {
+      width: 40px;
+      height: 40px;
+      background: #9175b6;
+      color: white;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .composer-input {
+      flex: 1;
+      background: #2a2638;
+      color: #fff;
+      border: none;
+      resize: none;
+      min-height: 60px;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 14px;
+
+      &:focus {
+        outline: 1px solid #9175b6;
+      }
+    }
+  }
+
+  .composer-image-preview {
+  position: relative;
+  display: inline-block;
+  border-radius: 10px;
+  overflow: hidden;
+
+  img {
+    width: 180px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #34293e;
+    display: block;
+  }
+
+  .remove-image {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    background: rgba(10, 9, 15, 0.8);
+    border: 1px solid #9175b6;
+    color: #fff;
+    font-size: 14px;
+    line-height: 1;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 4px 7px;
+    transition: all 0.2s ease;
+    z-index: 10;
+    opacity: 0;
+  }
+
+  &:hover .remove-image {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  .remove-image:hover {
+    background: #9175b6;
+    color: #0a090f;
+  }
+}
+
+
+
+
+  .composer-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .composer-tools {
+      display: flex;
+      gap: 10px;
+
+      .composer-tool {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: none;
+        border: none;
+        color: #9175b6;
+        cursor: pointer;
+        font-size: 14px;
+        padding: 4px 8px;
+
+        img {
+          width: 20px;
+          height: 20px;
+        }
+
+        &:hover {
+          color: #b59ed8;
+        }
+      }
+    }
+
+    .composer-submit {
+      background: #9175b6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &:hover {
+        background: #a58bcf;
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .error {
+    color: #ff7777;
+    font-size: 13px;
+  }
+}

@@ -19,7 +19,7 @@ const Post: FC<PostProps> = ({ item }) => {
         <div className="post-text">{item.text}</div>
         {item.image && (
           <div className="post-image">
-            <img src={item.image} />
+            <img src={"http://localhost:8000/"+item.image} />
           </div>
         )}
       </div>
