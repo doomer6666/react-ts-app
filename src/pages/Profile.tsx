@@ -6,6 +6,7 @@ import ProfileHeader from '../features/profile/ProfileHeader';
 import PostComposer from '../features/profile/PostComposer';
 import Post from '../components/Post';
 import type { IUser } from '../types/IUser';
+import mockUserData from '../mocks/mockUserData.ts';
 
 const Profile: FC = () => {
   const [activeItem, setActiveItem] = useState('profile');
@@ -16,14 +17,14 @@ const Profile: FC = () => {
   });
 
   if (error) {
-    return <div>Ошибка, зайдите позже</div>;
+    // return <div>Ошибка, зайдите позже</div>;
   }
 
   if (!data) {
-    return;
+    // return;
   }
 
-  const user: IUser = data;
+  const user: IUser = data ?? mockUserData;
 
   return (
     <MainLayout

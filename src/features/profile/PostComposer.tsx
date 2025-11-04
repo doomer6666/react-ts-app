@@ -4,8 +4,15 @@ import * as yup from 'yup';
 import type IPostComposer from '../../types/IPostComposer';
 import useSWRMutation from 'swr/mutation';
 import poster from '../../api/poster';
+import Modal from '../Modal';
+import PhotoUploader from '../PhotoUploader';
+import { useState } from 'react';
+
 
 const PostComposer = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null);
+  const [uploadedInfo, setUploadedInfo] = useState<any>(null);
   const schema = yup.object({
     content: yup
       .string()
@@ -50,17 +57,34 @@ const PostComposer = () => {
       </div>
       <div className="composer-actions">
         <div className="composer-tools">
-          <label className="composer-tool file-upload">
-            <input type="file" hidden />
+          <button className="composer-tool file-upload" onClick={() => setIsModalOpen(true)} type="button">
             <img src="/photo.svg" alt="Загрузить медиа" />
             <span>Фото</span>
-          </label>
+          </button>
         </div>
 
         <button type="submit" className="composer-submit">
           {!isMutating ? 'Опубликовать' : 'Опубликовано'}
         </button>
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        title="Загрузить фото"
+        confirmText="Загрузить"
+        cancelText="Отмена"
+        onConfirm={() => {
+          alert("Удалено!");
+          setIsModalOpen(false);
+        }}
+        onClose={() => setIsModalOpen(false)}
+      >
+        <PhotoUploader
+          onUploadComplete={(data) => {
+            console.log("Загружено:", data);
+            setUploadedInfo(data);
+          }}
+        />
+      </Modal>
     </form>
   );
 };

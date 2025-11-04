@@ -1,0 +1,64 @@
+.photo-uploader {
+  background: #232030;
+  border: 2px dashed #34293e;
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  color: #9175b6;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    border-color: #9175b6;
+    background: #181622;
+  }
+
+  &.dragging {
+    border-color: #b6a3cc;
+    background: rgba(145, 117, 182, 0.05);
+  }
+
+  .photo-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    p {
+      color: #8a7b96;
+      font-size: 14px;
+    }
+  }
+
+  .icon-upload {
+    width: 48px;
+    height: 48px;
+    stroke: #9175b6;
+  }
+
+  .photo-preview {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #34293e;
+    object-fit: cover;
+  }
+
+  .upload-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background: #2b2333;
+    border-radius: 0 0 8px 8px;
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #9175b6, #b6a3cc);
+      transition: width 0.2s;
+      border-radius: 0 0 8px 8px;
+    }
+  }
+}
