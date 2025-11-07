@@ -8,8 +8,11 @@ import Modal from '../Modal';
 import PhotoUploader from '../PhotoUploader';
 import { useState } from 'react';
 
+interface PostComposerProps {
+  mutate: () => void;
+}
 
-const PostComposer = () => {
+const PostComposer: React.FC<PostComposerProps> = ({mutate}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadedInfo, setUploadedInfo] = useState<{ filepath?: string } | null>(null);
 
@@ -45,6 +48,7 @@ const PostComposer = () => {
       console.log("Отправлено:", payload);
       reset();
       setUploadedInfo(null);
+      mutate();
     } catch {
       console.error("Ошибка отправки");
     }

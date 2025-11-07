@@ -11,7 +11,7 @@ import mockUserData from '../mocks/mockUserData.ts';
 const Profile: FC = () => {
   const [activeItem, setActiveItem] = useState('profile');
 
-  const { data, error, isLoading } = useSWR<IUser>('/profile/', fetcher, {
+  const { data, error, isLoading, mutate } = useSWR<IUser>('/profile/', fetcher, {
     revalidateOnFocus: true,
     shouldRetryOnError: false,
   });
@@ -36,7 +36,7 @@ const Profile: FC = () => {
         <ProfileHeader user={user} />
         <div className="profile-content">
           <div className="profile-feed">
-            <PostComposer />
+            <PostComposer mutate={mutate} />
             <div className="feed">
               {isLoading && <div>Загрузка...</div>}
               {user.posts
