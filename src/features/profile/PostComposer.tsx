@@ -69,7 +69,7 @@ const PostComposer: React.FC<PostComposerProps> = ({mutate}) => {
 
       {errors.content && <p className="error">{errors.content.message}</p>}
 
-      {uploadedInfo?.filepath && (
+      {uploadedInfo?.filepath && !isModalOpen && (
         <div className="composer-image-preview">
           <img src={"http://localhost:8000/"+uploadedInfo.filepath}/>
           <button
@@ -101,7 +101,10 @@ const PostComposer: React.FC<PostComposerProps> = ({mutate}) => {
         confirmText="Готово"
         cancelText="Отмена"
         onConfirm={() => setIsModalOpen(false)}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => {
+          setIsModalOpen(false)
+          setUploadedInfo(null);
+        }}
       >
         <PhotoUploader
           onUploadComplete={(data) => {

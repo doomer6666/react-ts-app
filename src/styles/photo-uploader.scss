@@ -15,11 +15,6 @@
     background: #181622;
   }
 
-  &.dragging {
-    border-color: #b6a3cc;
-    background: rgba(145, 117, 182, 0.05);
-  }
-
   .photo-placeholder {
     display: flex;
     flex-direction: column;
@@ -45,20 +40,4 @@
     object-fit: cover;
   }
 
-  .upload-progress {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 4px;
-    width: 100%;
-    background: #2b2333;
-    border-radius: 0 0 8px 8px;
-
-    .progress-bar {
-      height: 100%;
-      background: linear-gradient(90deg, #9175b6, #b6a3cc);
-      transition: width 0.2s;
-      border-radius: 0 0 8px 8px;
-    }
-  }
 }
