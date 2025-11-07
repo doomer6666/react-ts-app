@@ -67,13 +67,13 @@ const PostComposer = () => {
 
       {uploadedInfo?.filepath && (
         <div className="composer-image-preview">
-          <img src={"http://localhost:8000/"+uploadedInfo.filepath} alt="preview" />
+          <img src={"http://localhost:8000/"+uploadedInfo.filepath}/>
           <button
             type="button"
             className="remove-image"
             onClick={() => setUploadedInfo(null)}
           >
-            ✕
+            x
           </button>
         </div>
       )}
@@ -91,7 +91,6 @@ const PostComposer = () => {
         </button>
       </div>
 
-      {/* Модалка для загрузки фото */}
       <Modal
         isOpen={isModalOpen}
         title="Загрузить фото"

@@ -31,7 +31,7 @@ const Modal: React.FC<ModalProps> = ({
         <div className="modal-header">
           <span>{title}</span>
           <button className="modal-close" onClick={onClose}>
-            &times;
+            x
           </button>
         </div>
 
