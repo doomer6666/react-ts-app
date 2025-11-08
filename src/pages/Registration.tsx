@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import type ISignUp from '../types/ISignUp';
 import Cubes from '../components/animations/Cubes';
+import useSWRMutation from 'swr/mutation';
+import poster from '../api/poster';
+import type ISignIn from '../types/ISignIn';
 
 const Registration = () => {
   const schema = yup.object({
@@ -39,10 +42,23 @@ const Registration = () => {
     formState: { errors },
   } = useForm<ISignUp>({ resolver: yupResolver(schema) });
 
+  const { trigger, isMutating, error } = useSWRMutation<
+    ISignIn,
+    Error,
+    string,
+    ISignUp
+  >('/auth/register/', poster);
+
   const navigate = useNavigate();
 
-  const onSubmit = async (data: ISignUp) => {
-    console.log(data);
+  const onSubmit = async (formData: ISignUp) => {
+    try {
+      console.log(formData);
+      await trigger(formData);
+      navigate('/profile');
+    } catch (e) {
+      console.error('Error submitting form:', e);
+    }
   };
 
   return (
@@ -124,9 +140,9 @@ const Registration = () => {
           </div>
 
           <button type="submit" className="btn">
-            ЗАРЕГИСТРИРОВАТЬСЯ
+            {!isMutating ? 'ЗАРЕГИСТРИРОВАТЬСЯ' : 'РЕГИСТРАЦИЯ...'}
           </button>
-
+          {error && <div>Ошибка регистрации</div>}
           <div className="policy-text">
             Регистрируясь, вы соглашаетесь с{' '}
             <a href="#">Условиями использования</a> и{' '}

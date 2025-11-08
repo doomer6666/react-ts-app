@@ -4,6 +4,9 @@ import type ISignIn from '../types/ISignIn';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Cubes from '../components/animations/Cubes';
+import useSWRMutation from 'swr/mutation';
+import poster from '../api/poster';
+import type React from 'react';
 
 const Sign = () => {
   const schema = yup.object({
@@ -17,8 +20,24 @@ const Sign = () => {
     formState: { errors },
   } = useForm<ISignIn>({ resolver: yupResolver(schema) });
 
-  const onSubmit = async (data: ISignIn) => {
-    console.log(data);
+  const { trigger, isMutating, error } = useSWRMutation<
+    string,
+    Error,
+    string,
+    ISignIn
+  >('/auth/login/', poster);
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    handleSubmit(async (formData) => {
+      try {
+        console.log(formData);
+        await trigger(formData);
+        navigate('/profile');
+      } catch (e) {
+        console.error('Error submitting form:', e);
+      }
+    })();
   };
 
   const navigate = useNavigate();
@@ -36,7 +55,7 @@ const Sign = () => {
     >
       <div className="sign-container">
         <div className="logo">ПОДЗЕМЕЛЬЕ</div>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={onSubmit}>
           <div className="form-group">
             <label className="form-label" htmlFor="username">
               Имя пользователя
@@ -70,13 +89,10 @@ const Sign = () => {
               <a href="#">Забыли пароль?</a>
             </div>
           </div>
-          <button
-            type="submit"
-            className="btn"
-            onClick={() => navigate('/feed')}
-          >
-            ВОЙТИ
+          <button type="submit" className="btn">
+            {!isMutating ? 'ВОЙТИ' : 'ВХОД...'}
           </button>
+          {error && <div>Ошибка входа</div>}
         </form>
         <div className="divider"></div>
         <div className="login-footer">

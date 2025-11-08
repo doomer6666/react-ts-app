@@ -1,12 +1,31 @@
 import { useState, type FC } from 'react';
+import useSWR from 'swr';
+import { fetcher } from '../api/fetcher';
 import MainLayout from '../layouts/MainLayout';
 import ProfileHeader from '../features/profile/ProfileHeader';
 import PostComposer from '../features/profile/PostComposer';
 import Post from '../components/Post';
-import type ProfileProps from '../types/IUser';
+import type { IUser } from '../types/IUser';
+import mockUserData from '../mocks/mockUserData.ts';
 
-const Profile: FC<ProfileProps> = ({ user }) => {
+const Profile: FC = () => {
   const [activeItem, setActiveItem] = useState('profile');
+
+  const { data, error, isLoading, mutate } = useSWR<IUser>('/profile/', fetcher, {
+    revalidateOnFocus: true,
+    shouldRetryOnError: false,
+  });
+
+  if (error) {
+    // return <div>Ошибка, зайдите позже</div>;
+  }
+
+  if (!data) {
+    // return;
+  }
+
+  const user: IUser = data ?? mockUserData;
+
   return (
     <MainLayout
       activeItem={activeItem}
@@ -17,11 +36,18 @@ const Profile: FC<ProfileProps> = ({ user }) => {
         <ProfileHeader user={user} />
         <div className="profile-content">
           <div className="profile-feed">
-            <PostComposer />
+            <PostComposer mutate={mutate} />
             <div className="feed">
-              {user.posts.map((item) => (
-                <Post item={item} />
-              ))}
+              {isLoading && <div>Загрузка...</div>}
+              {user.posts
+                .sort(
+                  (a, b) =>
+                    new Date(b.postTime).getTime() -
+                    new Date(a.postTime).getTime(),
+                )
+                .map((item) => (
+                  <Post item={item} />
+                ))}
             </div>
 
             {/*вернуться когда будет логика <div className="post-options">

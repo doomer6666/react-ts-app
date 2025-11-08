@@ -17,10 +17,12 @@ const getRussianWordForm = (
 };
 
 const getTimeAgo = (time: string): string => {
-  const date = new Date(time);
+  console.log(time);
+  const date = new Date(time + 'Z');
   const now = new Date();
 
-  const diffMs = now.getTime() - date.getTime();
+  const nowInUTC = new Date(now.toISOString());
+  const diffMs = nowInUTC.getTime() - date.getTime();
 
   const diffSecs = Math.floor(diffMs / 1000);
   const diffMins = Math.floor(diffSecs / 60);
