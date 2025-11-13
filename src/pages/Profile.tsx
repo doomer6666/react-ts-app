@@ -6,25 +6,28 @@ import ProfileHeader from '../features/profile/ProfileHeader';
 import PostComposer from '../features/profile/PostComposer';
 import Post from '../components/Post';
 import type { IUser } from '../types/IUser';
-import mockUserData from '../mocks/mockUserData.ts';
 
 const Profile: FC = () => {
   const [activeItem, setActiveItem] = useState('profile');
 
-  const { data, error, isLoading, mutate } = useSWR<IUser>('/profile/', fetcher, {
-    revalidateOnFocus: true,
-    shouldRetryOnError: false,
-  });
+  const { data, error, isLoading, mutate } = useSWR<IUser>(
+    '/profile/',
+    fetcher,
+    {
+      revalidateOnFocus: true,
+      shouldRetryOnError: false,
+    },
+  );
 
   if (error) {
-    // return <div>Ошибка, зайдите позже</div>;
+    return <div>Ошибка, зайдите позже</div>;
   }
 
   if (!data) {
-    // return;
+    return;
   }
 
-  const user: IUser = data ?? mockUserData;
+  const user: IUser = data;
 
   return (
     <MainLayout

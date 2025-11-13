@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 interface ModalProps {
-  isOpen: boolean;
   title?: string;
   children?: React.ReactNode;
   onConfirm?: () => void;
@@ -11,22 +11,28 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({
-  isOpen,
-  title = "Модальное окно",
+  title = 'Модальное окно',
   children,
   onConfirm,
   onClose,
-  confirmText = "ОК",
-  cancelText = "Отмена",
+  confirmText = 'ОК',
+  cancelText = 'Отмена',
 }) => {
-  if (!isOpen) return null;
+  const modalRoot = document.getElementById('modal-root');
 
-  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) onClose();
-  };
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
 
-  return (
-    <div className="modal-overlay" onClick={handleOverlayClick}>
+  if (!modalRoot) {
+    return;
+  }
+
+  return createPortal(
+    <div className="modal-overlay">
       <div className="modal">
         <div className="modal-header">
           <span>{title}</span>
@@ -48,7 +54,8 @@ const Modal: React.FC<ModalProps> = ({
           )}
         </div>
       </div>
-    </div>
+    </div>,
+    modalRoot,
   );
 };
 

@@ -10,6 +10,9 @@
   position: relative;
   overflow: hidden;
 
+  img {
+    max-width: 80% !important;
+  }
   &:hover {
     border-color: #9175b6;
     background: #181622;
@@ -39,5 +42,4 @@
     border: 1px solid #34293e;
     object-fit: cover;
   }
-
 }
