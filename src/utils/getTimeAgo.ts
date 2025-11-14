@@ -17,7 +17,6 @@ const getRussianWordForm = (
 };
 
 const getTimeAgo = (time: string): string => {
-  console.log(time);
   const date = new Date(time + 'Z');
   const now = new Date();
 
