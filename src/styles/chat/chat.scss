@@ -299,11 +299,11 @@
         max-width: 80%;
     }
 
-    .message.received {
+    .message.recieved {
         align-self: flex-start;
     }
 
-    .message.sent {
+    .message.send {
         align-self: flex-end;
         flex-direction: row-reverse;
         margin-left: auto;
@@ -337,12 +337,13 @@
         max-width: calc(100% - 50px);
     }
 
-    .received .message-content {
+    .recieved .message-content {
         border-top-left-radius: 0;
         border-left: 3px solid #9175b6;
     }
 
-    .sent .message-content {
+    .send .message-content {
+        margin-right: 5px;
         background: #34293e;
         border-top-right-radius: 0;
         border-right: 3px solid #9175b6;

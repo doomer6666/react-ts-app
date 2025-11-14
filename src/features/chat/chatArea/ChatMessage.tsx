@@ -13,7 +13,9 @@ const ChatMessage: FC<ChatMessageProps> = ({
   message,
   time,
 }) => {
+  console.log(time);
   const timeAgo = getTimeAgo(time);
+  console.log(timeAgo);
   return (
     <div className={`message ${direction}`}>
       <div className="message-avatar">{name[0]}</div>

@@ -3,23 +3,46 @@ import ChatHeader from './ChatHeader';
 import ChatInput from './ChatInput';
 import ChatMessage from './ChatMessage';
 import { ChatContext } from '../../../pages/Chat';
+import useSWR from 'swr';
+import { fetcher } from '../../../api/fetcher';
+import type { IChatMessage } from '../../../types/chat/IChatMessage';
 
 const ChatArea = () => {
   const chatContext = useContext(ChatContext);
+
+  const { data, error, isLoading } = useSWR<IChatMessage[]>(
+    `/chats/${chatContext?.activeChat}/messages`,
+    fetcher,
+    {
+      revalidateOnFocus: true,
+      shouldRetryOnError: false,
+    },
+  );
+
+  if (!data || error) {
+    return;
+  }
+  const messages: IChatMessage[] = data;
+  const sender: string =
+    messages.find((item) => item.direction === 'recieved')?.name || '';
+
   return (
     <div className="chat-area">
       {chatContext?.activeChat ? (
         <>
-          <ChatHeader name="Олег" />
+          {isLoading && <div>Загрузка...</div>}
+          <ChatHeader name={sender} />
 
           <div className="chat-messages">
             {/* <div className="message-date">Сегодня</div> */}
-            <ChatMessage
-              direction={'sent'}
-              name={'Уээ'}
-              message={'УЭээээээээ'}
-              time={'2025-10-13T09:45:00.000Z'}
-            />
+            {messages.map((item) => (
+              <ChatMessage
+                direction={item.direction}
+                name={item.name}
+                message={item.message}
+                time={item.time}
+              />
+            ))}
           </div>
           <ChatInput />
         </>
