@@ -4,9 +4,9 @@ import * as yup from 'yup';
 import type IPostComposer from '../../types/IPostComposer';
 import useSWRMutation from 'swr/mutation';
 import poster from '../../api/poster';
-import Modal from '../Modal';
-import PhotoUploader from '../PhotoUploader';
 import { useState } from 'react';
+import PhotoUploader from './PhotoUploader';
+import ModalUploader from './ModalUploader';
 
 interface PostComposerProps {
   mutate: () => void;
@@ -21,7 +21,10 @@ const PostComposer: React.FC<PostComposerProps> = ({ mutate }) => {
   const schema = yup.object({
     content: yup
       .string()
-      .matches(/^[a-zA-Z0-9а-яА-Я_]+$/, 'Только буквы, цифры и подчеркивания')
+      .matches(
+        /^[a-zA-Z0-9а-яА-Я_ !,.?]+$/,
+        'Только буквы, цифры и подчеркивания',
+      )
       .required('Введите текст'),
   });
 
@@ -79,7 +82,7 @@ const PostComposer: React.FC<PostComposerProps> = ({ mutate }) => {
             className="remove-image"
             onClick={() => setUploadedInfo(null)}
           >
-            x
+            <img src="./close.svg" />
           </button>
         </div>
       )}
@@ -101,7 +104,7 @@ const PostComposer: React.FC<PostComposerProps> = ({ mutate }) => {
         </button>
       </div>
       {isModalOpen && (
-        <Modal
+        <ModalUploader
           title="Загрузить фото"
           confirmText="Готово"
           cancelText="Отмена"
@@ -117,7 +120,7 @@ const PostComposer: React.FC<PostComposerProps> = ({ mutate }) => {
               setUploadedInfo({ filepath: data.filepath });
             }}
           />
-        </Modal>
+        </ModalUploader>
       )}
     </form>
   );

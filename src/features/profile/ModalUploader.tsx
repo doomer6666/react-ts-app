@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { createPortal } from 'react-dom';
+import React from 'react';
+import Modal from '../../components/Modal';
 
-interface ModalProps {
+interface ModalUploaderProps {
   title?: string;
   children?: React.ReactNode;
   onConfirm?: () => void;
@@ -10,7 +10,7 @@ interface ModalProps {
   cancelText?: string;
 }
 
-const Modal: React.FC<ModalProps> = ({
+const ModalUploader: React.FC<ModalUploaderProps> = ({
   title = 'Модальное окно',
   children,
   onConfirm,
@@ -18,26 +18,13 @@ const Modal: React.FC<ModalProps> = ({
   confirmText = 'ОК',
   cancelText = 'Отмена',
 }) => {
-  const modalRoot = document.getElementById('modal-root');
-
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, []);
-
-  if (!modalRoot) {
-    return;
-  }
-
-  return createPortal(
-    <div className="modal-overlay">
+  return (
+    <Modal onClose={onClose}>
       <div className="modal">
         <div className="modal-header">
           <span>{title}</span>
           <button className="modal-close" onClick={onClose}>
-            x
+            <img src="./close.svg" />
           </button>
         </div>
 
@@ -54,9 +41,8 @@ const Modal: React.FC<ModalProps> = ({
           )}
         </div>
       </div>
-    </div>,
-    modalRoot,
+    </Modal>
   );
 };
 
-export default Modal;
+export default ModalUploader;

@@ -1,5 +1,5 @@
-import React, { useState, useRef } from "react";
-import api from "../api/axiosInstance";
+import React, { useState, useRef } from 'react';
+import api from '../../api/axiosInstance';
 
 interface UploadResponse {
   id: number;
@@ -17,17 +17,17 @@ const PhotoUploader: React.FC<PhotoUploaderProps> = ({ onUploadComplete }) => {
 
   const uploadFile = async (file: File) => {
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append('file', file);
 
     try {
-      const response = await api.post<UploadResponse>("/image/load", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+      const response = await api.post<UploadResponse>('/image/load', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
 
       onUploadComplete(response.data);
     } catch (err) {
-      console.error("Ошибка загрузки файла:", err);
-      alert("Ошибка загрузки файла");
+      console.error('Ошибка загрузки файла:', err);
+      alert('Ошибка загрузки файла');
     }
   };
 
@@ -40,10 +40,7 @@ const PhotoUploader: React.FC<PhotoUploaderProps> = ({ onUploadComplete }) => {
   };
 
   return (
-    <div
-      className="photo-uploader"
-      onClick={() => inputRef.current?.click()}
-    >
+    <div className="photo-uploader" onClick={() => inputRef.current?.click()}>
       {preview ? (
         <img src={preview} alt="preview" className="photo-preview" />
       ) : (

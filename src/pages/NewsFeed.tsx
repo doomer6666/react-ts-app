@@ -13,6 +13,10 @@ const NewsFeed: FC = () => {
     shouldRetryOnError: false,
   });
 
+  if (error) {
+    return <div>Ошибка, зайдите позже</div>;
+  }
+
   return (
     <MainLayout
       activeItem={activeItem}
@@ -28,47 +32,11 @@ const NewsFeed: FC = () => {
         </div>
         <div className="feed">
           {data?.map((item) => (
-            <Post item={item} />
+            <Post item={item} openUserInfo={true} />
           ))}
         </div>
       </div>
-
-      {/* <div className="sidebar-right">
-        <div className="trending-header">
-          <span className="trending-header-icon">✨</span>
-          ПРОРОЧЕСТВА
-        </div>
-
-        <div className="trending-item">
-          <div className="trending-tag">#Тартар</div>
-          <div className="trending-title">Новые комнаты испытаний от Аида</div>
-          <div className="trending-stats">666 упоминаний</div>
-        </div>
-
-        <div className="trending-item">
-          <div className="trending-tag">#Олимп</div>
-          <div className="trending-title">
-            Зевс объявил о новых дарах смертным
-          </div>
-          <div className="trending-stats">432 упоминания</div>
-        </div>
-
-        <div className="trending-item">
-          <div className="trending-tag">#Битвы</div>
-          <div className="trending-title">
-            Лучшее оружие для прохождения Асфодела
-          </div>
-          <div className="trending-stats">789 упоминаний</div>
-        </div>
-
-        <div className="trending-item">
-          <div className="trending-tag">#Нектар</div>
-          <div className="trending-title">
-            Кому дарить подарки: рейтинг благосклонности
-          </div>
-          <div className="trending-stats">321 упоминание</div>
-        </div>
-      </div> */}
+      {isLoading && <div className="post-text">Идет загрузка</div>}
     </MainLayout>
   );
 };

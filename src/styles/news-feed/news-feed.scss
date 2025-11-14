@@ -1,6 +1,7 @@
 @use "./search.scss";
 @use "./feed.scss";
 @use "./topic.scss";
+@use "./user-modal";
 
 .news-feed {
     display: grid;

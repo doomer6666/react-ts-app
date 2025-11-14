@@ -1,14 +1,24 @@
 import { useState, type FC } from 'react';
 import type PostProps from '../types/IPost';
 import getTimeAgo from '../utils/getTimeAgo';
+import ModalUser from '../features/feed/ModalUser';
 
-const Post: FC<PostProps> = ({ item }) => {
+const Post: FC<PostProps> = ({ item, openUserInfo }) => {
+  const [openModal, setOpenModal] = useState(false);
   const [isOpemComments, setIsOpenComments] = useState(false);
-  const avatarLetter = item.user[0];
+  const avatarLetter: string = item.user[0];
   const timeAgo = getTimeAgo(item.postTime);
+
+  const handleOpenUserModal = () => {
+    if (!openUserInfo) {
+      return;
+    }
+    setOpenModal(true);
+  };
+
   return (
     <div className="post">
-      <div className="post-header">
+      <div className="post-header" onClick={handleOpenUserModal}>
         <div className="post-avatar">{avatarLetter}</div>
         <div>
           <div className="post-user">{item.user}</div>
@@ -19,7 +29,7 @@ const Post: FC<PostProps> = ({ item }) => {
         <div className="post-text">{item.text}</div>
         {item.image && (
           <div className="post-image">
-            <img src={"http://localhost:8000/"+item.image} />
+            <img src={'http://localhost:8000/' + item.image} />
           </div>
         )}
       </div>
@@ -46,6 +56,13 @@ const Post: FC<PostProps> = ({ item }) => {
             <li key={comment}>{comment}</li>
           ))}
         </ul>
+      )}
+      {openModal && (
+        <ModalUser
+          name={item.user}
+          avatarLetter={avatarLetter}
+          onClose={() => setOpenModal(false)}
+        />
       )}
     </div>
   );

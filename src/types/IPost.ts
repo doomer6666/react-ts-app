@@ -10,4 +10,5 @@ export interface IPost {
 
 export default interface PostProps {
   item: IPost;
+  openUserInfo?: boolean;
 }
