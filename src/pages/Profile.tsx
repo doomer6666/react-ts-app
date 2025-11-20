@@ -49,7 +49,7 @@ const Profile: FC = () => {
                     new Date(a.postTime).getTime(),
                 )
                 .map((item) => (
-                  <Post item={item} />
+                  <Post item={item} mutate={mutate} />
                 ))}
             </div>
 
