@@ -4,43 +4,53 @@ import * as yup from 'yup';
 import type IPostComposer from '../../types/IPostComposer';
 import useSWRMutation from 'swr/mutation';
 import poster from '../../api/poster';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PhotoUploader from './PhotoUploader';
 import ModalUploader from './ModalUploader';
 
 interface PostComposerProps {
-  mutate: () => void;
+  mutate?: () => void;
+  initialContent?: string;
+  initialImgUrl?: string;
+  onComplete?: (payload: IPostComposer) => void | Promise<any>;
+  onCancel?: () => void;
+  submitLabel?: string;
 }
 
-const PostComposer: React.FC<PostComposerProps> = ({ mutate }) => {
+const PostComposer: React.FC<PostComposerProps> = ({
+  mutate,
+  initialContent,
+  initialImgUrl,
+  onComplete,
+  onCancel,
+  submitLabel,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadedInfo, setUploadedInfo] = useState<{
     filepath?: string;
   } | null>(null);
 
+  useEffect(() => {
+    if (initialImgUrl) {
+      setUploadedInfo({ filepath: initialImgUrl });
+    }
+  }, [initialImgUrl]);
+
   const schema = yup.object({
     content: yup
       .string()
-      .matches(
-        /^[a-zA-Z0-9а-яА-Я_ !,.?]+$/,
-        'Только буквы, цифры и подчеркивания',
-      )
+      .matches(/^[a-zA-Z0-9а-яА-Я_ !,.?]+$/, 'Только буквы, цифры и подчеркивания')
       .required('Введите текст'),
   });
 
-  const { trigger, isMutating, error } = useSWRMutation<
-    string,
-    Error,
-    string,
-    IPostComposer
-  >('/posts/', poster);
+  const { trigger, isMutating, error } = useSWRMutation<string, Error, string, IPostComposer>('/posts/', poster);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<IPostComposer>({ resolver: yupResolver(schema) });
+  } = useForm<IPostComposer>({ resolver: yupResolver(schema), defaultValues: { content: initialContent || '' } });
 
   const composerSubmit = async (formData: IPostComposer) => {
     try {
@@ -49,13 +59,20 @@ const PostComposer: React.FC<PostComposerProps> = ({ mutate }) => {
         imgUrl: uploadedInfo?.filepath || undefined,
       };
 
+      if (onComplete) {
+        await onComplete(payload);
+        reset();
+        setUploadedInfo(null);
+        if (onCancel) onCancel();
+        return;
+      }
+
       await trigger(payload);
-      console.log('Отправлено:', payload);
       reset();
       setUploadedInfo(null);
-      mutate();
-    } catch {
-      console.error('Ошибка отправки');
+      if (mutate) mutate();
+    } catch (err) {
+      console.error('Ошибка отправки', err);
     }
   };
 
@@ -99,10 +116,19 @@ const PostComposer: React.FC<PostComposerProps> = ({ mutate }) => {
           </button>
         </div>
 
-        <button type="submit" className="composer-submit">
-          {!isMutating ? 'Опубликовать' : 'Опубликовано'}
-        </button>
+        <div>
+          {onCancel && (
+            <button type="button" className="btn-cancel" onClick={() => { reset(); setUploadedInfo(null); if (onCancel) onCancel(); }}>
+              Отмена
+            </button>
+          )}
+
+          <button type="submit" className="composer-submit">
+            {submitLabel ? submitLabel : !isMutating ? 'Опубликовать' : 'Опубликовано'}
+          </button>
+        </div>
       </div>
+
       {isModalOpen && (
         <ModalUploader
           title="Загрузить фото"
@@ -116,7 +142,6 @@ const PostComposer: React.FC<PostComposerProps> = ({ mutate }) => {
         >
           <PhotoUploader
             onUploadComplete={(data) => {
-              console.log('Загружено:', data);
               setUploadedInfo({ filepath: data.filepath });
             }}
           />

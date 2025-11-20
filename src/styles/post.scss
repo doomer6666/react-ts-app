@@ -107,6 +107,78 @@
     line-height: 1.6;
 }
 
+.post-edit {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.post-edit-textarea {
+    width: 100%;
+    min-height: 96px;
+    resize: vertical;
+    padding: 10px;
+    background: #241d29;
+    border: 1px solid #34293e;
+    color: #cdc1b4;
+    border-radius: 6px;
+}
+
+.post-edit-image-preview {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    background: #232030;
+    border: 1px solid #34293e;
+    border-radius: 6px;
+    padding: 8px;
+
+    img {
+        width: 100%;
+        display: block;
+        border-radius: 6px;
+    }
+
+    .remove-image {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        background: transparent;
+        border: none;
+        padding: 6px;
+        cursor: pointer;
+    }
+}
+
+.post-edit-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.post-edit-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-cancel {
+    background: transparent;
+    border: 1px solid #34293e;
+    color: #cdc1b4;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-save {
+    background: #9175b6;
+    border: none;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
 .post-image {
     width: 100%;
     border-radius: 6px;

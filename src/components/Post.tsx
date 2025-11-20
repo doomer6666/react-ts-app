@@ -1,8 +1,9 @@
-import { useState, type FC } from 'react';
+import { useState, useRef, type FC } from 'react';
 import type PostProps from '../types/IPost';
 import getTimeAgo from '../utils/getTimeAgo';
 import ModalUser from '../features/feed/ModalUser';
 import ModalUploader from '../features/profile/ModalUploader';
+import PostComposer from '../features/profile/PostComposer';
 import api from '../api/axiosInstance';
 
 const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, openUserInfo, mutate }) => {
@@ -10,6 +11,9 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const [isOpemComments, setIsOpenComments] = useState(false);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editError, setEditError] = useState<string | null>(null);
+  const optionsRef = useRef<HTMLDivElement | null>(null);
   const avatarLetter: string = item.user[0];
   const timeAgo = getTimeAgo(item.postTime);
 
@@ -18,6 +22,45 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
       return;
     }
     setOpenModal(true);
+  };
+
+  const startEdit = () => {
+    setIsOptionsOpen(false);
+    setEditError(null);
+    setIsEditing(true);
+  };
+
+  const cancelEdit = () => {
+    setIsEditing(false);
+    setEditError(null);
+  };
+
+  const handleEditComplete = async (payload: { content: string; imgUrl?: string }) => {
+    try {
+      const body: any = { text: payload.content };
+      if (payload.imgUrl) body.image = payload.imgUrl;
+      else body.image = null;
+
+      await api.patch('/posts/' + item.id, body);
+      if (mutate) await mutate();
+      setIsEditing(false);
+    } catch (e: any) {
+      if (e && e.message) {
+        setEditError(e.message);
+        return;
+      }
+      console.error('Failed to update post', e);
+    }
+  };
+
+  const confirmDelete = async () => {
+    setOpenModalDelete(false);
+    try {
+      await api.delete('/posts/' + item.id);
+      if (mutate) await mutate();
+    } catch (e) {
+      console.error('Failed to delete post', e);
+    }
   };
 
   return (
@@ -31,7 +74,8 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
 
         <button
           className="post-options-button"
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             setIsOptionsOpen((s) => !s);
           }}
           aria-label="Post options"
@@ -40,21 +84,16 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
         </button>
 
         {isOptionsOpen && (
-          <div className="post-options-menu">
+          <div className="post-options-menu" ref={optionsRef}>
             <button
               className="post-options-item"
-              onClick={() => {
-                console.log('Delete post', item.id);
-                setIsOptionsOpen(false);
-                setOpenModalDelete(true);
-              }}
+              onClick={() => startEdit()}
             >
               Редактировать
             </button>
             <button
               className="post-options-item delete"
               onClick={() => {
-                console.log('Delete post', item.id);
                 setIsOptionsOpen(false);
                 setOpenModalDelete(true);
               }}
@@ -64,14 +103,30 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
           </div>
         )}
       </div>
+
       <div className="post-content">
-        <div className="post-text">{item.text}</div>
-        {item.image && (
+        {!isEditing && <div className="post-text">{item.text}</div>}
+
+        {isEditing && (
+          <div>
+            <PostComposer
+              initialContent={item.text}
+              initialImgUrl={item.image || undefined}
+              onComplete={handleEditComplete}
+              onCancel={cancelEdit}
+              submitLabel="Сохранить"
+            />
+            {editError && <div className="error">{editError}</div>}
+          </div>
+        )}
+
+        {!isEditing && item.image && (
           <div className="post-image">
             <img src={'http://localhost:8000/' + item.image} />
           </div>
         )}
       </div>
+
       <div className="post-footer">
         <div className="post-action action-like">
           <div className="post-action-icon">
@@ -89,6 +144,7 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
           <div>{item.comments.length}</div>
         </div>
       </div>
+
       {isOpemComments && (
         <ul className="comment-list">
           {item.comments.map((comment) => (
@@ -96,6 +152,7 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
           ))}
         </ul>
       )}
+
       {openModal && (
         <ModalUser
           name={item.user}
@@ -103,22 +160,13 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
           onClose={() => setOpenModal(false)}
         />
       )}
+
       {openModalDelete && (
         <ModalUploader
           title="Удалить пост"
           confirmText="Удалить"
           cancelText="Отмена"
-          onConfirm={async () => {
-            setOpenModalDelete(false);
-            try {
-              await api.delete('/posts/' + item.id);
-              if (mutate) {
-                await mutate();
-              }
-            } catch (e) {
-              console.error('Failed to delete post', e);
-            }
-          }}
+          onConfirm={confirmDelete}
           onClose={() => {
             setOpenModalDelete(false);
           }}
