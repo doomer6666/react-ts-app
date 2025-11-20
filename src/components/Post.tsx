@@ -21,9 +21,9 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
   const timeAgo = getTimeAgo(item.postTime);
 
   const handleOpenUserModal = () => {
-    if (!openUserInfo) {
-      return;
-    }
+    // if (!openUserInfo) {
+    //   return;
+    // }
     setOpenModal(true);
   };
 
@@ -66,8 +66,7 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
     }
   };
 
-  const submitComment = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const submitComment = async () => {
     setCommentError(null);
     if (!commentText.trim()) {
       setCommentError('Введите текст комментария');
@@ -75,7 +74,6 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
     }
     setIsSubmittingComment(true);
     try {
-      // API expects CommentCreate: { postId, content }
       await api.post(`/comments`, { postId: item.id, content: commentText.trim() });
       setCommentText('');
       if (mutate) await mutate();
@@ -158,11 +156,9 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
           </div>
           <div>{item.likes}</div>
         </div>
-        <div className="post-action action-comment">
-          <div
-            className="post-action-icon"
-            onClick={() => setIsOpenComments(!isOpemComments)}
-          >
+        <div className="post-action action-comment"
+            onClick={() => setIsOpenComments(!isOpemComments)}>
+          <div className="post-action-icon">
             <img src="/comment.svg" />
           </div>
           <div>{item.comments.length}</div>
