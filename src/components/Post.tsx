@@ -13,6 +13,9 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editError, setEditError] = useState<string | null>(null);
+  const [commentText, setCommentText] = useState('');
+  const [isSubmittingComment, setIsSubmittingComment] = useState(false);
+  const [commentError, setCommentError] = useState<string | null>(null);
   const optionsRef = useRef<HTMLDivElement | null>(null);
   const avatarLetter: string = item.user[0];
   const timeAgo = getTimeAgo(item.postTime);
@@ -60,6 +63,27 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
       if (mutate) await mutate();
     } catch (e) {
       console.error('Failed to delete post', e);
+    }
+  };
+
+  const submitComment = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setCommentError(null);
+    if (!commentText.trim()) {
+      setCommentError('Введите текст комментария');
+      return;
+    }
+    setIsSubmittingComment(true);
+    try {
+      // API expects CommentCreate: { postId, content }
+      await api.post(`/comments`, { postId: item.id, content: commentText.trim() });
+      setCommentText('');
+      if (mutate) await mutate();
+    } catch (err) {
+      console.error('Failed to send comment', err);
+      setCommentError('Ошибка отправки комментария');
+    } finally {
+      setIsSubmittingComment(false);
     }
   };
 
@@ -146,11 +170,42 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
       </div>
 
       {isOpemComments && (
-        <ul className="comment-list">
-          {item.comments.map((comment) => (
-            <li key={comment}>{comment}</li>
-          ))}
-        </ul>
+        <div className="comments-section">
+          <ul className="comment-list">
+            {item.comments && item.comments.length > 0 ? (
+              item.comments.map((comment: any) => (
+                <li className="comment-item" key={comment.id}>
+                  <div className="comment-avatar">{comment.username?.[0] || 'A'}</div>
+                  <div className="comment-body">
+                    <div className="comment-meta">
+                      <span className="comment-username">{comment.username}</span>
+                      <span className="comment-time">{getTimeAgo(comment.createdAt)}</span>
+                    </div>
+                    <div className="comment-content">{comment.content}</div>
+                  </div>
+                </li>
+              ))
+            ) : (
+              <li className="comment-empty">Нет комментариев</li>
+            )}
+          </ul>
+
+          <form className="comment-form" onSubmit={submitComment}>
+            <div className="comment-input-wrap">
+              <div className="comment-input-avatar">A</div>
+              <input
+                className="comment-input"
+                placeholder="Написать комментарий..."
+                value={commentText}
+                onChange={(e) => setCommentText(e.target.value)}
+              />
+            </div>
+            <button className="comment-submit" type="submit" disabled={isSubmittingComment}>
+              {isSubmittingComment ? '...' : 'Отправить'}
+            </button>
+          </form>
+          {commentError && <div className="error">{commentError}</div>}
+        </div>
       )}
 
       {openModal && (
