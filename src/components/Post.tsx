@@ -17,13 +17,17 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
   const [commentError, setCommentError] = useState<string | null>(null);
   const optionsRef = useRef<HTMLDivElement | null>(null);
+
+  const [likesCount, setLikesCount] = useState<number>(item.likes || 0);
+  const [isLiked, setIsLiked] = useState<boolean>(item.isLiked || false);
+
   const avatarLetter: string = item.user[0];
   const timeAgo = getTimeAgo(item.postTime);
 
   const handleOpenUserModal = () => {
-    // if (!openUserInfo) {
-    //   return;
-    // }
+    if (!openUserInfo) {
+      return;
+    }
     setOpenModal(true);
   };
 
@@ -82,6 +86,25 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
       setCommentError('Ошибка отправки комментария');
     } finally {
       setIsSubmittingComment(false);
+    }
+  };
+
+  const toggleLike = async () => {
+    const prevLiked = isLiked;
+    setIsLiked(!prevLiked);
+    setLikesCount((c) => (prevLiked ? c - 1 : c + 1));
+
+    try {
+      if (!prevLiked) {
+        await api.post(`/likes/`, { postId: item.id });
+      } else {
+        await api.delete(`/likes/${item.id}`);
+      }
+      // if (mutate) await mutate();
+    } catch (err) {
+      setIsLiked(prevLiked);
+      setLikesCount((c) => (prevLiked ? c + 1 : c - 1));
+      console.error('Failed to toggle like', err);
     }
   };
 
@@ -150,14 +173,16 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
       </div>
 
       <div className="post-footer">
-        <div className="post-action action-like">
+        <div
+          className={`post-action action-like ${isLiked ? 'liked' : ''}`}
+          onClick={toggleLike}
+        >
           <div className="post-action-icon">
-            <img src="/like.svg" />
+            <img src="/like.svg" alt="like" />
           </div>
-          <div>{item.likes}</div>
+          <div>{likesCount}</div>
         </div>
-        <div className="post-action action-comment"
-            onClick={() => setIsOpenComments(!isOpemComments)}>
+        <div className="post-action action-comment" onClick={() => setIsOpenComments(!isOpemComments)}>
           <div className="post-action-icon">
             <img src="/comment.svg" />
           </div>
@@ -186,7 +211,7 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
             )}
           </ul>
 
-          <form className="comment-form" onSubmit={submitComment}>
+          <form className="comment-form" onSubmit={(e) => { e.preventDefault(); submitComment(); }}>
             <div className="comment-input-wrap">
               <div className="comment-input-avatar">A</div>
               <input
@@ -196,7 +221,7 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
                 onChange={(e) => setCommentText(e.target.value)}
               />
             </div>
-            <button className="comment-submit" type="submit" disabled={isSubmittingComment}>
+            <button className="comment-submit" type="button" onClick={(e) => { e.stopPropagation(); submitComment(); }} disabled={isSubmittingComment}>
               {isSubmittingComment ? '...' : 'Отправить'}
             </button>
           </form>

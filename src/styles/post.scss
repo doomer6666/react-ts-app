@@ -220,6 +220,19 @@
     .post-action-icon {
         margin-right: 8px;
         font-size: 16px;
+
+        img {
+            width: 18px;
+            height: 18px;
+            display: block;
+            filter: grayscale(1) brightness(0.9);
+            transition: filter 0.15s ease, transform 0.15s ease;
+        }
+    }
+
+    &.liked .post-action-icon img {
+        filter: none;
+        transform: scale(1.05);
     }
 
     .action-like .post-action-icon {

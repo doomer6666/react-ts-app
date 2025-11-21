@@ -5,6 +5,7 @@ export interface IPost {
   text: string;
   image?: string;
   likes: number;
+  isLiked: boolean;
   comments: string[];
 }
 
