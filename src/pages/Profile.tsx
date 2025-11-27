@@ -16,6 +16,8 @@ const Profile: FC = () => {
     {
       revalidateOnFocus: true,
       shouldRetryOnError: false,
+      refreshInterval: 100,
+      
     },
   );
 
@@ -28,6 +30,10 @@ const Profile: FC = () => {
   }
 
   const user: IUser = data;
+  const postsSorted = user.posts.toSorted(
+    (a, b) =>
+      new Date(b.postTime).getTime() - new Date(a.postTime).getTime(),
+  );
 
   return (
     <MainLayout
@@ -39,16 +45,10 @@ const Profile: FC = () => {
         <ProfileHeader user={user} />
         <div className="profile-content">
           <div className="profile-feed">
-            <PostComposer mutate={mutate} />
+            <PostComposer mutate={mutate} AvatarLetter={user.name[0]} />
             <div className="feed">
               {isLoading && <div>Загрузка...</div>}
-              {user.posts
-                .sort(
-                  (a, b) =>
-                    new Date(b.postTime).getTime() -
-                    new Date(a.postTime).getTime(),
-                )
-                .map((item) => (
+              {postsSorted.map((item) => (
                   <Post item={item} mutate={mutate} />
                 ))}
             </div>

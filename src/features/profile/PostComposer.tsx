@@ -15,6 +15,7 @@ interface PostComposerProps {
   onComplete?: (payload: IPostComposer) => void | Promise<any>;
   onCancel?: () => void;
   submitLabel?: string;
+  AvatarLetter?: string;
 }
 
 const PostComposer: React.FC<PostComposerProps> = ({
@@ -24,6 +25,7 @@ const PostComposer: React.FC<PostComposerProps> = ({
   onComplete,
   onCancel,
   submitLabel,
+  AvatarLetter,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadedInfo, setUploadedInfo] = useState<{
@@ -80,7 +82,7 @@ const PostComposer: React.FC<PostComposerProps> = ({
     <form className="post-composer" onSubmit={handleSubmit(composerSubmit)}>
       {error && <div>Ошибка. Зайдите позже</div>}
       <div className="composer-header">
-        <div className="composer-avatar">А</div>
+        <div className="composer-avatar">{AvatarLetter || 'A'}</div>
         <textarea
           className="composer-input"
           placeholder="Что у вас нового?"

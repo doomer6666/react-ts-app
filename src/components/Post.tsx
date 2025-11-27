@@ -119,8 +119,7 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
 
         <button
           className="post-options-button"
-          onClick={(e) => {
-            e.stopPropagation();
+          onClick={() => {
             setIsOptionsOpen((s) => !s);
           }}
           aria-label="Post options"
@@ -160,6 +159,7 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
               onComplete={handleEditComplete}
               onCancel={cancelEdit}
               submitLabel="Сохранить"
+              AvatarLetter={avatarLetter}
             />
             {editError && <div className="error">{editError}</div>}
           </div>
@@ -213,7 +213,7 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
 
           <form className="comment-form" onSubmit={(e) => { e.preventDefault(); submitComment(); }}>
             <div className="comment-input-wrap">
-              <div className="comment-input-avatar">A</div>
+              <div className="comment-input-avatar">{avatarLetter}</div>
               <input
                 className="comment-input"
                 placeholder="Написать комментарий..."
