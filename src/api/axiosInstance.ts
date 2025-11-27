@@ -14,9 +14,9 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       console.warn('Неавторизованный запрос — переход на страницу входа');
-      // if (window.location.href !== 'http://localhost:5173/') {
-      //   window.location.href = '/';
-      // }
+      if (window.location.href !== 'http://localhost:5173/') {
+        window.location.href = '/';
+      }
     }
     return Promise.reject(error);
   },

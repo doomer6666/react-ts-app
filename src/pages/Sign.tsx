@@ -4,9 +4,9 @@ import type ISignIn from '../types/ISignIn';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Cubes from '../components/animations/Cubes';
-import useSWRMutation from 'swr/mutation';
-import poster from '../api/poster';
 import type React from 'react';
+import api from '../api/axiosInstance';
+import { useState } from 'react';
 
 const Sign = () => {
   const schema = yup.object({
@@ -20,22 +20,23 @@ const Sign = () => {
     formState: { errors },
   } = useForm<ISignIn>({ resolver: yupResolver(schema) });
 
-  const { trigger, isMutating, error } = useSWRMutation<
-    string,
-    Error,
-    string,
-    ISignIn
-  >('/auth/login/', poster);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     handleSubmit(async (formData) => {
       try {
-        console.log(formData);
-        await trigger(formData);
+        setIsLoading(!isLoading);
+        const response = await api.post('/auth/login/', formData);
+        const id: string = response.data.id;
+        localStorage.setItem('id', id);
         navigate('/profile');
       } catch (e) {
+        setIsError(true);
         console.error('Error submitting form:', e);
+      } finally {
+        setIsLoading(!isLoading);
       }
     })();
   };
@@ -90,9 +91,9 @@ const Sign = () => {
             </div>
           </div>
           <button type="submit" className="btn">
-            {!isMutating ? 'ВОЙТИ' : 'ВХОД...'}
+            {!isLoading ? 'ВОЙТИ' : 'ВХОД...'}
           </button>
-          {error && <div>Ошибка входа</div>}
+          {isError && <div>Ошибка входа</div>}
         </form>
         <div className="divider"></div>
         <div className="login-footer">
