@@ -1,0 +1,198 @@
+.container.friends {
+    .main-content {
+        padding: 40px;
+        max-width: 900px;
+        .header-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #34293e;
+            padding-bottom: 15px;
+            height: fit-content;
+        }
+
+        .section-title {
+            font-size: 22px;
+            color: #b6a3cc;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 5px;
+            background: #181622;
+            padding: 4px;
+            border-radius: 6px;
+            border: 1px solid #34293e;
+        }
+
+        .tab {
+            padding: 6px 15px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #8a7b96;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            color: #cdc1b4;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab.active {
+            background: #34293e;
+            color: #9175b6;
+            font-weight: 700;
+        }
+
+        .user-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            background: #34293e;
+            border: 1px solid #34293e;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .user-row {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: #181622;
+            /* Цвет фона строки */
+            transition: background 0.2s;
+        }
+
+        .user-row:hover {
+            background: #1e1c29;
+        }
+
+        /* Аватар */
+        .user-avatar-link {
+            flex-shrink: 0;
+            margin-right: 15px;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #232030;
+            border: 2px solid #34293e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #cdc1b4;
+            transition: border-color 0.2s;
+        }
+
+        .user-avatar-link:hover .user-avatar {
+            border-color: #9175b6;
+        }
+
+        /* Инфо о пользователе */
+        .user-info {
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        .user-name {
+            font-size: 16px;
+            color: #cdc1b4;
+            text-decoration: none;
+            display: block;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .user-name:hover {
+            color: #b6a3cc;
+            text-decoration: underline;
+        }
+
+        .user-status {
+            font-size: 13px;
+            color: #8a7b96;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Действия (Кнопки) */
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 20px;
+            flex-shrink: 0;
+        }
+
+        /* Стиль кнопок: иконка + текст (для основных) или только иконка */
+        .action-btn {
+            background: transparent;
+            border: 1px solid #34293e;
+            color: #8a7b96;
+            border-radius: 4px;
+            padding: 6px 10px;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .action-btn:hover {
+            background: #232030;
+            color: #cdc1b4;
+            border-color: #9175b6;
+        }
+
+        .action-btn.primary {
+            /* Кнопка "Написать" или "Добавить" */
+            border-color: #4a4557;
+        }
+
+        .action-btn.destructive {
+            /* Кнопка удаления */
+            padding: 6px;
+            /* Квадратная кнопка */
+            opacity: 0.7;
+        }
+
+        .action-btn.destructive:hover {
+            border-color: #664444;
+            color: #cc8888;
+            background: rgba(100, 0, 0, 0.1);
+            opacity: 1;
+        }
+
+        /* Иконки */
+        .icon-svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* Заголовок группы (Заявки/Друзья) */
+        .list-divider {
+            margin: 25px 0 10px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #595066;
+            font-weight: 700;
+            padding-left: 5px;
+        }
+    }
+}

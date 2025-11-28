@@ -12,7 +12,7 @@ interface PostComposerProps {
   mutate?: () => void;
   initialContent?: string;
   initialImgUrl?: string;
-  onComplete?: (payload: IPostComposer) => void | Promise<any>;
+  onComplete?: (payload: IPostComposer) => void | Promise<unknown>;
   onCancel?: () => void;
   submitLabel?: string;
   AvatarLetter?: string;
@@ -41,18 +41,29 @@ const PostComposer: React.FC<PostComposerProps> = ({
   const schema = yup.object({
     content: yup
       .string()
-      .matches(/^[a-zA-Z0-9а-яА-Я_ !,.?]+$/, 'Только буквы, цифры и подчеркивания')
+      .matches(
+        /^[a-zA-Z0-9а-яА-Я_ !,.?]+$/,
+        'Только буквы, цифры и подчеркивания',
+      )
       .required('Введите текст'),
   });
 
-  const { trigger, isMutating, error } = useSWRMutation<string, Error, string, IPostComposer>('/posts/', poster);
+  const { trigger, isMutating, error } = useSWRMutation<
+    string,
+    Error,
+    string,
+    IPostComposer
+  >('/posts/', poster);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<IPostComposer>({ resolver: yupResolver(schema), defaultValues: { content: initialContent || '' } });
+  } = useForm<IPostComposer>({
+    resolver: yupResolver(schema),
+    defaultValues: { content: initialContent || '' },
+  });
 
   const composerSubmit = async (formData: IPostComposer) => {
     try {
@@ -120,13 +131,25 @@ const PostComposer: React.FC<PostComposerProps> = ({
 
         <div>
           {onCancel && (
-            <button type="button" className="btn-cancel" onClick={() => { reset(); setUploadedInfo(null); if (onCancel) onCancel(); }}>
+            <button
+              type="button"
+              className="btn-cancel"
+              onClick={() => {
+                reset();
+                setUploadedInfo(null);
+                if (onCancel) onCancel();
+              }}
+            >
               Отмена
             </button>
           )}
 
           <button type="submit" className="composer-submit">
-            {submitLabel ? submitLabel : !isMutating ? 'Опубликовать' : 'Опубликовано'}
+            {submitLabel
+              ? submitLabel
+              : !isMutating
+                ? 'Опубликовать'
+                : 'Опубликовано'}
           </button>
         </div>
       </div>

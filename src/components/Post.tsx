@@ -6,7 +6,19 @@ import ModalUploader from '../features/profile/ModalUploader';
 import PostComposer from '../features/profile/PostComposer';
 import api from '../api/axiosInstance';
 
-const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, openUserInfo, mutate }) => {
+interface UpdatePostBody {
+  text: string;
+  image?: string | null;
+}
+
+const Post: FC<PostProps & { mutate?: () => void | Promise<unknown> }> = ({
+  item,
+  openUserInfo,
+  mutate,
+}) => {
+  if (item.comments.length > 0) {
+    console.log(item.comments);
+  }
   const [openModal, setOpenModal] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const [isOpemComments, setIsOpenComments] = useState(false);
@@ -42,18 +54,22 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
     setEditError(null);
   };
 
-  const handleEditComplete = async (payload: { content: string; imgUrl?: string }) => {
+  const handleEditComplete = async (payload: {
+    content: string;
+    imgUrl?: string;
+  }) => {
     try {
-      const body: any = { text: payload.content };
+      const body: UpdatePostBody = { text: payload.content };
       if (payload.imgUrl) body.image = payload.imgUrl;
       else body.image = null;
 
       await api.patch('/posts/' + item.id, body);
       if (mutate) await mutate();
       setIsEditing(false);
-    } catch (e: any) {
-      if (e && e.message) {
-        setEditError(e.message);
+    } catch (e) {
+      const error = e as Error;
+      if (error && error.message) {
+        setEditError(error.message);
         return;
       }
       console.error('Failed to update post', e);
@@ -78,7 +94,10 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
     }
     setIsSubmittingComment(true);
     try {
-      await api.post(`/comments`, { postId: item.id, content: commentText.trim() });
+      await api.post(`/comments`, {
+        postId: item.id,
+        content: commentText.trim(),
+      });
       setCommentText('');
       if (mutate) await mutate();
     } catch (err) {
@@ -107,7 +126,6 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
       console.error('Failed to toggle like', err);
     }
   };
-
   return (
     <div className="post">
       <div className="post-header" onClick={handleOpenUserModal}>
@@ -129,10 +147,7 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
 
         {isOptionsOpen && (
           <div className="post-options-menu" ref={optionsRef}>
-            <button
-              className="post-options-item"
-              onClick={() => startEdit()}
-            >
+            <button className="post-options-item" onClick={() => startEdit()}>
               Редактировать
             </button>
             <button
@@ -182,7 +197,10 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
           </div>
           <div>{likesCount}</div>
         </div>
-        <div className="post-action action-comment" onClick={() => setIsOpenComments(!isOpemComments)}>
+        <div
+          className="post-action action-comment"
+          onClick={() => setIsOpenComments(!isOpemComments)}
+        >
           <div className="post-action-icon">
             <img src="/comment.svg" />
           </div>
@@ -194,13 +212,19 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
         <div className="comments-section">
           <ul className="comment-list">
             {item.comments && item.comments.length > 0 ? (
-              item.comments.map((comment: any) => (
+              item.comments.map((comment) => (
                 <li className="comment-item" key={comment.id}>
-                  <div className="comment-avatar">{comment.username?.[0] || 'A'}</div>
+                  <div className="comment-avatar">
+                    {comment.username?.[0] || 'A'}
+                  </div>
                   <div className="comment-body">
                     <div className="comment-meta">
-                      <span className="comment-username">{comment.username}</span>
-                      <span className="comment-time">{getTimeAgo(comment.createdAt)}</span>
+                      <span className="comment-username">
+                        {comment.username}
+                      </span>
+                      <span className="comment-time">
+                        {getTimeAgo(comment.createdAt)}
+                      </span>
                     </div>
                     <div className="comment-content">{comment.content}</div>
                   </div>
@@ -211,7 +235,13 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
             )}
           </ul>
 
-          <form className="comment-form" onSubmit={(e) => { e.preventDefault(); submitComment(); }}>
+          <form
+            className="comment-form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              submitComment();
+            }}
+          >
             <div className="comment-input-wrap">
               <div className="comment-input-avatar">{avatarLetter}</div>
               <input
@@ -221,7 +251,15 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<any> }> = ({ item, op
                 onChange={(e) => setCommentText(e.target.value)}
               />
             </div>
-            <button className="comment-submit" type="button" onClick={(e) => { e.stopPropagation(); submitComment(); }} disabled={isSubmittingComment}>
+            <button
+              className="comment-submit"
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                submitComment();
+              }}
+              disabled={isSubmittingComment}
+            >
               {isSubmittingComment ? '...' : 'Отправить'}
             </button>
           </form>

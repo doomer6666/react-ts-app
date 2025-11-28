@@ -6,7 +6,16 @@ export interface IPost {
   image?: string;
   likes: number;
   isLiked: boolean;
-  comments: string[];
+  comments: IComment[];
+}
+
+interface IComment {
+  content: string;
+  createdAt: string;
+  id: number;
+  postId: number;
+  userId: number;
+  username?: string;
 }
 
 export default interface PostProps {

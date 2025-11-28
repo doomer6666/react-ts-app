@@ -6,6 +6,7 @@ import Sign from './pages/Sign.tsx';
 import Registration from './pages/Registration.tsx';
 import Profile from './pages/Profile.tsx';
 import Chat from './pages/Chat.tsx';
+import Friends from './pages/Friends.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -16,6 +17,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/feed" element={<NewsFeed />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/message" element={<Chat />} />
+        <Route path="/friends" element={<Friends />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,

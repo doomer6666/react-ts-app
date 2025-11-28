@@ -1,5 +1,6 @@
 import type { FC } from 'react';
 import Modal from '../../components/Modal';
+// import api from '../../api/axiosInstance';
 
 interface ModalUserProps {
   name: string;
@@ -8,6 +9,10 @@ interface ModalUserProps {
 }
 
 const ModalUser: FC<ModalUserProps> = ({ name, avatarLetter, onClose }) => {
+  // как будут ручки
+  // handleOpenChat = async()=>{
+  //   const response = api.post()
+  // }
   return (
     <Modal onClose={onClose}>
       <div className="profile-modal">

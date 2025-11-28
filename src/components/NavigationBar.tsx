@@ -1,15 +1,17 @@
 import type { FC } from 'react';
 import type INavigationBar from '../types/INavigationBar';
 import { useNavigate } from 'react-router-dom';
+import { GlobalTabEnum } from '../consts/DungeonTabs';
 
 const NavigationBar: FC<INavigationBar> = ({ activeItem, setActiveItem }) => {
   const navigate = useNavigate();
   const items = [
-    { key: 'profile', name: 'Профиль', icon: '/profile.svg' },
-    { key: 'feed', name: 'Лента', icon: '/feed.svg' },
-    { key: 'message', name: 'Сообщения', icon: '/chat.svg' },
-    { key: 'music', name: 'Музыка', icon: '/music.svg' },
-    { key: 'settings', name: 'Настройки', icon: '/setting.svg' },
+    { key: GlobalTabEnum.PROFILE, name: 'Профиль', icon: '/profile.svg' },
+    { key: GlobalTabEnum.FEED, name: 'Лента', icon: '/feed.svg' },
+    { key: GlobalTabEnum.MESSAGE, name: 'Сообщения', icon: '/chat.svg' },
+    { key: GlobalTabEnum.FRIENDS, name: 'Друзья', icon: '/chat.svg' },
+    { key: GlobalTabEnum.MUSIC, name: 'Музыка', icon: '/music.svg' },
+    { key: GlobalTabEnum.SETTINGS, name: 'Настройки', icon: '/setting.svg' },
   ];
 
   return (
