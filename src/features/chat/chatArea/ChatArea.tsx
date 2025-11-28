@@ -1,17 +1,17 @@
-import { useContext } from 'react';
 import ChatHeader from './ChatHeader';
 import ChatInput from './ChatInput';
 import ChatMessage from './ChatMessage';
-import { ChatContext } from '../../../pages/Chat';
+
 import useSWR from 'swr';
 import { fetcher } from '../../../api/fetcher';
 import type { IChatMessage } from '../../../types/chat/IChatMessage';
+import { useChat } from '../../../context/ChatContext';
 
 const ChatArea = () => {
-  const chatContext = useContext(ChatContext);
+  const chatContext = useChat();
 
   const { data, error, isLoading } = useSWR<IChatMessage[]>(
-    `/chats/${chatContext?.activeChat}/messages`,
+    `/chats/${chatContext.activeChat}/messages`,
     fetcher,
     {
       revalidateOnFocus: true,

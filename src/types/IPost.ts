@@ -1,5 +1,6 @@
 export interface IPost {
   id: number;
+  userId: number;
   user: string;
   postTime: string;
   text: string;

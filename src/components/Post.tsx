@@ -270,6 +270,7 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<unknown> }> = ({
       {openModal && (
         <ModalUser
           name={item.user}
+          authorId={item.userId}
           avatarLetter={avatarLetter}
           onClose={() => setOpenModal(false)}
         />

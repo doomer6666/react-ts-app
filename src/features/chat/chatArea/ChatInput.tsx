@@ -1,10 +1,10 @@
 import useSWRMutation from 'swr/mutation';
 import poster from '../../../api/poster';
-import { useContext, useState } from 'react';
-import { ChatContext } from '../../../pages/Chat';
+import { useState } from 'react';
+import { useChat } from '../../../context/ChatContext';
 
 const ChatInput = () => {
-  const chatContext = useContext(ChatContext);
+  const chatContext = useChat();
   const [inputMessage, setInputMessage] = useState('');
   const { trigger, isMutating, error } = useSWRMutation<
     string,
@@ -20,6 +20,7 @@ const ChatInput = () => {
   const onSubmit = async () => {
     const data = { content: inputMessage };
     await trigger(data);
+    setInputMessage('');
   };
   return (
     <div className="chat-input-container">

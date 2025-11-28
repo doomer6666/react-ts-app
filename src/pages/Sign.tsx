@@ -8,6 +8,11 @@ import type React from 'react';
 import api from '../api/axiosInstance';
 import { useState } from 'react';
 
+interface LoginResponse {
+  id: string;
+  username: string;
+}
+
 const Sign = () => {
   const schema = yup.object({
     username: yup.string().required('Введите имя!'),
@@ -29,8 +34,9 @@ const Sign = () => {
       try {
         setIsLoading(!isLoading);
         const response = await api.post('/auth/login/', formData);
-        const id: string = response.data.id;
-        localStorage.setItem('id', id);
+        const loginResponse: LoginResponse = response.data;
+        localStorage.setItem('id', loginResponse.id);
+        localStorage.setItem('name', loginResponse.username);
         navigate('/profile');
       } catch (e) {
         setIsError(true);

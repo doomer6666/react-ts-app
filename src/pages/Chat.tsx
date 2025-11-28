@@ -1,19 +1,14 @@
-import { createContext, useState } from 'react';
+import { useState } from 'react';
 import MainLayout from '../layouts/MainLayout';
 import ChatList from '../features/chat/chatList/ChatList';
 import ChatArea from '../features/chat/chatArea/ChatArea';
-
-interface IChatContext {
-  activeChat: string | null;
-  setActiveChat: React.Dispatch<React.SetStateAction<string | null>>;
-}
-
-// eslint-disable-next-line react-refresh/only-export-components
-export const ChatContext = createContext<IChatContext | null>(null);
+import { useLocation } from 'react-router-dom';
+import { ChatProvider } from '../context/ChatProvider';
 
 const Chat = () => {
+  const location = useLocation();
+  const state = location.state;
   const [activeItem, setActiveItem] = useState('message');
-  const [activeChat, setActiveChat] = useState<string | null>(null);
 
   return (
     <MainLayout
@@ -21,10 +16,10 @@ const Chat = () => {
       activeItem={activeItem}
       setActiveItem={setActiveItem}
     >
-      <ChatContext.Provider value={{ activeChat, setActiveChat }}>
+      <ChatProvider chatId={state.chatId}>
         <ChatList />
         <ChatArea />
-      </ChatContext.Provider>
+      </ChatProvider>
     </MainLayout>
   );
 };

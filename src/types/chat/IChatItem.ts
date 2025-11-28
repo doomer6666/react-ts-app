@@ -1,5 +1,5 @@
 export default interface IChatItem {
-  id: string;
+  id: number;
   name: string;
   preview: string;
   chatTime: string;

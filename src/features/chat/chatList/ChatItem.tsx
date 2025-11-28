@@ -1,7 +1,7 @@
-import { useContext, type FC } from 'react';
+import { type FC } from 'react';
 import getTimeAgo from '../../../utils/getTimeAgo';
 import type IChatItem from '../../../types/chat/IChatItem';
-import { ChatContext } from '../../../pages/Chat';
+import { useChat } from '../../../context/ChatContext';
 
 const ChatItem: FC<IChatItem> = ({
   id,
@@ -12,13 +12,13 @@ const ChatItem: FC<IChatItem> = ({
 }) => {
   const timeAgo = getTimeAgo(chatTime);
 
-  const activeChatContext = useContext(ChatContext);
-  const setActiveChat = (id: string) => {
+  const activeChatContext = useChat();
+  const setActiveChat = (id: number) => {
     activeChatContext?.setActiveChat(id);
   };
   return (
     <div
-      className={`chat-item ${activeChatContext?.activeChat === id ? 'active' : ''}`}
+      className={`chat-item ${activeChatContext.activeChat === id ? 'active' : ''}`}
       onClick={() => setActiveChat(id)}
     >
       <div className="chat-avatar">{name[0]}</div>
