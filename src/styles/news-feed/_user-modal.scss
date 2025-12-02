@@ -60,11 +60,14 @@
         font-weight: 600;
         cursor: pointer;
         transition: all 0.2s;
+        &:hover {
+            background: #483d5e;
+        }
+        &.active {
+            background: #5e4f7a;
+        }
     }
 
-    .profile-btn:hover {
-        background: #483d5e;
-    }
     .modal-close {
         color: #8a7b96;
         cursor: pointer;

@@ -1,4 +1,4 @@
-const GlobalTabEnum = {
+export const GlobalTabEnum = {
   PROFILE: 'profile',
   FEED: 'feed',
   MESSAGE: 'message',
@@ -7,7 +7,4 @@ const GlobalTabEnum = {
   SETTINGS: 'settings',
 } as const;
 
-type GlobalTabValue = (typeof GlobalTabEnum)[keyof typeof GlobalTabEnum];
-
-export { GlobalTabEnum };
-export type { GlobalTabValue };
+export type GlobalTabValue = (typeof GlobalTabEnum)[keyof typeof GlobalTabEnum];
