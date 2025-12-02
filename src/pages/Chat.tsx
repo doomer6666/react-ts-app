@@ -16,7 +16,7 @@ const Chat = () => {
       activeItem={activeItem}
       setActiveItem={setActiveItem}
     >
-      <ChatProvider chatId={state.chatId}>
+      <ChatProvider chatId={state?.chatId}>
         <ChatList />
         <ChatArea />
       </ChatProvider>
