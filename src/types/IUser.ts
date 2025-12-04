@@ -6,6 +6,7 @@ export interface IUser {
   photoCount: number;
   subscriberCount: number;
   posts: IPost[];
+  userId?: number;
 }
 
 export default interface ProfileProps {

@@ -1,8 +1,11 @@
 import { useEffect, useState, type FC } from 'react';
 import Modal from '../../components/Modal';
-import api from '../../api/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import { Statuses, type StatusValues } from '../../consts/FriendStatuses';
+import getFriendLists from '../../utils/getFriendLists';
+import moveToChat from '../../utils/openChat';
+import deleteFriend from '../../api/deleteFriend';
+import addFriend from '../../api/addFriend';
 interface ModalUserProps {
   name: string;
   authorId: number;
@@ -10,20 +13,13 @@ interface ModalUserProps {
   onClose: () => void;
 }
 
-interface Chat {
+export interface IChat {
   id: number;
   name: string;
   preview: string;
   chatTime: string;
   chatBadge: number;
   chatMembers: string[];
-}
-
-interface Friend {
-  friend_id: number;
-  id: number;
-  status: string;
-  user_id: number;
 }
 
 const ModalUser: FC<ModalUserProps> = ({
@@ -38,18 +34,15 @@ const ModalUser: FC<ModalUserProps> = ({
   const [isActiveOptions, setIsActiveOptions] = useState(false);
 
   const handleFriendCheck = async () => {
-    const authorFriends: Friend[] = await (
-      await api.get(`friend/${authorId}`)
-    ).data.filter((friend: Friend) => friend.friend_id === userId);
-
-    const authorSubscribers: Friend[] = await (
-      await api.get(`friend/subscribers/${authorId}`)
-    ).data.filter((subscriber: Friend) => subscriber.friend_id === authorId);
-
-    const userSubscribers: Friend[] = await (
-      await api.get(`friend/subscribers/${userId}`)
-    ).data.filter((subscriber: Friend) => subscriber.user_id == authorId);
-
+    const [authorFriends, authorSubscribers, userSubscribers] =
+      await getFriendLists(authorId, userId);
+    console.log(
+      localStorage.getItem('id'),
+      authorId,
+      authorFriends,
+      authorSubscribers,
+      userSubscribers,
+    );
     if (authorFriends.length > 0) {
       setAuthorStatus(Statuses.FRIEND);
     } else if (authorSubscribers.length > 0) {
@@ -59,13 +52,6 @@ const ModalUser: FC<ModalUserProps> = ({
     } else {
       setAuthorStatus(Statuses.UNKNOWN);
     }
-    console.log(
-      userId,
-      authorId,
-      authorFriends,
-      authorSubscribers,
-      userSubscribers,
-    );
 
     setIsActiveOptions(false);
   };
@@ -74,45 +60,13 @@ const ModalUser: FC<ModalUserProps> = ({
     handleFriendCheck();
   }, []);
 
-  const handleOpenChat = async () => {
-    try {
-      const chats: Chat[] = await (await api.get('/chats/')).data;
-      const authorName = localStorage.getItem('name');
-
-      if (!authorName) {
-        return;
-      }
-
-      const existChat = chats.filter(
-        (chat) =>
-          chat.chatMembers.includes(authorName) &&
-          chat.chatMembers.includes(name),
-      )[0];
-
-      if (existChat) {
-        navigate('/message', { state: { chatId: existChat.id } });
-      } else {
-        const response: {
-          userId: number;
-        } = await api.post('/chats/private', {
-          userId: authorId,
-        });
-        navigate('/message', { state: { chatId: response.userId } });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const hanldeAddFriend = async () => {
-    await api.post('/friend', {
-      friendId: authorId,
-    });
+    await addFriend(authorId);
     handleFriendCheck();
   };
 
   const handleDeleteFriend = async () => {
-    await api.delete(`friend/${authorId}`);
+    await deleteFriend(authorId);
     handleFriendCheck();
   };
 
@@ -131,7 +85,10 @@ const ModalUser: FC<ModalUserProps> = ({
           </div>
         </div>
         <div className="profile-actions">
-          <button className="profile-btn" onClick={handleOpenChat}>
+          <button
+            className="profile-btn"
+            onClick={() => moveToChat(name, navigate, authorId)}
+          >
             <img src="./airplane.svg" />
             Написать сообщение
           </button>
