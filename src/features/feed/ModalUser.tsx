@@ -6,6 +6,7 @@ import getFriendLists from '../../utils/getFriendLists';
 import moveToChat from '../../utils/openChat';
 import deleteFriend from '../../api/deleteFriend';
 import addFriend from '../../api/addFriend';
+import getFriendStatus from '../../utils/getFriendStatus';
 interface ModalUserProps {
   name: string;
   authorId: number;
@@ -34,20 +35,18 @@ const ModalUser: FC<ModalUserProps> = ({
   const [isActiveOptions, setIsActiveOptions] = useState(false);
 
   const handleFriendCheck = async () => {
-    const [authorFriends, authorSubscribers, userSubscribers] =
-      await getFriendLists(authorId, userId);
+    const status =
+      await getFriendStatus(authorId);
     console.log(
       localStorage.getItem('id'),
       authorId,
-      authorFriends,
-      authorSubscribers,
-      userSubscribers,
+      status
     );
-    if (authorFriends.length > 0) {
+    if (status === "friends") {
       setAuthorStatus(Statuses.FRIEND);
-    } else if (authorSubscribers.length > 0) {
+    } else if (status === "following") {
       setAuthorStatus(Statuses.SENT);
-    } else if (userSubscribers.length > 0) {
+    } else if (status === "pending") {
       setAuthorStatus(Statuses.SUBSCRIBER);
     } else {
       setAuthorStatus(Statuses.UNKNOWN);
@@ -77,7 +76,7 @@ const ModalUser: FC<ModalUserProps> = ({
           <img src="./close.svg" />
         </button>
         <div className="profile-header">
-          <div className="profile-avatar" id="modalAvatar">
+          <div className="profile-avatar" id="modalAvatar" onClick={() => navigate('/profile/' + authorId)}>
             {avatarLetter}
           </div>
           <div className="profile-name" id="modalName">

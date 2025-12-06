@@ -55,7 +55,7 @@ const FriendsUserRow: FC<FriendsUserRowProps> = ({ status, friends }) => {
             {/* <div className="user-status">Хочет добавить вас в друзья</div> */}
           </div>
           <div className="user-actions">
-            {status === TabEnum.REQUESTS && (
+            {status === TabEnum.FOLLOWERS && (
               <button
                 className="action-btn primary"
                 onClick={() => handleAddFriend(friend.userId)}

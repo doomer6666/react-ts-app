@@ -9,16 +9,19 @@ import type { Friend } from '../utils/getFriendLists';
 const Friends = () => {
   const [activeItem, setActiveItem] = useState('friends');
   const [userFriends, setUserFriends] = useState<Friend[]>([]);
-  const [userSubscribers, setUserSubscribers] = useState<Friend[]>([]);
+  const [userRequests, setUserRequests] = useState<Friend[]>([]);
+  const [userFollowing, setUserFollowing] = useState<Friend[]>([]);
   const [activeTab, setActiveTab] = useState<TabValues>(TabEnum.FRIENDS);
   const userId = Number(localStorage.getItem('id'));
   const handleGetFriendLists = async () => {
-    const [userFriendsResponse, userSubscribersResponse] = await Promise.all([
+    const [userFriendsResponse, userRequestsResponse, userFollowingResponse] = await Promise.all([
       api.get(`friend/${userId}`),
-      api.get(`friend/subscribers/${userId}`),
+      api.get(`friend/requests/${userId}`),
+      api.get(`friend/following/${userId}`),
     ]);
     setUserFriends(userFriendsResponse.data);
-    setUserSubscribers(userSubscribersResponse.data);
+    setUserRequests(userRequestsResponse.data);
+    setUserFollowing(userFollowingResponse.data);
   };
   useEffect(() => {
     handleGetFriendLists();
@@ -41,13 +44,13 @@ const Friends = () => {
           <div className="user-list">
             <FriendsUserRow
               status={TabEnum.REQUESTS}
-              friends={userSubscribers}
+              friends={userRequests}
             />
           </div>
         )}
         {activeTab === TabEnum.FOLLOWERS && (
           <div className="user-list">
-            <FriendsUserRow status={TabEnum.FOLLOWERS} friends={[]} />
+            <FriendsUserRow status={TabEnum.FOLLOWERS} friends={userFollowing} />
           </div>
         )}
       </div>

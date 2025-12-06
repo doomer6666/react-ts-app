@@ -36,8 +36,11 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<unknown> }> = ({
   const avatarLetter: string = item.user[0];
   const timeAgo = getTimeAgo(item.postTime);
 
-  const handleOpenUserModal = () => {
-    if (!openUserInfo) {
+  const handleOpenUserModal = (userId:number) => {
+    // if (!openUserInfo) {
+    //   return;
+    // }
+    if (userId === Number(localStorage.getItem('id'))) {
       return;
     }
     setOpenModal(true);
@@ -128,7 +131,7 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<unknown> }> = ({
   };
   return (
     <div className="post">
-      <div className="post-header" onClick={handleOpenUserModal}>
+      <div className="post-header" onClick={() => handleOpenUserModal(item.userId)}>
         <div className="post-avatar">{avatarLetter}</div>
         <div>
           <div className="post-user">{item.user}</div>

@@ -15,6 +15,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<Sign />} />
         <Route path="/registration" element={<Registration />} />
         <Route path="/feed" element={<NewsFeed />} />
+        <Route path="/profile/:profileId" element={<Profile />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/message" element={<Chat />} />
         <Route path="/friends" element={<Friends />} />

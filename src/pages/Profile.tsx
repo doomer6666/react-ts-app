@@ -6,12 +6,18 @@ import ProfileHeader from '../features/profile/ProfileHeader';
 import PostComposer from '../features/profile/PostComposer';
 import Post from '../components/Post';
 import type { IUser } from '../types/IUser';
+import { useParams } from 'react-router-dom';
 
 const Profile: FC = () => {
   const [activeItem, setActiveItem] = useState('profile');
+  let params = useParams()
 
+  let profileUrl = '/profile/';
+  if (params.profileId) {
+    profileUrl = `/profile/${params.profileId}`;
+  }
   const { data, error, isLoading, mutate } = useSWR<IUser>(
-    '/profile/',
+    profileUrl,
     fetcher,
     {
       revalidateOnFocus: true,
