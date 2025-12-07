@@ -1,0 +1,75 @@
+.settings-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #1f1926;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  color: #cdc1b4;
+  min-height: 100vh; /* Ensure full viewport height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+h1 {
+  text-align: center;
+  color: #b6a3cc;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #b6a3cc;
+}
+
+input[type="text"],
+input[type="file"],
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #34293e;
+  border-radius: 6px;
+  background: #241d29;
+  color: #cdc1b4;
+}
+
+input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+.btn-save {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background: #9175b6;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  transition: background 0.3s;
+}
+
+.btn-save:disabled {
+  background: #5e4a7a;
+  cursor: not-allowed;
+}
+
+.btn-save:hover:not(:disabled) {
+  background: #a386c7;
+}
+
+.error {
+  margin-top: 10px;
+  color: #e74c3c;
+  text-align: center;
+}

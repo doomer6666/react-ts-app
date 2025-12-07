@@ -13,6 +13,12 @@ interface LoginResponse {
   username: string;
 }
 
+interface SettingsRead {
+  user_id: number;
+  notifications_enabled: boolean;
+  theme: string;
+}
+
 const Sign = () => {
   const schema = yup.object({
     username: yup.string().required('Введите имя!'),
@@ -32,17 +38,24 @@ const Sign = () => {
     e.preventDefault();
     handleSubmit(async (formData) => {
       try {
-        setIsLoading(!isLoading);
+        setIsLoading(true);
         const response = await api.post('/auth/login/', formData);
         const loginResponse: LoginResponse = response.data;
         localStorage.setItem('id', loginResponse.id);
         localStorage.setItem('name', loginResponse.username);
+
+        // Fetch user settings after login
+        const settingsResponse = await api.get<SettingsRead>(`/settings`);
+        const settings = settingsResponse.data;
+        localStorage.setItem('notifications_enabled', String(settings.notifications_enabled));
+        localStorage.setItem('theme', settings.theme);
+
         navigate('/profile');
       } catch (e) {
         setIsError(true);
         console.error('Error submitting form:', e);
       } finally {
-        setIsLoading(!isLoading);
+        setIsLoading(false);
       }
     })();
   };
