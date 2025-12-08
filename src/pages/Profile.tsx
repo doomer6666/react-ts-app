@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 
 const Profile: FC = () => {
   const [activeItem, setActiveItem] = useState('profile');
-  let params = useParams()
+  const params = useParams();
 
   let profileUrl = '/profile/';
   if (params.profileId) {
@@ -23,7 +23,6 @@ const Profile: FC = () => {
       revalidateOnFocus: true,
       shouldRetryOnError: false,
       refreshInterval: 100,
-      
     },
   );
 
@@ -37,8 +36,7 @@ const Profile: FC = () => {
 
   const user: IUser = data;
   const postsSorted = user.posts.toSorted(
-    (a, b) =>
-      new Date(b.postTime).getTime() - new Date(a.postTime).getTime(),
+    (a, b) => new Date(b.postTime).getTime() - new Date(a.postTime).getTime(),
   );
 
   return (
@@ -55,8 +53,8 @@ const Profile: FC = () => {
             <div className="feed">
               {isLoading && <div>Загрузка...</div>}
               {postsSorted.map((item) => (
-                  <Post item={item} mutate={mutate} />
-                ))}
+                <Post item={item} mutate={mutate} />
+              ))}
             </div>
 
             {/*вернуться когда будет логика <div className="post-options">

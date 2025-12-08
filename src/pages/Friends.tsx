@@ -1,31 +1,46 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import MainLayout from '../layouts/MainLayout';
 import FriendsHeader from '../features/friends/FriendsHeader';
 import FriendsUserRow from '../features/friends/FriendsUserRow';
 import { TabEnum, type TabValues } from '../consts/FriendsTabs';
-import api from '../api/axiosInstance';
 import type { Friend } from '../utils/getFriendLists';
+import { fetcher } from '../api/fetcher';
+import useSWR from 'swr';
 
 const Friends = () => {
   const [activeItem, setActiveItem] = useState('friends');
-  const [userFriends, setUserFriends] = useState<Friend[]>([]);
-  const [userRequests, setUserRequests] = useState<Friend[]>([]);
-  const [userFollowing, setUserFollowing] = useState<Friend[]>([]);
   const [activeTab, setActiveTab] = useState<TabValues>(TabEnum.FRIENDS);
   const userId = Number(localStorage.getItem('id'));
-  const handleGetFriendLists = async () => {
-    const [userFriendsResponse, userRequestsResponse, userFollowingResponse] = await Promise.all([
-      api.get(`friend/${userId}`),
-      api.get(`friend/requests/${userId}`),
-      api.get(`friend/following/${userId}`),
-    ]);
-    setUserFriends(userFriendsResponse.data);
-    setUserRequests(userRequestsResponse.data);
-    setUserFollowing(userFollowingResponse.data);
-  };
-  useEffect(() => {
-    handleGetFriendLists();
-  }, []);
+
+  const { data: userFriends, mutate: friendsMutate } = useSWR<Friend[]>(
+    `friend/${userId}`,
+    fetcher,
+    {
+      revalidateOnFocus: true,
+      shouldRetryOnError: false,
+      refreshInterval: 100,
+    },
+  );
+
+  const { data: userRequests, mutate: requestsMutate } = useSWR<Friend[]>(
+    `friend/requests/${userId}`,
+    fetcher,
+    {
+      revalidateOnFocus: true,
+      shouldRetryOnError: false,
+      refreshInterval: 100,
+    },
+  );
+
+  const { data: userFollowing, mutate: followingMutate } = useSWR<Friend[]>(
+    `friend/following/${userId}`,
+    fetcher,
+    {
+      revalidateOnFocus: true,
+      shouldRetryOnError: false,
+      refreshInterval: 100,
+    },
+  );
 
   return (
     <MainLayout
@@ -36,22 +51,49 @@ const Friends = () => {
       <div className="main-content">
         <FriendsHeader activeTab={activeTab} setActiveTab={setActiveTab} />
         {activeTab === TabEnum.FRIENDS && (
-          <div className="user-list">
-            <FriendsUserRow status={TabEnum.FRIENDS} friends={userFriends} />
-          </div>
+          <>
+            {!userFriends || userFriends.length === 0 ? (
+              <div className="empty">У вас пока нет друзей:(</div>
+            ) : (
+              <div className="user-list">
+                <FriendsUserRow
+                  status={TabEnum.FRIENDS}
+                  friends={userFriends}
+                  mutate={friendsMutate}
+                />
+              </div>
+            )}
+          </>
         )}
         {activeTab === TabEnum.REQUESTS && (
-          <div className="user-list">
-            <FriendsUserRow
-              status={TabEnum.REQUESTS}
-              friends={userRequests}
-            />
-          </div>
+          <>
+            {!userRequests || userRequests.length === 0 ? (
+              <div className="empty">У вас пока нет заявок</div>
+            ) : (
+              <div className="user-list">
+                <FriendsUserRow
+                  status={TabEnum.REQUESTS}
+                  friends={userRequests}
+                  mutate={requestsMutate}
+                />
+              </div>
+            )}
+          </>
         )}
         {activeTab === TabEnum.FOLLOWERS && (
-          <div className="user-list">
-            <FriendsUserRow status={TabEnum.FOLLOWERS} friends={userFollowing} />
-          </div>
+          <>
+            {!userFollowing || userFollowing.length === 0 ? (
+              <div className="empty">У вас пока нет подписчиков</div>
+            ) : (
+              <div className="user-list">
+                <FriendsUserRow
+                  status={TabEnum.FOLLOWERS}
+                  friends={userFollowing}
+                  mutate={followingMutate}
+                />
+              </div>
+            )}
+          </>
         )}
       </div>
     </MainLayout>

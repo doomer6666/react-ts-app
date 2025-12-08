@@ -1,21 +1,22 @@
 import { useState, useRef, type FC } from 'react';
-import type PostProps from '../types/IPost';
 import getTimeAgo from '../utils/getTimeAgo';
 import ModalUser from '../features/feed/ModalUser';
 import ModalUploader from '../features/profile/ModalUploader';
 import PostComposer from '../features/profile/PostComposer';
 import api from '../api/axiosInstance';
+import type { IPost } from '../types/IPost';
 
 interface UpdatePostBody {
   text: string;
   image?: string | null;
 }
+interface PostProps {
+  item: IPost;
+  openUserInfo?: boolean;
+  mutate?: () => void | Promise<unknown>;
+}
 
-const Post: FC<PostProps & { mutate?: () => void | Promise<unknown> }> = ({
-  item,
-  openUserInfo,
-  mutate,
-}) => {
+const Post: FC<PostProps> = ({ item, mutate }) => {
   if (item.comments.length > 0) {
     console.log(item.comments);
   }
@@ -36,7 +37,7 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<unknown> }> = ({
   const avatarLetter: string = item.user[0];
   const timeAgo = getTimeAgo(item.postTime);
 
-  const handleOpenUserModal = (userId:number) => {
+  const handleOpenUserModal = (userId: number) => {
     // if (!openUserInfo) {
     //   return;
     // }
@@ -131,7 +132,10 @@ const Post: FC<PostProps & { mutate?: () => void | Promise<unknown> }> = ({
   };
   return (
     <div className="post">
-      <div className="post-header" onClick={() => handleOpenUserModal(item.userId)}>
+      <div
+        className="post-header"
+        onClick={() => handleOpenUserModal(item.userId)}
+      >
         <div className="post-avatar">{avatarLetter}</div>
         <div>
           <div className="post-user">{item.user}</div>

@@ -18,8 +18,3 @@ interface IComment {
   userId: number;
   username?: string;
 }
-
-export default interface PostProps {
-  item: IPost;
-  openUserInfo?: boolean;
-}

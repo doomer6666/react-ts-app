@@ -11,9 +11,14 @@ import addFriend from '../../api/addFriend';
 interface FriendsUserRowProps {
   status: TabValues;
   friends: Friend[];
+  mutate: () => void | Promise<unknown>;
 }
 
-const FriendsUserRow: FC<FriendsUserRowProps> = ({ status, friends }) => {
+const FriendsUserRow: FC<FriendsUserRowProps> = ({
+  status,
+  friends,
+  mutate,
+}) => {
   const navigate = useNavigate();
   const [friendList, setFriendList] = useState<IUser[]>([]);
   const getFriendsProfile = async () => {
@@ -24,21 +29,20 @@ const FriendsUserRow: FC<FriendsUserRowProps> = ({ status, friends }) => {
   };
 
   useEffect(() => {
-    console.log(friends);
     getFriendsProfile();
-  }, [friends]);
+  }, []);
 
   const handleDeleteFriend = async (id: number | undefined) => {
     if (id) {
       await deleteFriend(id);
-      await getFriendsProfile();
+      if (mutate) await mutate();
     }
   };
 
   const handleAddFriend = async (id: number | undefined) => {
     if (id) {
       await addFriend(id);
-      await getFriendsProfile();
+      if (mutate) await mutate();
     }
   };
   return (
@@ -64,7 +68,15 @@ const FriendsUserRow: FC<FriendsUserRowProps> = ({ status, friends }) => {
                 <span>Принять</span>
               </button>
             )}
-
+            {status === TabEnum.REQUESTS && (
+              <button
+                className="action-btn primary"
+                onClick={() => handleDeleteFriend(friend.userId)}
+              >
+                <img src="/close.svg" />
+                <span>Отменить</span>
+              </button>
+            )}
             <button
               className="action-btn primary"
               onClick={() =>
