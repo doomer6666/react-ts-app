@@ -12,11 +12,11 @@ interface UpdatePostBody {
 }
 interface PostProps {
   item: IPost;
-  openUserInfo?: boolean;
+  isFromProfile?: boolean;
   mutate?: () => void | Promise<unknown>;
 }
 
-const Post: FC<PostProps> = ({ item, mutate }) => {
+const Post: FC<PostProps> = ({ item, mutate, isFromProfile }) => {
   if (item.comments.length > 0) {
     console.log(item.comments);
   }
@@ -36,12 +36,10 @@ const Post: FC<PostProps> = ({ item, mutate }) => {
 
   const avatarLetter: string = item.user[0];
   const timeAgo = getTimeAgo(item.postTime);
+  const userId = Number(localStorage.getItem('id'));
 
-  const handleOpenUserModal = (userId: number) => {
-    // if (!openUserInfo) {
-    //   return;
-    // }
-    if (userId === Number(localStorage.getItem('id'))) {
+  const handleOpenUserModal = (authorId: number) => {
+    if (authorId === userId) {
       return;
     }
     setOpenModal(true);
@@ -141,17 +139,17 @@ const Post: FC<PostProps> = ({ item, mutate }) => {
           <div className="post-user">{item.user}</div>
           <div className="post-time">{timeAgo}</div>
         </div>
-
-        <button
-          className="post-options-button"
-          onClick={() => {
-            setIsOptionsOpen((s) => !s);
-          }}
-          aria-label="Post options"
-        >
-          ...
-        </button>
-
+        {item.userId === userId && (
+          <button
+            className="post-options-button"
+            onClick={() => {
+              setIsOptionsOpen((s) => !s);
+            }}
+            aria-label="Post options"
+          >
+            ...
+          </button>
+        )}
         {isOptionsOpen && (
           <div className="post-options-menu" ref={optionsRef}>
             <button className="post-options-item" onClick={() => startEdit()}>
@@ -274,7 +272,7 @@ const Post: FC<PostProps> = ({ item, mutate }) => {
         </div>
       )}
 
-      {openModal && (
+      {!isFromProfile && openModal && (
         <ModalUser
           name={item.user}
           authorId={item.userId}

@@ -11,7 +11,7 @@ import { useParams } from 'react-router-dom';
 const Profile: FC = () => {
   const [activeItem, setActiveItem] = useState('profile');
   const params = useParams();
-
+  const userId = Number(localStorage.getItem('id'));
   let profileUrl = '/profile/';
   if (params.profileId) {
     profileUrl = `/profile/${params.profileId}`;
@@ -49,11 +49,14 @@ const Profile: FC = () => {
         <ProfileHeader user={user} />
         <div className="profile-content">
           <div className="profile-feed">
-            <PostComposer mutate={mutate} AvatarLetter={user.name[0]} />
+            {user.userId === userId && (
+              <PostComposer mutate={mutate} AvatarLetter={user.name[0]} />
+            )}
+
             <div className="feed">
               {isLoading && <div>Загрузка...</div>}
               {postsSorted.map((item) => (
-                <Post item={item} mutate={mutate} />
+                <Post item={item} mutate={mutate} isFromProfile={true} />
               ))}
             </div>
 

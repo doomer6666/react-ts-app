@@ -72,27 +72,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: "Cinzel", serif;
+    // font-family: "Cinzel", serif;
     font-size: 50px;
     font-weight: bold;
     color: #cdc1b4;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     position: relative;
-    cursor: pointer;
-}
-
-.profile-avatar:hover::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(26, 22, 34, 0.7);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 /* Информация профиля */
@@ -108,7 +93,7 @@
 }
 
 .profile-name {
-    font-family: "Cinzel", serif;
+    // font-family: "Cinzel", serif;
     font-size: 28px;
     font-weight: 900;
     color: #b6a3cc;
@@ -159,7 +144,7 @@
 }
 
 .profile-stat-value {
-    font-family: "Cinzel", serif;
+    // font-family: "Cinzel", serif;
     font-size: 24px;
     font-weight: 700;
     color: #9175b6;
@@ -194,7 +179,7 @@
 .sidebar-header {
     padding: 15px;
     border-bottom: 1px solid #34293e;
-    font-family: "Cinzel", serif;
+    // font-family: "Cinzel", serif;
     font-weight: 700;
     font-size: 16px;
     color: #b6a3cc;
@@ -281,7 +266,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: "Cinzel", serif;
+    // font-family: "Cinzel", serif;
     font-weight: bold;
     font-size: 24px;
     color: #cdc1b4;
@@ -356,7 +341,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: "Cinzel", serif;
+    // font-family: "Cinzel", serif;
     font-weight: bold;
     color: #cdc1b4;
     margin-right: 15px;
@@ -412,7 +397,7 @@
     color: #0a090f;
     border-radius: 4px;
     border: none;
-    font-family: "Cinzel", serif;
+    // font-family: "Cinzel", serif;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
@@ -432,10 +417,10 @@
     transition: all 0.3s;
 }
 
-.post:hover {
-    border-color: #9175b6;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
+// .post:hover {
+//     border-color: #9175b6;
+//     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+// }
 
 .post-header {
     padding: 15px;
@@ -452,7 +437,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: "Cinzel", serif;
+    // font-family: "Cinzel", serif;
     font-weight: bold;
     color: #cdc1b4;
     margin-right: 15px;
@@ -464,7 +449,7 @@
 }
 
 .post-username {
-    font-family: "Cinzel", serif;
+    // font-family: "Cinzel", serif;
     font-weight: 600;
     color: #b6a3cc;
     margin-bottom: 5px;
