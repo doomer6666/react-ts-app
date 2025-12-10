@@ -22,7 +22,6 @@ const Profile: FC = () => {
     {
       revalidateOnFocus: true,
       shouldRetryOnError: false,
-      refreshInterval: 100,
     },
   );
 
