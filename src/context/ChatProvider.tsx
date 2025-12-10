@@ -1,4 +1,4 @@
-import { type FC, type ReactNode, useState } from 'react';
+import { type FC, type ReactNode, useEffect, useState } from 'react';
 import { ChatContext } from './ChatContext';
 
 interface ChatProviderProps {
@@ -10,6 +10,18 @@ export const ChatProvider: FC<ChatProviderProps> = ({
   chatId = null,
 }) => {
   const [activeChat, setActiveChat] = useState<number | null>(chatId);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setActiveChat(null);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
     <ChatContext.Provider value={{ activeChat, setActiveChat }}>
       {children}

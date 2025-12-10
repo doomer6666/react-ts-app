@@ -4,9 +4,9 @@ import type ISignIn from '../types/ISignIn';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Cubes from '../components/animations/Cubes';
-import type React from 'react';
 import api from '../api/axiosInstance';
 import { useState } from 'react';
+import useEnterKey from '../hooks/useKeyDown';
 
 interface LoginResponse {
   id: string;
@@ -34,8 +34,7 @@ const Sign = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = () => {
     handleSubmit(async (formData) => {
       try {
         setIsLoading(true);
@@ -47,7 +46,10 @@ const Sign = () => {
         // Fetch user settings after login
         const settingsResponse = await api.get<SettingsRead>(`/settings`);
         const settings = settingsResponse.data;
-        localStorage.setItem('notifications_enabled', String(settings.notifications_enabled));
+        localStorage.setItem(
+          'notifications_enabled',
+          String(settings.notifications_enabled),
+        );
         localStorage.setItem('theme', settings.theme);
 
         navigate('/profile');
@@ -59,6 +61,8 @@ const Sign = () => {
       }
     })();
   };
+
+  const onKeyDown = useEnterKey(onSubmit);
 
   const navigate = useNavigate();
 
@@ -75,7 +79,7 @@ const Sign = () => {
     >
       <div className="sign-container">
         <div className="logo">ПОДЗЕМЕЛЬЕ</div>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} onKeyDown={onKeyDown}>
           <div className="form-group">
             <label className="form-label" htmlFor="username">
               Имя пользователя

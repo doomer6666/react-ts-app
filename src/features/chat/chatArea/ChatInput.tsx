@@ -2,6 +2,7 @@ import useSWRMutation from 'swr/mutation';
 import poster from '../../../api/poster';
 import { useState } from 'react';
 import { useChat } from '../../../context/ChatContext';
+import useEnterKey from '../../../hooks/useKeyDown';
 
 const ChatInput = () => {
   const chatContext = useChat();
@@ -13,17 +14,20 @@ const ChatInput = () => {
     { content: string }
   >(`/chats/${chatContext?.activeChat}/messages`, poster);
 
-  if (error) {
-    return;
-  }
-
   const onSubmit = async () => {
     const data = { content: inputMessage };
     await trigger(data);
     setInputMessage('');
   };
+
+  const onKeyDown = useEnterKey(onSubmit);
+
+  if (error) {
+    return;
+  }
+
   return (
-    <div className="chat-input-container">
+    <div className="chat-input-container" onKeyDown={onKeyDown}>
       <div className="chat-input-wrapper">
         {/* <div className="input-action">📎</div> */}
         <input
