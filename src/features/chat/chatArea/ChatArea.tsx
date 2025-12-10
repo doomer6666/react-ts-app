@@ -6,6 +6,7 @@ import useSWR from 'swr';
 import { fetcher } from '../../../api/fetcher';
 import type { IChatMessage } from '../../../types/chat/IChatMessage';
 import { useChat } from '../../../context/ChatContext';
+import ChatEmptyArea from './ChatEmptyArea';
 
 const ChatArea = () => {
   const chatContext = useChat();
@@ -20,7 +21,7 @@ const ChatArea = () => {
   );
 
   if (!data || error) {
-    return;
+    return <ChatEmptyArea />;
   }
   const messages: IChatMessage[] = data;
   const sender: string =
@@ -28,7 +29,7 @@ const ChatArea = () => {
 
   return (
     <div className="chat-area">
-      {chatContext?.activeChat ? (
+      {chatContext.activeChat !== null && (
         <>
           {isLoading && <div>Загрузка...</div>}
           <ChatHeader name={sender} />
@@ -37,6 +38,7 @@ const ChatArea = () => {
             {/* <div className="message-date">Сегодня</div> */}
             {messages.map((item) => (
               <ChatMessage
+                key={`${item.direction}-${item.time}`}
                 direction={item.direction}
                 name={item.name}
                 message={item.message}
@@ -46,8 +48,6 @@ const ChatArea = () => {
           </div>
           <ChatInput />
         </>
-      ) : (
-        <></>
       )}
     </div>
   );
