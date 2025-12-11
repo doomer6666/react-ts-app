@@ -11,7 +11,6 @@ const Settings = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Load settings from localStorage
     const storedTheme = localStorage.getItem('theme');
     const storedNotifications = localStorage.getItem('notifications_enabled');
 
@@ -34,7 +33,6 @@ const Settings = () => {
 
       await api.post('/settings', payload);
 
-      // Update localStorage
       localStorage.setItem('theme', theme);
       localStorage.setItem('notifications_enabled', String(notifications));
 
@@ -48,38 +46,40 @@ const Settings = () => {
   };
 
   return (
-    <MainLayout activeItem="settings" setActiveItem={() => {}} pageName="settings">
-      <div className="settings-container">
-        <h1>Настройки</h1>
+    <MainLayout activeItem="settings" setActiveItem={() => { }} pageName="settings">
+      <div className="settings-out">
+        <div className="settings-container">
+          <h1>Настройки</h1>
 
-        <div className="form-group">
-          <label htmlFor="theme">Тема</label>
-          <select
-            id="theme"
-            value={theme}
-            onChange={(e) => setTheme(e.target.value)}
-          >
-            <option value="light">Светлая</option>
-            <option value="dark">Тёмная</option>
-          </select>
+          <div className="form-group">
+            <label htmlFor="theme">Тема</label>
+            <select
+              id="theme"
+              value={theme}
+              onChange={(e) => setTheme(e.target.value)}
+            >
+              <option value="light">Светлая</option>
+              <option value="dark">Тёмная</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label>
+              <input
+                type="checkbox"
+                checked={notifications}
+                onChange={(e) => setNotifications(e.target.checked)}
+              />
+              Уведомления
+            </label>
+          </div>
+
+          <button onClick={handleSave} disabled={isSubmitting} className="btn-save">
+            {isSubmitting ? 'Сохранение...' : 'Сохранить изменения'}
+          </button>
+
+          {error && <div className="error">{error}</div>}
         </div>
-
-        <div className="form-group">
-          <label>
-            <input
-              type="checkbox"
-              checked={notifications}
-              onChange={(e) => setNotifications(e.target.checked)}
-            />
-            Уведомления
-          </label>
-        </div>
-
-        <button onClick={handleSave} disabled={isSubmitting} className="btn-save">
-          {isSubmitting ? 'Сохранение...' : 'Сохранить изменения'}
-        </button>
-
-        {error && <div className="error">{error}</div>}
       </div>
     </MainLayout>
   );
