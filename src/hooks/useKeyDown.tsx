@@ -1,11 +1,10 @@
 import { useCallback } from 'react';
 
-const useEnterKey = (onSubmit: () => void) => {
+const useEnterKey = (onSubmit: (e: React.FormEvent) => void) => {
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.key === 'Enter') {
-        e.preventDefault();
-        onSubmit();
+        onSubmit(e);
       }
     },
     [onSubmit],

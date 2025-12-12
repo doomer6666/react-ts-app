@@ -34,7 +34,8 @@ const Sign = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const onSubmit = () => {
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     handleSubmit(async (formData) => {
       try {
         setIsLoading(true);
