@@ -1,6 +1,8 @@
 import type { FC } from 'react';
-import type ProfileProps from '../../types/IUser';
-
+import type IUser from '../../types/IUser';
+interface ProfileProps {
+  user: IUser;
+}
 const ProfileHeader: FC<ProfileProps> = ({ user }) => {
   const avavarLetter = user.name[0];
   return (

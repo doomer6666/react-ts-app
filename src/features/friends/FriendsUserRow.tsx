@@ -2,7 +2,7 @@ import { useEffect, useState, type FC } from 'react';
 import { TabEnum, type TabValues } from '../../consts/FriendsTabs';
 import type { Friend } from '../../utils/getFriendLists';
 import { getProfile } from '../../api/getProfie';
-import type { IUser } from '../../types/IUser';
+import type IUser from '../../types/IUser';
 import moveToChat from '../../utils/openChat';
 import { useNavigate } from 'react-router-dom';
 import deleteFriend from '../../api/deleteFriend';
@@ -25,7 +25,6 @@ const FriendsUserRow: FC<FriendsUserRowProps> = ({
     setFriendList(
       await Promise.all(friends.map((friend) => getProfile(friend.friend_id))),
     );
-    console.log(friendList);
   };
 
   useEffect(() => {

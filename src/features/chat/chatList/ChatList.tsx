@@ -11,6 +11,7 @@ const ChatList = () => {
   });
   const [filterInput, setFilterInput] = useState('');
   const filteredChatList = useMemo(() => {
+    console.log(data);
     return data?.filter((item) =>
       item.name.toLowerCase().includes(filterInput.toLowerCase().trim()),
     );

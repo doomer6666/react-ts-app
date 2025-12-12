@@ -2,7 +2,6 @@ import { useEffect, useState, type FC } from 'react';
 import Modal from '../../components/Modal';
 import { useNavigate } from 'react-router-dom';
 import { Statuses, type StatusValues } from '../../consts/FriendStatuses';
-import getFriendLists from '../../utils/getFriendLists';
 import moveToChat from '../../utils/openChat';
 import deleteFriend from '../../api/deleteFriend';
 import addFriend from '../../api/addFriend';
@@ -30,23 +29,17 @@ const ModalUser: FC<ModalUserProps> = ({
   onClose,
 }) => {
   const navigate = useNavigate();
-  const userId = Number(localStorage.getItem('id'));
   const [authorStatus, setAuthorStatus] = useState<StatusValues>();
   const [isActiveOptions, setIsActiveOptions] = useState(false);
 
   const handleFriendCheck = async () => {
-    const status =
-      await getFriendStatus(authorId);
-    console.log(
-      localStorage.getItem('id'),
-      authorId,
-      status
-    );
-    if (status === "friends") {
+    const status = await getFriendStatus(authorId);
+    console.log(localStorage.getItem('id'), authorId, status);
+    if (status === 'friends') {
       setAuthorStatus(Statuses.FRIEND);
-    } else if (status === "following") {
+    } else if (status === 'following') {
       setAuthorStatus(Statuses.SENT);
-    } else if (status === "pending") {
+    } else if (status === 'pending') {
       setAuthorStatus(Statuses.SUBSCRIBER);
     } else {
       setAuthorStatus(Statuses.UNKNOWN);
@@ -76,7 +69,11 @@ const ModalUser: FC<ModalUserProps> = ({
           <img src="./close.svg" />
         </button>
         <div className="profile-header">
-          <div className="profile-avatar" id="modalAvatar" onClick={() => navigate('/profile/' + authorId)}>
+          <div
+            className="profile-avatar"
+            id="modalAvatar"
+            onClick={() => navigate('/profile/' + authorId)}
+          >
             {avatarLetter}
           </div>
           <div className="profile-name" id="modalName">

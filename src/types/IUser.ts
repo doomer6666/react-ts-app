@@ -1,14 +1,10 @@
 import type { IPost } from './IPost';
 
-export interface IUser {
+export default interface IUser {
   name: string;
   friendCount: number;
   photoCount: number;
   subscriberCount: number;
   posts: IPost[];
   userId?: number;
-}
-
-export default interface ProfileProps {
-  user: IUser;
 }
