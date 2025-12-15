@@ -3,10 +3,13 @@ import poster from '../../../api/poster';
 import { useState } from 'react';
 import { useChat } from '../../../context/ChatContext';
 import useEnterKey from '../../../hooks/useKeyDown';
+import { useSWRConfig } from 'swr';
 
 const ChatInput = () => {
   const chatContext = useChat();
   const [inputMessage, setInputMessage] = useState('');
+  const { mutate } = useSWRConfig();
+
   const { trigger, isMutating, error } = useSWRMutation<
     string,
     Error,
@@ -18,6 +21,7 @@ const ChatInput = () => {
     const data = { content: inputMessage };
     await trigger(data);
     setInputMessage('');
+    await mutate('/chats/');
   };
 
   const onKeyDown = useEnterKey(onSubmit);

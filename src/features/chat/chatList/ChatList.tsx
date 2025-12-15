@@ -5,10 +5,14 @@ import type IChatItem from '../../../types/chat/IChatItem';
 import { useMemo, useState } from 'react';
 
 const ChatList = () => {
-  const { data, error, isLoading } = useSWR<IChatItem[]>('/chats/', fetcher, {
-    revalidateOnFocus: true,
-    shouldRetryOnError: false,
-  });
+  const { data, error, isLoading, mutate } = useSWR<IChatItem[]>(
+    '/chats/',
+    fetcher,
+    {
+      revalidateOnFocus: true,
+      shouldRetryOnError: false,
+    },
+  );
   const [filterInput, setFilterInput] = useState('');
   const filteredChatList = useMemo(() => {
     console.log(data);
@@ -39,6 +43,7 @@ const ChatList = () => {
       <div className="chat-list">
         {filteredChatList?.map((item) => (
           <ChatItem
+            mutate={mutate}
             key={item.id}
             id={item.id}
             name={item.name}

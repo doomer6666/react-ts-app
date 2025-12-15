@@ -31,6 +31,7 @@ const Modal: FC<ModalProps> = ({ children, onClose }) => {
     ) {
       return;
     }
+    e.stopPropagation();
     onClose();
   };
   if (!modalRoot) {

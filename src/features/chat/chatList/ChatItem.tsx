@@ -1,7 +1,9 @@
-import { useRef, type FC } from 'react';
+import React, { useState, type FC } from 'react';
 import getTimeAgo from '../../../utils/getTimeAgo';
 import type IChatItem from '../../../types/chat/IChatItem';
 import { useChat } from '../../../context/ChatContext';
+import ModalLeaveChat from '../ModalLeaveChat';
+import leaveChat from '../../../api/leaveChat';
 
 const ChatItem: FC<IChatItem> = ({
   id,
@@ -9,20 +11,27 @@ const ChatItem: FC<IChatItem> = ({
   preview,
   chatTime,
   chatBadge,
+  mutate,
 }) => {
-  const optionButtonFer = useRef<HTMLButtonElement>(null);
   const timeAgo = getTimeAgo(chatTime);
-
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const activeChatContext = useChat();
-  const setActiveChat = (id: number) => {
-    activeChatContext?.setActiveChat(id);
+
+  const handleOpenModal = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsOpenModal(true);
   };
 
-  // showOptions = () => {};
+  const handleLeaveChat = async () => {
+    await leaveChat(id);
+    await mutate();
+    setIsOpenModal(false);
+  };
+
   return (
     <div
       className={`chat-item ${activeChatContext.activeChat === id ? 'active' : ''}`}
-      onClick={() => setActiveChat(id)}
+      onClick={() => activeChatContext.setActiveChat(id)}
     >
       <div className="chat-avatar">{name[0]}</div>
       <div className="chat-info">
@@ -32,14 +41,21 @@ const ChatItem: FC<IChatItem> = ({
 
       <div className="chat-meta">
         <button
-          ref={optionButtonFer}
           className="chat-option"
           aria-label="Chat options"
+          onClick={handleOpenModal}
         >
           ×
         </button>
         {chatBadge && <div className="chat-badge">{chatBadge}</div>}
       </div>
+      {isOpenModal && (
+        <ModalLeaveChat
+          onClose={() => setIsOpenModal(false)}
+          chatId={id}
+          onLeaveChat={handleLeaveChat}
+        />
+      )}
     </div>
   );
 };

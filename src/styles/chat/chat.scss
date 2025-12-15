@@ -1,5 +1,6 @@
 @use "./empty-chat-area.scss";
 @use "./chat-invite.scss";
+@use "./chat-leave.scss";
 
 .chat {
     display: grid;
@@ -182,7 +183,8 @@
         border-radius: 6px;
         margin-bottom: 5px;
         &:hover {
-            background: #373348;
+            border-color: #664444;
+            color: #cc8888;
         }
     }
 
