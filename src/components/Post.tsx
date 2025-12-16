@@ -17,9 +17,6 @@ interface PostProps {
 }
 
 const Post: FC<PostProps> = ({ item, mutate, isFromProfile }) => {
-  if (item.comments.length > 0) {
-    console.log(item.comments);
-  }
   const [openModal, setOpenModal] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const [isOpemComments, setIsOpenComments] = useState(false);

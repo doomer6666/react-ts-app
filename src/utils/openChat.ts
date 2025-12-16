@@ -18,21 +18,21 @@ const moveToChat: OpenChatProps = async (name, navigate, authorId) => {
       return;
     }
 
-    const existChat = chats.filter(
+    const existChat = chats.find(
       (chat) =>
+        chat.chatMembers.length === 2 &&
         chat.chatMembers.includes(authorName) &&
         chat.chatMembers.includes(name),
-    )[0];
+    );
 
     if (existChat) {
       navigate('/message', { state: { chatId: existChat.id } });
     } else {
-      const response: {
-        userId: number;
-      } = await api.post('/chats/private', {
+      const { data } = await api.post<{ id: number }>('/chats/private', {
         userId: authorId,
       });
-      navigate('/message', { state: { chatId: response.userId } });
+
+      navigate('/message', { state: { chatId: data.id } });
     }
   } catch (error) {
     console.log(error);

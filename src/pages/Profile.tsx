@@ -5,7 +5,7 @@ import MainLayout from '../layouts/MainLayout';
 import ProfileHeader from '../features/profile/ProfileHeader';
 import PostComposer from '../features/profile/PostComposer';
 import Post from '../components/Post';
-import type { IUser } from '../types/IUser';
+import type IUser from '../types/IUser';
 import { useParams } from 'react-router-dom';
 
 const Profile: FC = () => {

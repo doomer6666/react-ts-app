@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ModalChatInvite from '../chatInvite/ModalChatInvite';
+import ModalChatInvite from '../ModalChatInvite';
 
 const ChatEmptyArea = () => {
   const [openModal, setOpenModal] = useState(false);

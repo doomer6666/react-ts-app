@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState, type FC } from 'react';
-import Modal from '../../../components/Modal';
 import useSWR from 'swr';
-import { fetcher } from '../../../api/fetcher';
-import type { Friend } from '../../../utils/getFriendLists';
-import { getProfile } from '../../../api/getProfie';
-import type IUser from '../../../types/IUser';
-import api from '../../../api/axiosInstance';
+import api from '../../api/axiosInstance';
+import { fetcher } from '../../api/fetcher';
+import { getProfile } from '../../api/getProfie';
+import Modal from '../../components/Modal';
+import type IUser from '../../types/IUser';
+import type { Friend } from '../../utils/getFriendLists';
 
 interface ModalChatInviteProps {
   onClose: () => void;
@@ -24,7 +24,6 @@ const ModalChatInvite: FC<ModalChatInviteProps> = ({ onClose }) => {
 
   const getFriendsProfile = async () => {
     if (data) {
-      console.log(data);
       setFriendList(
         await Promise.all(data.map((friend) => getProfile(friend.friend_id))),
       );
@@ -39,7 +38,6 @@ const ModalChatInvite: FC<ModalChatInviteProps> = ({ onClose }) => {
   const [filterInput, setFilterInput] = useState('');
 
   const filteredChatList = useMemo(() => {
-    console.log(friendList);
     return friendList.filter((item) =>
       item.name.toLowerCase().includes(filterInput.toLowerCase().trim()),
     );

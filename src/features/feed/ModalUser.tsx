@@ -34,7 +34,7 @@ const ModalUser: FC<ModalUserProps> = ({
 
   const handleFriendCheck = async () => {
     const status = await getFriendStatus(authorId);
-    console.log(localStorage.getItem('id'), authorId, status);
+
     if (status === 'friends') {
       setAuthorStatus(Statuses.FRIEND);
     } else if (status === 'following') {

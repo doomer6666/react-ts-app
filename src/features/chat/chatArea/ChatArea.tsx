@@ -10,16 +10,28 @@ import { useChat } from '../../../context/ChatContext';
 import ChatEmptyArea from './ChatEmptyArea';
 import api from '../../../api/axiosInstance';
 
+interface IChat {
+  id: 0;
+  name: string;
+  preview: string;
+  chatTime: Date;
+  chatBadge: number;
+  chatMembers: string[];
+}
+
 const ChatArea = () => {
   const chatContext = useChat();
   const [chatName, setChatName] = useState<string>('чат');
-
+  const [chatId, setChatId] = useState<number>(0);
   useEffect(() => {
     const fetchChatName = async () => {
       if (chatContext.activeChat) {
         try {
-          const response = await api.get(`/chats/${chatContext.activeChat}`);
+          const response = await api.get<IChat>(
+            `/chats/${chatContext.activeChat}`,
+          );
           setChatName(response.data.name);
+          setChatId(response.data.id);
         } catch (error) {
           console.error('Failed to fetch chat name:', error);
         }
@@ -49,7 +61,7 @@ const ChatArea = () => {
       {chatContext.activeChat !== null && (
         <>
           {isLoading && <div>Загрузка...</div>}
-          <ChatHeader name={chatName} />
+          <ChatHeader name={chatName} chatId={chatId} />
 
           <div className="chat-messages">
             {/* <div className="message-date">Сегодня</div> */}
