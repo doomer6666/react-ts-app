@@ -2,8 +2,8 @@ import React, { useState, type FC } from 'react';
 import getTimeAgo from '../../../utils/getTimeAgo';
 import type IChatItem from '../../../types/chat/IChatItem';
 import { useChat } from '../../../context/ChatContext';
-import ModalLeaveChat from '../ModalLeaveChat';
 import leaveChat from '../../../api/leaveChat';
+import ModalExitLayout from '../../../layouts/ModalExitLayout';
 
 const ChatItem: FC<IChatItem> = ({
   id,
@@ -50,10 +50,12 @@ const ChatItem: FC<IChatItem> = ({
         {chatBadge && <div className="chat-badge">{chatBadge}</div>}
       </div>
       {isOpenModal && (
-        <ModalLeaveChat
+        <ModalExitLayout
           onClose={() => setIsOpenModal(false)}
-          chatId={id}
-          onLeaveChat={handleLeaveChat}
+          onLeave={handleLeaveChat}
+          headerText="ПОКИНУТЬ ЧАТ"
+          message="Вы собираетесь покинуть чат. История сообщений будет удалена, и вы не сможете получать новые сообщения из этого чата."
+          exitText="Покинуть"
         />
       )}
     </div>

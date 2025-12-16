@@ -11,7 +11,7 @@ import ChatEmptyArea from './ChatEmptyArea';
 import api from '../../../api/axiosInstance';
 
 interface IChat {
-  id: 0;
+  id: number;
   name: string;
   preview: string;
   chatTime: Date;

@@ -2,23 +2,19 @@ import { useState, useEffect } from 'react';
 import api from '../api/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
+import ModalExitLayout from '../layouts/ModalExitLayout';
 
 const Settings = () => {
   const [theme, setTheme] = useState('light');
-  const [notifications, setNotifications] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme');
-    const storedNotifications = localStorage.getItem('notifications_enabled');
-
     if (storedTheme) {
       setTheme(storedTheme);
-    }
-    if (storedNotifications) {
-      setNotifications(storedNotifications === 'true');
     }
   }, []);
 
@@ -26,16 +22,9 @@ const Settings = () => {
     setError(null);
     setIsSubmitting(true);
     try {
-      const payload = {
-        notifications_enabled: notifications,
-        theme,
-      };
-
+      const payload = { theme };
       await api.post('/settings', payload);
-
       localStorage.setItem('theme', theme);
-      localStorage.setItem('notifications_enabled', String(notifications));
-
       navigate('/profile');
     } catch (err) {
       console.error('Failed to save settings:', err);
@@ -45,14 +34,23 @@ const Settings = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('theme');
+    navigate('/');
+  };
+
   return (
-    <MainLayout activeItem="settings" setActiveItem={() => { }} pageName="settings">
-      <div className="settings-out">
-        <div className="settings-container">
+    <MainLayout
+      activeItem="settings"
+      setActiveItem={() => {}}
+      pageName="settings"
+    >
+      <div className="settings-page-wrapper">
+        <div className="settings-card">
           <h1>Настройки</h1>
 
           <div className="form-group">
-            <label htmlFor="theme">Тема</label>
+            <label htmlFor="theme">Тема оформления</label>
             <select
               id="theme"
               value={theme}
@@ -63,24 +61,32 @@ const Settings = () => {
             </select>
           </div>
 
-          <div className="form-group">
-            <label>
-              <input
-                type="checkbox"
-                checked={notifications}
-                onChange={(e) => setNotifications(e.target.checked)}
-              />
-              Уведомления
-            </label>
-          </div>
+          <div className="actions-group">
+            <button
+              onClick={handleSave}
+              disabled={isSubmitting}
+              className="btn-save"
+            >
+              {isSubmitting ? 'Сохраняем...' : 'Сохранить'}
+            </button>
 
-          <button onClick={handleSave} disabled={isSubmitting} className="btn-save">
-            {isSubmitting ? 'Сохранение...' : 'Сохранить изменения'}
-          </button>
+            <button onClick={() => setIsOpenModal(true)} className="btn-logout">
+              Выйти из аккаунта
+            </button>
+          </div>
 
           {error && <div className="error">{error}</div>}
         </div>
       </div>
+      {isOpenModal && (
+        <ModalExitLayout
+          onClose={() => setIsOpenModal(false)}
+          onLeave={handleLogout}
+          headerText="ВЫЙТИ ИЗ АККАУНТА"
+          message="Вы собираетесь выйти из аккаута"
+          exitText="Выйти"
+        />
+      )}
     </MainLayout>
   );
 };
