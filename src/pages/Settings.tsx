@@ -34,7 +34,8 @@ const Settings = () => {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await api.post('/auth/logout/');
     localStorage.removeItem('theme');
     navigate('/');
   };
