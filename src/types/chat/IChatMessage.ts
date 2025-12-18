@@ -3,4 +3,5 @@ export interface IChatMessage {
   name: string;
   message: string;
   time: string;
+  imageUrl?: string;
 }
