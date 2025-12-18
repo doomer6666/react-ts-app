@@ -11,6 +11,7 @@
 @use "./chat/chat.scss";
 @use "./friends/friends.scss";
 @use "./settings.scss";
+@use '../../node_modules/react-cropper/node_modules/cropperjs/dist/cropper.css';
 
 @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Spectral:wght@400;600&display=swap");
 
