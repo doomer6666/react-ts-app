@@ -185,6 +185,7 @@
         opacity: 0;
         visibility: hidden;
         transition: all 0.2s ease;
+
         &:hover {
             border-color: #664444;
             color: #cc8888;
@@ -195,6 +196,7 @@
         opacity: 1;
         visibility: visible;
     }
+
     .chat-badge {
         background: #9175b6;
         color: #0a090f;
@@ -374,10 +376,70 @@
         margin-bottom: 5px;
     }
 
+    .message-image {
+
+        img {
+            width: 80%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid #34293e;
+            display: block;
+        }
+    }
+
     .message-time {
         text-align: right;
         font-size: 11px;
         color: #8a7b96;
+    }
+
+    .composer-image-preview {
+        position: relative;
+        display: inline-block;
+        border-radius: 10px;
+        overflow: hidden;
+
+        img {
+            width: 180px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid #34293e;
+            display: block;
+        }
+
+        .remove-image {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            background: rgba(10, 9, 15, 0.8);
+            border: 1px solid #9175b6;
+            color: #fff;
+            font-size: 14px;
+            line-height: 1;
+            border-radius: 50%;
+            cursor: pointer;
+            padding: 4px 7px;
+            transition: all 0.2s ease;
+            z-index: 10;
+            opacity: 0;
+
+            img {
+                width: 12px;
+                height: 12px;
+            }
+        }
+
+        &:hover .remove-image {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .remove-image:hover {
+            background: #9175b6;
+            color: #0a090f;
+        }
     }
 
     .chat-input-container {

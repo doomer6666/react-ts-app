@@ -92,6 +92,7 @@ const ChatArea = () => {
                 name={item.name}
                 message={item.message}
                 time={item.time}
+                imageUrl={item.imageUrl}
               />
             ))}
           </div>
