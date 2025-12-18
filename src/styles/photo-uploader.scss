@@ -1,10 +1,10 @@
 .photo-uploader {
-  background: #232030;
-  border: 2px dashed #34293e;
+  background: var(--bg-secondary);
+  border: 2px dashed var(--border-primary);
   border-radius: 10px;
   padding: 30px;
   text-align: center;
-  color: #9175b6;
+  color: var(--accent-primary);
   cursor: pointer;
   transition: all 0.25s;
   position: relative;
@@ -13,9 +13,10 @@
   img {
     max-width: 80% !important;
   }
+
   &:hover {
-    border-color: #9175b6;
-    background: #181622;
+    border-color: var(--accent-primary);
+    background: var(--bg-primary);
   }
 
   .photo-placeholder {
@@ -25,7 +26,7 @@
     gap: 10px;
 
     p {
-      color: #8a7b96;
+      color: var(--text-secondary);
       font-size: 14px;
     }
   }
@@ -33,13 +34,26 @@
   .icon-upload {
     width: 48px;
     height: 48px;
-    stroke: #9175b6;
+    stroke: var(--accent-primary);
   }
 
   .photo-preview {
     width: 100%;
     border-radius: 8px;
-    border: 1px solid #34293e;
+    border: 1px solid var(--border-primary);
     object-fit: cover;
+  }
+
+  &.loading {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
+  &.error {
+    border-color: var(--error-text);
+
+    .photo-placeholder p {
+      color: var(--error-text);
+    }
   }
 }

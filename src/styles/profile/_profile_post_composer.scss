@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  background: #1e1c2a;
+  background: var(--bg-hover);
   padding: 16px;
   border-radius: 12px;
 
@@ -14,8 +14,8 @@
     .composer-avatar {
       width: 40px;
       height: 40px;
-      background: #9175b6;
-      color: white;
+      background: var(--accent-primary);
+      color: var(--text-on-accent);
       font-weight: 700;
       border-radius: 50%;
       display: flex;
@@ -25,8 +25,8 @@
 
     .composer-input {
       flex: 1;
-      background: #2a2638;
-      color: #fff;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
       border: none;
       resize: none;
       min-height: 60px;
@@ -35,61 +35,58 @@
       font-size: 14px;
 
       &:focus {
-        outline: 1px solid #9175b6;
+        outline: 1px solid var(--accent-primary);
       }
     }
   }
 
   .composer-image-preview {
-  position: relative;
-  display: inline-block;
-  border-radius: 10px;
-  overflow: hidden;
-
-  img {
-    width: 180px;
-    height: 120px;
-    object-fit: cover;
+    position: relative;
+    display: inline-block;
     border-radius: 10px;
-    border: 1px solid #34293e;
-    display: block;
-  }
-
-  .remove-image {
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    background: rgba(10, 9, 15, 0.8);
-    border: 1px solid #9175b6;
-    color: #fff;
-    font-size: 14px;
-    line-height: 1;
-    border-radius: 50%;
-    cursor: pointer;
-    padding: 4px 7px;
-    transition: all 0.2s ease;
-    z-index: 10;
-    opacity: 0;
+    overflow: hidden;
 
     img {
-      width: 12px;
-      height: 12px;
+      width: 180px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid var(--border-primary);
+      display: block;
+    }
+
+    .remove-image {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      background: var(--modal-overlay);
+      border: 1px solid var(--accent-primary);
+      color: var(--text-on-accent);
+      font-size: 14px;
+      line-height: 1;
+      border-radius: 50%;
+      cursor: pointer;
+      padding: 4px 7px;
+      transition: all 0.2s ease;
+      z-index: 10;
+      opacity: 0;
+
+      img {
+        width: 12px;
+        height: 12px;
+      }
+    }
+
+    &:hover .remove-image {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .remove-image:hover {
+      background: var(--accent-primary);
+      color: var(--bg-body);
     }
   }
-
-  &:hover .remove-image {
-    opacity: 1;
-    transform: scale(1.1);
-  }
-
-  .remove-image:hover {
-    background: #9175b6;
-    color: #0a090f;
-  }
-}
-
-
-
 
   .composer-actions {
     display: flex;
@@ -106,7 +103,7 @@
         gap: 6px;
         background: none;
         border: none;
-        color: #9175b6;
+        color: var(--accent-primary);
         cursor: pointer;
         font-size: 14px;
         padding: 4px 8px;
@@ -117,14 +114,14 @@
         }
 
         &:hover {
-          color: #b59ed8;
+          color: var(--accent-light);
         }
       }
     }
 
     .composer-submit {
-      background: #9175b6;
-      color: white;
+      background: var(--accent-primary);
+      color: var(--text-on-accent);
       border: none;
       border-radius: 8px;
       padding: 8px 16px;
@@ -132,7 +129,7 @@
       transition: background 0.2s;
 
       &:hover {
-        background: #a58bcf;
+        background: var(--accent-hover-light);
       }
 
       &:disabled {
@@ -143,7 +140,7 @@
   }
 
   .error {
-    color: #ff7777;
+    color: var(--error-text);
     font-size: 13px;
   }
 }

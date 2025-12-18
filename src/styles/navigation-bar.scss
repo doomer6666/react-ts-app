@@ -1,24 +1,39 @@
 .sidebar {
-    background: #181622;
-    color: #cdc1b4;
+    background: var(--bg-primary);
+    color: var(--text-primary);
     padding: 20px 10px;
     height: 100vh;
     position: sticky;
     top: 0;
-    border-right: 1px solid #34293e;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    border-right: 1px solid var(--border-primary);
+    box-shadow: 2px 0 10px var(--shadow-sm);
     overflow-y: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color: var(--bg-tertiary) transparent;
+
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--bg-tertiary);
+        border-radius: 2px;
+    }
 }
 
 .logo {
     text-align: center;
     padding: 15px 0 25px;
-    // font-family: "Cinzel", serif;
     font-size: 24px;
     font-weight: 900;
-    color: #b6a3cc;
+    color: var(--text-heading);
     letter-spacing: 1px;
-    border-bottom: 1px solid #34293e;
+    border-bottom: 1px solid var(--border-primary);
     margin-bottom: 20px;
 }
 
@@ -26,7 +41,7 @@
     font-size: 28px;
     margin-bottom: 10px;
     display: block;
-    color: #9175b6;
+    color: var(--accent-primary);
 }
 
 .menu-item {
@@ -37,27 +52,111 @@
     border-radius: 6px;
     transition: all 0.2s ease;
     cursor: pointer;
-}
+    text-decoration: none;
+    color: var(--text-primary);
 
-.menu-item:hover {
-    background: #232030;
-}
+    &:hover {
+        background: var(--bg-secondary);
+    }
 
-.menu-item.active {
-    background: #34293e;
-    border-left: 3px solid #9175b6;
+    &.active {
+        background: var(--bg-tertiary);
+        border-left: 3px solid var(--accent-primary);
+    }
 }
 
 .menu-icon {
     margin-right: 15px;
     font-size: 20px;
-    color: #9175b6;
+    color: var(--accent-primary);
     width: 24px;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+    }
 }
 
 .menu-text {
-    // font-family: "Cinzel", serif;
     font-size: 15px;
     letter-spacing: 0.5px;
+}
+
+.menu-divider {
+    height: 1px;
+    background: var(--border-primary);
+    margin: 15px 10px;
+}
+
+.menu-section {
+    padding: 10px 15px 5px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.menu-badge {
+    margin-left: auto;
+    background: var(--accent-primary);
+    color: var(--bg-body);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 10px;
+    min-width: 18px;
+    text-align: center;
+}
+
+.sidebar-profile {
+    margin-top: auto;
+    padding: 15px;
+    border-top: 1px solid var(--border-primary);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+        background: var(--bg-secondary);
+    }
+
+    .sidebar-profile-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--bg-tertiary);
+        border: 2px solid var(--accent-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: var(--text-primary);
+    }
+
+    .sidebar-profile-info {
+        flex: 1;
+        overflow: hidden;
+    }
+
+    .sidebar-profile-name {
+        font-weight: 600;
+        color: var(--text-heading);
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .sidebar-profile-status {
+        font-size: 12px;
+        color: var(--text-secondary);
+    }
 }

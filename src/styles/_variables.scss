@@ -1,0 +1,154 @@
+:root {
+    // ===== BACKGROUND COLORS =====
+    --bg-body: #0a090f;
+    --bg-primary: #181622;
+    --bg-secondary: #232030;
+    --bg-tertiary: #34293e;
+    --bg-hover: #1e1c29;
+
+    // ===== TEXT COLORS =====
+    --text-primary: #cdc1b4;
+    --text-secondary: #8a7b96;
+    --text-heading: #b6a3cc;
+    --text-muted: #595066;
+
+    // ===== ACCENT COLORS =====
+    --accent-primary: #9175b6;
+    --accent-light: #b6a3cc;
+
+    // ===== BORDER COLORS =====
+    --border-primary: #34293e;
+    --border-secondary: #4a4557;
+
+    // ===== DESTRUCTIVE (danger) =====
+    --destructive-border: #664444;
+    --destructive-text: #cc8888;
+    --destructive-bg: rgba(100, 0, 0, 0.1);
+
+    // ===== OVERLAYS =====
+    --overlay-light: rgba(255, 255, 255, 0.05);
+    --overlay-dark: rgba(26, 22, 34, 0.7);
+
+    // ===== SHADOWS =====
+    --shadow-sm: rgba(0, 0, 0, 0.2);
+    --shadow-md: rgba(0, 0, 0, 0.3);
+
+    // ===== ICON FILLS =====
+    --icon-fill: rgba(145, 117, 182, 0.2);
+    --icon-fill-light: rgba(145, 117, 182, 0.15);
+
+    // ===== GRADIENTS =====
+    --gradient-cover: linear-gradient(to right, var(--bg-secondary), var(--bg-tertiary));
+
+    // ===== ADDITIONAL BACKGROUNDS =====
+    --bg-input: #241d29;
+    --bg-darker: #16121a;
+    --bg-card: #1f1926;
+
+    // ===== ADDITIONAL BORDERS =====
+    --border-subtle: #2a2330;
+
+    // ===== ACCENT STATES =====
+    --accent-hover: #766096;
+
+    // ===== BUTTON TEXT =====
+    --text-on-accent: #ffffff;
+
+    // ===== MODAL =====
+    --modal-overlay: rgba(10, 9, 15, 0.8);
+
+    // ===== SETTINGS / CARDS =====
+    --bg-settings: #261f2e;
+
+    // ===== ERROR / LOGOUT STATES =====
+    --error-text: #e57373;
+    --error-text-hover: #ff8a80;
+    --error-bg: rgba(229, 115, 115, 0.1);
+    --border-logout: #3e2f45;
+
+    // ===== DISABLED STATES =====
+    --accent-disabled: #5e4a7a;
+    --accent-hover-light: #a386c7;
+
+    // ===== CHAT SPECIFIC =====
+    --bg-chat-list: #14121a;
+    --bg-input-dark: #100d16;
+
+    // ===== STATUS INDICATORS =====
+    --status-online: #58d68d;
+    --status-online-border: #14121a;
+
+    // ===== DANGER BUTTON =====
+    --danger-bg: #e57373;
+    --danger-bg-hover: #ef9a9a;
+
+    // ===== ACCENT DISABLED ALT =====
+    --accent-disabled-alt: #786097;
+}
+
+// ===== LIGHT THEME =====
+[data-theme="light"] {
+    --bg-body: #f5f3f0;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f0ede8;
+    --bg-tertiary: #e5e0d8;
+    --bg-hover: #ebe7e0;
+
+    --text-primary: #2a2520;
+    --text-secondary: #6b6058;
+    --text-heading: #4a3f5c;
+    --text-muted: #9a9088;
+
+    --accent-primary: #7a5fa0;
+    --accent-light: #9175b6;
+
+    --border-primary: #d8d0c8;
+    --border-secondary: #c5bdb5;
+
+    --destructive-border: #e8b8b8;
+    --destructive-text: #a04040;
+    --destructive-bg: rgba(200, 50, 50, 0.08);
+
+    --overlay-light: rgba(0, 0, 0, 0.03);
+    --overlay-dark: rgba(255, 255, 255, 0.85);
+
+    --shadow-sm: rgba(0, 0, 0, 0.08);
+    --shadow-md: rgba(0, 0, 0, 0.12);
+
+    --icon-fill: rgba(122, 95, 160, 0.15);
+    --icon-fill-light: rgba(122, 95, 160, 0.1);
+
+    --gradient-cover: linear-gradient(to right, var(--bg-secondary), var(--bg-tertiary));
+
+    --bg-input: #f0ede8;
+    --bg-darker: #e8e4dc;
+    --bg-card: #fafafa;
+
+    --border-subtle: #d0c8c0;
+
+    --accent-hover: #9a85c0;
+
+    --text-on-accent: #ffffff;
+
+    --modal-overlay: rgba(0, 0, 0, 0.5);
+
+    --bg-settings: #f5f0eb;
+
+    --error-text: #c62828;
+    --error-text-hover: #d32f2f;
+    --error-bg: rgba(198, 40, 40, 0.08);
+    --border-logout: #e0d0d0;
+
+    --accent-disabled: #b8a8c8;
+    --accent-hover-light: #8a70b0;
+    --bg-chat-list: #fafafa;
+    --bg-input-dark: #f5f2ed;
+
+    --status-online: #4caf50;
+    --status-online-border: #fafafa;
+
+    --danger-bg: #e53935;
+    --danger-bg-hover: #ef5350;
+
+    --accent-disabled-alt: #b8a0d0;
+}

@@ -1,7 +1,7 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(10, 9, 15, 0.8);
+  background: var(--modal-overlay);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -11,14 +11,14 @@
 }
 
 .modal {
-  background: #181622;
-  border: 1px solid #34293e;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
   border-radius: 12px;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 25px var(--shadow-md);
   width: 100%;
   max-width: 500px;
   padding: 25px;
-  color: #cdc1b4;
+  color: var(--text-primary);
   position: relative;
   animation: scaleIn 0.25s ease forwards;
 }
@@ -26,7 +26,7 @@
 .modal-header {
   font-weight: 700;
   font-size: 20px;
-  color: #b6a3cc;
+  color: var(--text-heading);
   margin-bottom: 15px;
   display: flex;
   justify-content: space-between;
@@ -36,7 +36,7 @@
 .modal-close {
   background: none;
   border: none;
-  color: #9175b6;
+  color: var(--accent-primary);
   font-size: 22px;
   cursor: pointer;
   padding: 4px;
@@ -45,13 +45,13 @@
   transition: all 0.2s;
 
   &:hover {
-    background: #232030;
-    color: #b6a3cc;
+    background: var(--bg-secondary);
+    color: var(--text-heading);
   }
 }
 
 .modal-body {
-  color: #cdc1b4;
+  color: var(--text-primary);
   font-size: 15px;
   line-height: 1.6;
   margin-bottom: 20px;
@@ -72,22 +72,138 @@
   transition: all 0.2s;
 
   &.confirm {
-    background: #9175b6;
-    color: #0a090f;
+    background: var(--accent-primary);
+    color: var(--bg-body);
 
     &:hover {
-      background: #b6a3cc;
+      background: var(--accent-light);
     }
   }
 
   &.cancel {
-    background: #232030;
-    color: #b6a3cc;
-    border: 1px solid #34293e;
+    background: var(--bg-secondary);
+    color: var(--text-heading);
+    border: 1px solid var(--border-primary);
 
     &:hover {
-      background: #34293e;
-      border-color: #9175b6;
+      background: var(--bg-tertiary);
+      border-color: var(--accent-primary);
+    }
+  }
+
+  &.danger {
+    background: var(--destructive-bg);
+    color: var(--destructive-text);
+    border: 1px solid var(--destructive-border);
+
+    &:hover {
+      background: rgba(180, 60, 60, 0.2);
+    }
+  }
+}
+
+// ===== CONFIRM MODAL SPECIFIC =====
+.modal-container {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: 12px;
+  padding: 20px;
+  min-width: 360px;
+  max-width: 420px;
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-primary);
+    margin-bottom: 20px;
+  }
+
+  .modal-title {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--text-heading);
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s;
+
+    &:hover {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+  }
+
+  .modal-body {
+    text-align: center;
+    margin-bottom: 25px;
+  }
+
+  .confirm-icon {
+    margin-bottom: 15px;
+
+    img {
+      width: 48px;
+      height: 48px;
+      opacity: 0.8;
+    }
+  }
+
+  .confirm-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-heading);
+    margin-bottom: 8px;
+  }
+
+  .confirm-text {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .modal-footer {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .modal-button {
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+
+    &.cancel {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-primary);
+
+      &:hover {
+        background: var(--bg-tertiary);
+        border-color: var(--accent-primary);
+      }
+    }
+
+    &.danger {
+      background: #c0392b;
+      color: var(--text-on-accent);
+
+      &:hover {
+        background: #e74c3c;
+      }
     }
   }
 }

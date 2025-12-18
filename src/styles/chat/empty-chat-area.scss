@@ -11,15 +11,15 @@
 
 .empty-chat-text {
     font-size: 20px;
-    color: #b6a3cc;
+    color: var(--text-heading);
     margin-bottom: 15px;
     letter-spacing: 1px;
     text-align: center;
 }
 
 .create-chat-btn {
-    background: #9175b6;
-    color: #0a090f;
+    background: var(--accent-primary);
+    color: var(--bg-body);
     border: none;
     border-radius: 6px;
     padding: 12px 25px;
@@ -27,10 +27,10 @@
     font-size: 16px;
     cursor: pointer;
     transition: all 0.2s;
-}
 
-.create-chat-btn:hover {
-    background: #b6a3cc;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(145, 117, 182, 0.3);
+    &:hover {
+        background: var(--accent-light);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(145, 117, 182, 0.3);
+    }
 }

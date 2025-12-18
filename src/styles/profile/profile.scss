@@ -24,11 +24,11 @@
 .profile-cover {
     width: 100%;
     height: 240px;
-    background: linear-gradient(to right, #232030, #34293e);
+    background: var(--gradient-cover);
     border-radius: 12px;
     position: relative;
     overflow: hidden;
-    border: 1px solid #34293e;
+    border: 1px solid var(--border-primary);
 }
 
 .profile-cover::before {
@@ -46,7 +46,7 @@
     position: absolute;
     top: 20px;
     right: 20px;
-    background: rgba(26, 22, 34, 0.7);
+    background: var(--overlay-dark);
     border-radius: 20px;
     padding: 6px 12px;
     font-size: 14px;
@@ -67,16 +67,15 @@
     width: 140px;
     height: 140px;
     border-radius: 50%;
-    background: #34293e;
-    border: 4px solid #0a090f;
+    background: var(--bg-tertiary);
+    border: 4px solid var(--bg-body);
     display: flex;
     align-items: center;
     justify-content: center;
-    // font-family: "Cinzel", serif;
     font-size: 50px;
     font-weight: bold;
-    color: #cdc1b4;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    color: var(--text-primary);
+    box-shadow: 0 0 20px var(--shadow-md);
     position: relative;
 }
 
@@ -93,10 +92,9 @@
 }
 
 .profile-name {
-    // font-family: "Cinzel", serif;
     font-size: 28px;
     font-weight: 900;
-    color: #b6a3cc;
+    color: var(--text-heading);
     margin-bottom: 5px;
     letter-spacing: 1px;
     display: flex;
@@ -105,12 +103,12 @@
 }
 
 .verified-icon {
-    color: #9175b6;
+    color: var(--accent-primary);
     font-size: 20px;
 }
 
 .profile-status {
-    color: #8a7b96;
+    color: var(--text-secondary);
     font-style: italic;
     margin-bottom: 10px;
     cursor: pointer;
@@ -119,7 +117,7 @@
 }
 
 .profile-status:hover {
-    color: #b6a3cc;
+    color: var(--text-heading);
 }
 
 .profile-stats {
@@ -129,9 +127,9 @@
 
 .profile-stat {
     padding: 10px 15px;
-    background: #181622;
+    background: var(--bg-primary);
     border-radius: 8px;
-    border: 1px solid #34293e;
+    border: 1px solid var(--border-primary);
     text-align: center;
     min-width: 100px;
     cursor: pointer;
@@ -139,21 +137,20 @@
 }
 
 .profile-stat:hover {
-    background: #232030;
-    border-color: #9175b6;
+    background: var(--bg-secondary);
+    border-color: var(--accent-primary);
 }
 
 .profile-stat-value {
-    // font-family: "Cinzel", serif;
     font-size: 24px;
     font-weight: 700;
-    color: #9175b6;
+    color: var(--accent-primary);
     margin-bottom: 5px;
 }
 
 .profile-stat-label {
     font-size: 12px;
-    color: #8a7b96;
+    color: var(--text-secondary);
 }
 
 /* Основной контент */
@@ -169,20 +166,19 @@
 }
 
 .sidebar-section {
-    background: #181622;
+    background: var(--bg-primary);
     border-radius: 8px;
-    border: 1px solid #34293e;
+    border: 1px solid var(--border-primary);
     margin-bottom: 20px;
     overflow: hidden;
 }
 
 .sidebar-header {
     padding: 15px;
-    border-bottom: 1px solid #34293e;
-    // font-family: "Cinzel", serif;
+    border-bottom: 1px solid var(--border-primary);
     font-weight: 700;
     font-size: 16px;
-    color: #b6a3cc;
+    color: var(--text-heading);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -191,7 +187,7 @@
 .sidebar-action {
     font-size: 14px;
     font-weight: normal;
-    color: #9175b6;
+    color: var(--accent-primary);
     cursor: pointer;
 }
 
@@ -215,7 +211,7 @@
 
 .info-icon {
     width: 36px;
-    color: #9175b6;
+    color: var(--accent-primary);
     font-size: 18px;
     display: flex;
     justify-content: center;
@@ -226,7 +222,7 @@
 }
 
 .info-label {
-    color: #8a7b96;
+    color: var(--text-secondary);
     font-size: 13px;
 }
 
@@ -244,16 +240,16 @@
 .friend-avatar {
     width: 100%;
     padding-top: 100%;
-    background: #232030;
+    background: var(--bg-secondary);
     border-radius: 6px;
     position: relative;
     overflow: hidden;
-    border: 1px solid #34293e;
+    border: 1px solid var(--border-primary);
     transition: all 0.2s;
 }
 
 .friend-avatar:hover {
-    border-color: #9175b6;
+    border-color: var(--accent-primary);
     transform: scale(1.05);
 }
 
@@ -266,10 +262,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    // font-family: "Cinzel", serif;
     font-weight: bold;
     font-size: 24px;
-    color: #cdc1b4;
+    color: var(--text-primary);
 }
 
 .friend-name {
@@ -289,17 +284,17 @@
 
 .photo-item {
     padding-top: 100%;
-    background: #232030;
+    background: var(--bg-secondary);
     border-radius: 6px;
     position: relative;
     overflow: hidden;
-    border: 1px solid #34293e;
+    border: 1px solid var(--border-primary);
     transition: all 0.2s;
     cursor: pointer;
 }
 
 .photo-item:hover {
-    border-color: #9175b6;
+    border-color: var(--accent-primary);
     transform: scale(1.05);
 }
 
@@ -321,9 +316,9 @@
 }
 
 .post-composer {
-    background: #181622;
+    background: var(--bg-primary);
     border-radius: 8px;
-    border: 1px solid #34293e;
+    border: 1px solid var(--border-primary);
     margin-bottom: 20px;
     padding: 15px;
 }
@@ -337,24 +332,23 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: #34293e;
+    background: var(--bg-tertiary);
     display: flex;
     align-items: center;
     justify-content: center;
-    // font-family: "Cinzel", serif;
     font-weight: bold;
-    color: #cdc1b4;
+    color: var(--text-primary);
     margin-right: 15px;
-    border: 2px solid #9175b6;
+    border: 2px solid var(--accent-primary);
 }
 
 .composer-input {
     flex: 1;
-    background: #232030;
-    border: 1px solid #34293e;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
     border-radius: 20px;
     padding: 10px 15px;
-    color: #cdc1b4;
+    color: var(--text-primary);
     font-family: "Spectral", serif;
     font-size: 14px;
     cursor: pointer;
@@ -362,8 +356,8 @@
 }
 
 .composer-input:hover {
-    background: #34293e;
-    border-color: #9175b6;
+    background: var(--bg-tertiary);
+    border-color: var(--accent-primary);
 }
 
 .composer-actions {
@@ -380,7 +374,7 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    color: #9175b6;
+    color: var(--accent-primary);
     cursor: pointer;
     padding: 6px 10px;
     border-radius: 4px;
@@ -388,60 +382,53 @@
 }
 
 .composer-tool:hover {
-    background: #232030;
+    background: var(--bg-secondary);
 }
 
 .composer-submit {
     padding: 6px 15px;
-    background: #9175b6;
-    color: #0a090f;
+    background: var(--accent-primary);
+    color: var(--bg-body);
     border-radius: 4px;
     border: none;
-    // font-family: "Cinzel", serif;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .composer-submit:hover {
-    background: #b6a3cc;
+    background: var(--accent-light);
 }
 
 /* Стили для постов */
 .post {
-    background: #181622;
+    background: var(--bg-primary);
     border-radius: 8px;
-    border: 1px solid #34293e;
+    border: 1px solid var(--border-primary);
     margin-bottom: 20px;
     overflow: hidden;
     transition: all 0.3s;
 }
 
-// .post:hover {
-//     border-color: #9175b6;
-//     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-// }
-
 .post-header {
     padding: 15px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #34293e;
+    border-bottom: 1px solid var(--border-primary);
 }
 
 .post-avatar {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: #34293e;
+    background: var(--bg-tertiary);
     display: flex;
     align-items: center;
     justify-content: center;
-    // font-family: "Cinzel", serif;
     font-weight: bold;
-    color: #cdc1b4;
+    color: var(--text-primary);
     margin-right: 15px;
-    border: 2px solid #9175b6;
+    border: 2px solid var(--accent-primary);
 }
 
 .post-user-info {
@@ -449,19 +436,18 @@
 }
 
 .post-username {
-    // font-family: "Cinzel", serif;
     font-weight: 600;
-    color: #b6a3cc;
+    color: var(--text-heading);
     margin-bottom: 5px;
 }
 
 .post-time {
     font-size: 12px;
-    color: #8a7b96;
+    color: var(--text-secondary);
 }
 
 .post-options {
-    color: #9175b6;
+    color: var(--accent-primary);
     font-size: 20px;
     cursor: pointer;
     width: 30px;
@@ -474,7 +460,7 @@
 }
 
 .post-options:hover {
-    background: #232030;
+    background: var(--bg-secondary);
 }
 
 .post-content {
@@ -490,7 +476,7 @@
     width: 100%;
     border-radius: 8px;
     overflow: hidden;
-    border: 1px solid #34293e;
+    border: 1px solid var(--border-primary);
     margin-bottom: 15px;
     position: relative;
 }
@@ -498,17 +484,17 @@
 .post-image-content {
     width: 100%;
     height: 300px;
-    background: #232030;
+    background: var(--bg-secondary);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 36px;
-    color: #9175b6;
+    color: var(--accent-primary);
 }
 
 .post-footer {
     padding: 10px 15px;
-    border-top: 1px solid #34293e;
+    border-top: 1px solid var(--border-primary);
     display: flex;
     justify-content: space-between;
 }
@@ -524,7 +510,7 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    color: #8a7b96;
+    color: var(--text-secondary);
     cursor: pointer;
     transition: all 0.2s;
     padding: 8px 16px;
@@ -532,13 +518,13 @@
 }
 
 .post-action:hover {
-    color: #b6a3cc;
-    background: #232030;
+    color: var(--text-heading);
+    background: var(--bg-secondary);
 }
 
 .post-action-count {
     margin-left: 3px;
-    color: #9175b6;
+    color: var(--accent-primary);
     font-weight: 600;
 }
 
@@ -555,7 +541,7 @@
 }
 
 .icon-heart .icon-svg {
-    fill: rgba(145, 117, 182, 0.2);
+    fill: var(--icon-fill);
 }
 
 .icon-comment .icon-svg {
@@ -620,12 +606,12 @@
 
 .icon-coffee .icon-svg {
     stroke-width: 1.5;
-    fill: rgba(145, 117, 182, 0.15);
+    fill: var(--icon-fill-light);
 }
 
 .icon-verified .icon-svg {
     stroke-width: 2;
-    fill: rgba(145, 117, 182, 0.2);
+    fill: var(--icon-fill);
 }
 
 /* Адаптивность */

@@ -2,7 +2,7 @@
   .settings-page-wrapper {
     width: 100%;
     height: 100%;
-    background: #1f1926;
+    background: var(--bg-card);
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -13,10 +13,10 @@
   .settings-card {
     width: 100%;
     max-width: 480px;
-    background: #261f2e;
+    background: var(--bg-settings);
     padding: 30px;
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px var(--shadow-sm);
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -24,7 +24,7 @@
 
   h1 {
     text-align: center;
-    color: #cdc1b4;
+    color: var(--text-primary);
     margin: 0 0 10px 0;
     font-size: 24px;
   }
@@ -37,24 +37,30 @@
 
   label {
     font-weight: 600;
-    color: #b6a3cc;
+    color: var(--text-heading);
     font-size: 14px;
   }
 
   select {
     width: 100%;
     padding: 12px;
-    border: 1px solid #34293e;
+    border: 1px solid var(--border-primary);
     border-radius: 8px;
-    background: #1f1926;
-    color: #cdc1b4;
+    background: var(--bg-card);
+    color: var(--text-primary);
     font-size: 16px;
     outline: none;
     cursor: pointer;
-  }
 
-  select:focus {
-    border-color: #9175b6;
+    &:focus {
+      border-color: var(--accent-primary);
+    }
+
+    // Стилизация опций для тёмной темы
+    option {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+    }
   }
 
   .actions-group {
@@ -76,36 +82,45 @@
   }
 
   .btn-save {
-    background: #9175b6;
-    color: #fff;
-  }
+    background: var(--accent-primary);
+    color: var(--text-on-accent);
 
-  .btn-save:hover:not(:disabled) {
-    background: #a386c7;
-  }
+    &:hover:not(:disabled) {
+      background: var(--accent-hover-light);
+    }
 
-  .btn-save:disabled {
-    background: #5e4a7a;
-    cursor: not-allowed;
-    opacity: 0.7;
+    &:disabled {
+      background: var(--accent-disabled);
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
   }
 
   .btn-logout {
     background: transparent;
-    border: 2px solid #3e2f45;
-    color: #e57373;
-  }
+    border: 2px solid var(--border-logout);
+    color: var(--error-text);
 
-  .btn-logout:hover {
-    background: #3e2f45;
-    color: #ff8a80;
+    &:hover {
+      background: var(--border-logout);
+      color: var(--error-text-hover);
+    }
   }
 
   .error {
-    color: #e57373;
+    color: var(--error-text);
     text-align: center;
     font-size: 14px;
-    background: rgba(229, 115, 115, 0.1);
+    background: var(--error-bg);
+    padding: 10px;
+    border-radius: 6px;
+  }
+
+  .success {
+    color: #81c784;
+    text-align: center;
+    font-size: 14px;
+    background: rgba(129, 199, 132, 0.1);
     padding: 10px;
     border-radius: 6px;
   }
