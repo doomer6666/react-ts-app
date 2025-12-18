@@ -9,6 +9,7 @@ import type { IChatMessage } from '../../../types/chat/IChatMessage';
 import { useChat } from '../../../context/ChatContext';
 import ChatEmptyArea from './ChatEmptyArea';
 import api from '../../../api/axiosInstance';
+import { handleMessage } from '../../../api/ws';
 
 interface IChat {
   id: number;
@@ -41,7 +42,7 @@ const ChatArea = () => {
     fetchChatName();
   }, [chatContext.activeChat]);
 
-  const { data, error, isLoading } = useSWR<IChatMessage[]>(
+  const { data, error, isLoading, mutate } = useSWR<IChatMessage[]>(
     `/chats/${chatContext.activeChat}/messages`,
     fetcher,
     {
@@ -49,6 +50,25 @@ const ChatArea = () => {
       shouldRetryOnError: false,
     },
   );
+
+  useEffect(() => {
+    if (!chatContext.activeChat) return;
+
+    const unsubscribe = handleMessage((msg) => {
+      if (msg.type === 'message' && msg.payload?.chatId === chatContext.activeChat) {
+        const newMsg: IChatMessage = msg.payload.message;
+        try {
+          mutate((current) => (current ? [...current, newMsg] : [newMsg]), false);
+        } catch (err) {
+          console.warn('[ws] Failed', err);
+        }
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [chatContext.activeChat, mutate]);
 
   if (!data || error) {
     return <ChatEmptyArea />;

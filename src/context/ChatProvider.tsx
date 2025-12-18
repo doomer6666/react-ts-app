@@ -1,5 +1,6 @@
 import { type FC, type ReactNode, useEffect, useState } from 'react';
 import { ChatContext } from './ChatContext';
+import { initWebsocket } from '../api/ws';
 
 interface ChatProviderProps {
   children: ReactNode;
@@ -20,6 +21,10 @@ export const ChatProvider: FC<ChatProviderProps> = ({
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  useEffect(() => {
+    initWebsocket();
   }, []);
 
   return (
