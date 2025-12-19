@@ -1,8 +1,7 @@
 @use "./variables";
 @use "./navigation-bar.scss";
 @use "./news-feed/news-feed.scss";
-@use "./sign-in-up/sign-in.scss";
-@use "./sign-in-up/sign-up.scss";
+@use "./sign.scss";
 @use "./profile/profile.scss";
 @use "./post.scss";
 @use "./profile-modal.scss";
@@ -12,7 +11,7 @@
 @use "./chat/chat.scss";
 @use "./friends/friends.scss";
 @use "./settings.scss";
-@use '../../node_modules/react-cropper/node_modules/cropperjs/dist/cropper.css';
+@use "../../node_modules/react-cropper/node_modules/cropperjs/dist/cropper.css";
 
 @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Spectral:wght@400;600&display=swap");
 
