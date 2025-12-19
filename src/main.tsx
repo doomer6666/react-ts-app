@@ -8,6 +8,7 @@ import Profile from './pages/Profile.tsx';
 import Chat from './pages/Chat.tsx';
 import Friends from './pages/Friends.tsx';
 import Settings from './pages/Settings.tsx';
+import Gallery from './pages/Gallery.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -21,6 +22,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/message" element={<Chat />} />
         <Route path="/friends" element={<Friends />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path='/gallery/:userId' element={<Gallery />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,

@@ -179,6 +179,7 @@ const PostComposer: React.FC<PostComposerProps> = ({
             onUploadComplete={(data) => {
               setUploadedInfo({ filepath: data.filepath });
             }}
+            isPrivate={false}
           />
         </ModalUploader>
       )}

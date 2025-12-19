@@ -29,7 +29,7 @@ const PhotoUploaderCropper: React.FC<PhotoUploaderCropperProps> = ({
     formData.append('file', file);
 
     try {
-      const response = await api.post<UploadResponse>('/image/load', formData, {
+      const response = await api.post<UploadResponse>('/image/load/public', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
