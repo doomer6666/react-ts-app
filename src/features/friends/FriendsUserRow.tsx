@@ -7,6 +7,7 @@ import moveToChat from '../../utils/openChat';
 import { useNavigate } from 'react-router-dom';
 import deleteFriend from '../../api/deleteFriend';
 import addFriend from '../../api/addFriend';
+import settings from '../../api/config';
 
 interface FriendsUserRowProps {
   status: TabValues;
@@ -55,7 +56,7 @@ const FriendsUserRow: FC<FriendsUserRowProps> = ({
             >
               {friend.avatarUrl !== null ? (
                 <img
-                  src={'http://localhost:8000/' + friend.avatarUrl}
+                  src={settings.apiBaseUrl + friend.avatarUrl}
                   alt="Avatar"
                   className="user-avatar-img"
                 />

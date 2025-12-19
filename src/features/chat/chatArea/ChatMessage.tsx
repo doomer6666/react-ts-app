@@ -1,5 +1,6 @@
 import type { FC } from 'react';
 import getTimeAgo from '../../../utils/getTimeAgo';
+import settings from '../../../api/config';
 
 interface ChatMessageProps {
   direction: string;
@@ -23,7 +24,7 @@ const ChatMessage: FC<ChatMessageProps> = ({
     <div className={`message ${direction}`}>
       {avatarUrl ? (
         <div className="message-avatar">
-          <img src={'http://localhost:8000/' + avatarUrl} alt="Avatar" />
+          <img src={settings.apiBaseUrl + avatarUrl} alt="Avatar" />
         </div>
       ) : (
         <div className="message-avatar">{name[0]}</div>
@@ -32,7 +33,7 @@ const ChatMessage: FC<ChatMessageProps> = ({
         <div className="message-text">{message}</div>
         {imageUrl && (
           <div className="message-image">
-            <img src={'http://localhost:8000/' + imageUrl} alt="Message image" />
+            <img src={settings.apiBaseUrl + imageUrl} alt="Message image" />
           </div>
         )}
         <div className="message-time">{timeAgo}</div>

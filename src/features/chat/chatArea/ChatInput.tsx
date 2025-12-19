@@ -6,6 +6,7 @@ import useEnterKey from '../../../hooks/useKeyDown';
 import { useSWRConfig } from 'swr';
 import ModalUploader from '../../profile/ModalUploader';
 import PhotoUploader from '../../profile/PhotoUploader';
+import settings from '../../../api/config';
 
 const ChatInput = () => {
   const chatContext = useChat();
@@ -41,7 +42,7 @@ const ChatInput = () => {
     <div className="chat-input-container" onKeyDown={onKeyDown}>
       {uploadedInfo?.filepath && !isModalOpen && (
         <div className="composer-image-preview">
-          <img src={'http://localhost:8000/' + uploadedInfo.filepath} />
+          <img src={settings.apiBaseUrl + uploadedInfo.filepath} />
           <button
             type="button"
             className="remove-image"

@@ -5,6 +5,7 @@ import ModalUploader from '../features/profile/ModalUploader';
 import PostComposer from '../features/profile/PostComposer';
 import api from '../api/axiosInstance';
 import type { IPost } from '../types/IPost';
+import settings from '../api/config';
 
 interface UpdatePostBody {
   text: string;
@@ -190,7 +191,7 @@ const Post: FC<PostProps> = ({ item, mutate, isFromProfile }) => {
 
         {!isEditing && item.image && (
           <div className="post-image">
-            <img src={'http://localhost:8000/' + item.image} />
+            <img src={settings.apiBaseUrl + item.image} />
           </div>
         )}
       </div>
