@@ -7,6 +7,7 @@ import poster from '../../api/poster';
 import { useState, useEffect } from 'react';
 import PhotoUploader from './PhotoUploader';
 import ModalUploader from './ModalUploader';
+import settings from '../../api/config';
 
 interface PostComposerProps {
   mutate?: () => void;
@@ -97,7 +98,7 @@ const PostComposer: React.FC<PostComposerProps> = ({
       <div className="composer-header">
         {AvatarUrl !== '' ? (
           <img
-            src={'http://localhost:8000/' + AvatarUrl}
+            src={settings.apiBaseUrl + AvatarUrl}
             alt="Avatar"
             className="composer-avatar"
           />
@@ -116,7 +117,7 @@ const PostComposer: React.FC<PostComposerProps> = ({
 
       {uploadedInfo?.filepath && !isModalOpen && (
         <div className="composer-image-preview">
-          <img src={'http://localhost:8000/' + uploadedInfo.filepath} />
+          <img src={settings.apiBaseUrl + uploadedInfo.filepath} />
           <button
             type="button"
             className="remove-image"

@@ -6,6 +6,7 @@ import moveToChat from '../../utils/openChat';
 import deleteFriend from '../../api/deleteFriend';
 import addFriend from '../../api/addFriend';
 import getFriendStatus from '../../utils/getFriendStatus';
+import settings from '../../api/config';
 interface ModalUserProps {
   name: string;
   authorId: number;
@@ -78,7 +79,7 @@ const ModalUser: FC<ModalUserProps> = ({
             onClick={() => navigate('/profile/' + authorId)}
           >
             <img
-              src={'http://localhost:8000/' + avatarUrl}
+              src={settings.apiBaseUrl + avatarUrl}
               alt="Avatar"
               className="profile-avatar-img"
             />

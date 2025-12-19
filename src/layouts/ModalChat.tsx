@@ -6,6 +6,7 @@ import { getSipmleProfile } from '../api/getProfie';
 import Modal from '../components/Modal';
 import type { Friend } from '../utils/getFriendLists';
 import type { IChat } from '../features/feed/ModalUser';
+import settings from '../api/config';
 
 interface ModalChatInviteProps {
   onClose: () => void;
@@ -157,7 +158,7 @@ const ModalChat: FC<ModalChatInviteProps> = ({
                 <div className="participant-item">
                   {friend.avatarUrl !== null ? (
                   <img
-                    src={'http://localhost:8000/' + friend.avatarUrl}
+                    src={settings.apiBaseUrl + friend.avatarUrl}
                     alt="Avatar"
                     className="participant-avatar"
                   />
@@ -184,7 +185,7 @@ const ModalChat: FC<ModalChatInviteProps> = ({
                     <div className="selected-user">
                       {friend.avatarUrl !== null ? (
                       <img
-                        src={'http://localhost:8000/' + friend.avatarUrl}
+                        src={settings.apiBaseUrl + friend.avatarUrl}
                         alt="Avatar"
                         className="selected-user-avatar"
                       />
