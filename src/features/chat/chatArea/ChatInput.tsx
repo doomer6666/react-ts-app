@@ -52,7 +52,9 @@ const ChatInput = () => {
         </div>
       )}
       <div className="chat-input-wrapper">
-        <div className="input-action" onClick={() => setIsModalOpen(true)}>📎</div>
+        <div className="input-action" onClick={() => setIsModalOpen(true)}>
+          📎
+        </div>
         <input
           type="text"
           className="chat-input"
