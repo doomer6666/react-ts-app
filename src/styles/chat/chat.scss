@@ -396,6 +396,7 @@
     .message-image {
         img {
             max-height: 400px;
+            max-width: 600px;
             object-fit: cover;
             border-radius: 10px;
             border: 1px solid #34293e;

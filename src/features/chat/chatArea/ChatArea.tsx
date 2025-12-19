@@ -57,10 +57,16 @@ const ChatArea = () => {
     if (!chatContext.activeChat) return;
 
     const unsubscribe = handleMessage((msg) => {
-      if (msg.type === 'message' && msg.payload?.chatId === chatContext.activeChat) {
+      if (
+        msg.type === 'message' &&
+        msg.payload?.chatId === chatContext.activeChat
+      ) {
         const newMsg: IChatMessage = msg.payload.message;
         try {
-          mutate((current) => (current ? [...current, newMsg] : [newMsg]), false);
+          mutate(
+            (current) => (current ? [...current, newMsg] : [newMsg]),
+            false,
+          );
         } catch (err) {
           console.warn('[ws] Failed', err);
         }

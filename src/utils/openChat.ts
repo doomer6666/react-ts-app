@@ -21,8 +21,8 @@ const moveToChat: OpenChatProps = async (name, navigate, authorId) => {
     const existChat = chats.find(
       (chat) =>
         chat.chatMembers.length === 2 &&
-        chat.chatMembers.includes(authorName) &&
-        chat.chatMembers.includes(name),
+        chat.chatMembers.some((members) => members.username === authorName) &&
+        chat.chatMembers.some((members) => members.username === name),
     );
 
     if (existChat) {

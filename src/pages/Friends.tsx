@@ -18,7 +18,6 @@ const Friends = () => {
     {
       revalidateOnFocus: true,
       shouldRetryOnError: false,
-      refreshInterval: 100,
     },
   );
 
@@ -28,7 +27,6 @@ const Friends = () => {
     {
       revalidateOnFocus: true,
       shouldRetryOnError: false,
-      refreshInterval: 100,
     },
   );
 
@@ -38,7 +36,6 @@ const Friends = () => {
     {
       revalidateOnFocus: true,
       shouldRetryOnError: false,
-      refreshInterval: 100,
     },
   );
 
