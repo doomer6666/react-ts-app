@@ -3,6 +3,7 @@ import useSWR from 'swr';
 import { fetcher } from '../api/fetcher';
 import MainLayout from '../layouts/MainLayout';
 import { useParams } from 'react-router-dom';
+import settings from '../api/config';
 
 interface IPhoto {
   id: number;
@@ -20,7 +21,7 @@ const Gallery: FC = () => {
     {
       revalidateOnFocus: true,
       shouldRetryOnError: false,
-    }
+    },
   );
 
   if (error) {
@@ -45,7 +46,7 @@ const Gallery: FC = () => {
               className="gallery-item"
               onClick={() => setActivePhoto(photo)}
             >
-              <img src={"http://localhost:8000/" + photo.url} alt="photo" />
+              <img src={settings.apiBaseUrl + photo.url} alt="photo" />
             </div>
           ))}
         </div>
@@ -56,7 +57,7 @@ const Gallery: FC = () => {
               className="gallery-modal-content"
               onClick={(e) => e.stopPropagation()}
             >
-              <img src={"http://localhost:8000/" + activePhoto.url} alt="full" />
+              <img src={settings.apiBaseUrl + activePhoto.url} alt="full" />
               <button
                 className="gallery-close"
                 onClick={() => setActivePhoto(null)}

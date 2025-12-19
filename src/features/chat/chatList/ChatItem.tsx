@@ -4,6 +4,7 @@ import type IChatItem from '../../../types/chat/IChatItem';
 import { useChat } from '../../../context/ChatContext';
 import leaveChat from '../../../api/leaveChat';
 import ModalExitLayout from '../../../layouts/ModalExitLayout';
+import settings from '../../../api/config';
 
 const ChatItem: FC<IChatItem> = ({
   id,
@@ -33,9 +34,13 @@ const ChatItem: FC<IChatItem> = ({
       className={`chat-item ${activeChatContext.activeChat === id ? 'active' : ''}`}
       onClick={() => activeChatContext.setActiveChat(id)}
     >
-      {chatBadge !== null ? (<div className="chat-avatar"><img src={"http://localhost:8000/" + chatBadge} alt="Avatar"/></div>) :
-        (<div className="chat-avatar">{name[0]}</div>)
-      }
+      {chatBadge !== null ? (
+        <div className="chat-avatar">
+          <img src={settings.apiBaseUrl + chatBadge} alt="Avatar" />
+        </div>
+      ) : (
+        <div className="chat-avatar">{name[0]}</div>
+      )}
       <div className="chat-info">
         <div className="chat-name">{name}</div>
         <div className="chat-preview">{`${preview}: ${timeAgo}`}</div>

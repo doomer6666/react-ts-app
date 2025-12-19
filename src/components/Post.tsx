@@ -134,7 +134,11 @@ const Post: FC<PostProps> = ({ item, mutate, isFromProfile }) => {
         onClick={() => handleOpenUserModal(item.userId)}
       >
         {avatarUrl !== '' ? (
-          <img src={"http://localhost:8000/" + avatarUrl} alt="Avatar" className="post-avatar" />
+          <img
+            src={settings.apiBaseUrl + avatarUrl}
+            alt="Avatar"
+            className="post-avatar"
+          />
         ) : (
           <div className="post-avatar">{avatarLetter}</div>
         )}
@@ -224,7 +228,11 @@ const Post: FC<PostProps> = ({ item, mutate, isFromProfile }) => {
               item.comments.map((comment) => (
                 <li className="comment-item" key={comment.id}>
                   {comment.avatarUrl ? (
-                    <img src={"http://localhost:8000/" + comment.avatarUrl} alt="Avatar" className="comment-avatar" />
+                    <img
+                      src={settings.apiBaseUrl + comment.avatarUrl}
+                      alt="Avatar"
+                      className="comment-avatar"
+                    />
                   ) : (
                     <div className="comment-avatar">
                       {comment.username?.[0] || 'A'}

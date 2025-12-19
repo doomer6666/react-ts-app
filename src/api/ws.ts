@@ -1,12 +1,18 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type WSMessage = { type: string; payload?: any };
 
-const WS_URL = "ws://localhost:8000/ws"
+const WS_URL = 'ws://localhost:8000/ws';
 
 let socket: WebSocket | null = null;
 const handler = new Set<(msg: WSMessage) => void>();
 
 function connect() {
-  if (socket && (socket.readyState === WebSocket.OPEN || socket.readyState === WebSocket.CONNECTING)) return;
+  if (
+    socket &&
+    (socket.readyState === WebSocket.OPEN ||
+      socket.readyState === WebSocket.CONNECTING)
+  )
+    return;
 
   socket = new WebSocket(WS_URL);
 
@@ -46,5 +52,5 @@ export function handleMessage(cb: (msg: WSMessage) => void) {
 
 export default {
   initWebsocket,
-  handleMessage
+  handleMessage,
 };
