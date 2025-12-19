@@ -5,12 +5,17 @@ interface ProfileProps {
 }
 const ProfileHeader: FC<ProfileProps> = ({ user }) => {
   const avavarLetter = user.name[0];
+  const avatarUrl = user.avatarUrl || '';
   return (
     <div className="header">
       <div className="profile-header">
         <div className="profile-cover"></div>
         <div className="profile-avatar-container">
-          <div className="profile-avatar">{avavarLetter}</div>
+          {avatarUrl ? (
+            <img src={"http://localhost:8000/" + avatarUrl} alt="Avatar" className="profile-avatar" />
+          ) : (
+            <div className="profile-avatar">{avavarLetter}</div>
+          )}
         </div>
       </div>
       <div className="profile-info">

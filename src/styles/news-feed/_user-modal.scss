@@ -30,6 +30,13 @@
         font-size: 32px;
         color: #cdc1b4;
         border: 3px solid #9175b6;
+
+        img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
     }
 
     .profile-name {

@@ -16,7 +16,7 @@ interface IChat {
   name: string;
   preview: string;
   chatTime: Date;
-  chatBadge: number;
+  chatBadge?: string;
   chatMembers: string[];
 }
 
@@ -24,6 +24,7 @@ const ChatArea = () => {
   const chatContext = useChat();
   const [chatName, setChatName] = useState<string>('чат');
   const [chatId, setChatId] = useState<number>(0);
+  const [chatBadge, setChatBadge] = useState<string>('');
   useEffect(() => {
     const fetchChatName = async () => {
       if (chatContext.activeChat) {
@@ -33,6 +34,7 @@ const ChatArea = () => {
           );
           setChatName(response.data.name);
           setChatId(response.data.id);
+          if (response.data.chatBadge) setChatBadge(response.data.chatBadge);
         } catch (error) {
           console.error('Failed to fetch chat name:', error);
         }
@@ -81,7 +83,7 @@ const ChatArea = () => {
       {chatContext.activeChat !== null && (
         <>
           {isLoading && <div>Загрузка...</div>}
-          <ChatHeader name={chatName} chatId={chatId} />
+          <ChatHeader name={chatName} chatId={chatId} chatBadge={chatBadge} />
 
           <div className="chat-messages">
             {/* <div className="message-date">Сегодня</div> */}
@@ -93,6 +95,7 @@ const ChatArea = () => {
                 message={item.message}
                 time={item.time}
                 imageUrl={item.imageUrl}
+                avatarUrl={item.avatarUrl}
               />
             ))}
           </div>

@@ -47,6 +47,7 @@ const ChatList = () => {
             id={item.id}
             name={item.name}
             preview={item.preview}
+            chatBadge={item.chatBadge}
             chatTime={item.chatTime}
           />
         ))}

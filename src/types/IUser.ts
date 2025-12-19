@@ -7,4 +7,5 @@ export default interface IUser {
   subscriberCount: number;
   posts: IPost[];
   userId?: number;
+  avatarUrl?: string;
 }

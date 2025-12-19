@@ -4,4 +4,5 @@ export interface IChatMessage {
   message: string;
   time: string;
   imageUrl?: string;
+  avatarUrl?: string;
 }

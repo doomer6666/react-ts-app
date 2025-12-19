@@ -2,6 +2,7 @@ export interface IPost {
   id: number;
   userId: number;
   user: string;
+  avatarUrl?: string;
   postTime: string;
   text: string;
   image?: string;
@@ -17,4 +18,5 @@ interface IComment {
   postId: number;
   userId: number;
   username?: string;
+  avatarUrl?: string;
 }

@@ -10,6 +10,7 @@ interface ModalUserProps {
   name: string;
   authorId: number;
   avatarLetter: string;
+  avatarUrl?: string;
   onClose: () => void;
 }
 
@@ -26,6 +27,7 @@ const ModalUser: FC<ModalUserProps> = ({
   name,
   authorId,
   avatarLetter,
+  avatarUrl,
   onClose,
 }) => {
   const navigate = useNavigate();
@@ -69,6 +71,19 @@ const ModalUser: FC<ModalUserProps> = ({
           <img src="./close.svg" />
         </button>
         <div className="profile-header">
+          {avatarUrl !== '' ? (
+<         div
+            className="profile-avatar"
+            id="modalAvatar"
+            onClick={() => navigate('/profile/' + authorId)}
+          >
+            <img
+              src={'http://localhost:8000/' + avatarUrl}
+              alt="Avatar"
+              className="profile-avatar-img"
+            />
+          </div>
+          ) : (
           <div
             className="profile-avatar"
             id="modalAvatar"
@@ -76,6 +91,7 @@ const ModalUser: FC<ModalUserProps> = ({
           >
             {avatarLetter}
           </div>
+          )}
           <div className="profile-name" id="modalName">
             {name}
           </div>
