@@ -16,6 +16,7 @@ interface ModalChatInviteProps {
 interface SipmleIUser {
   name: string;
   id: number;
+  avatarUrl?: string;
 }
 
 const ModalChat: FC<ModalChatInviteProps> = ({
@@ -33,15 +34,15 @@ const ModalChat: FC<ModalChatInviteProps> = ({
   const [friendList, setFriendList] = useState<SipmleIUser[]>([]);
 
   const getFriendsProfile = async (data: Friend[] | undefined) => {
-    if (data) {
-      setFriendList(
-        (
-          await Promise.all(
-            data.map((friend) => getSipmleProfile(friend.friend_id)),
-          )
-        ).filter((profile): profile is SipmleIUser => profile.id !== undefined),
-      );
-    }
+    if (!data) return;
+
+    const profiles = await Promise.all(
+      data.map(friend => getSipmleProfile(friend.friend_id))
+    );
+
+    setFriendList(
+      profiles.filter((p): p is SipmleIUser => p !== null)
+    );
   };
 
   useEffect(() => {
@@ -67,18 +68,22 @@ const ModalChat: FC<ModalChatInviteProps> = ({
   }, [filterInput, friendList]);
 
   const fillDataIfCreated = async () => {
-    if (isCreated) {
-      const { data } = await api.get<IChat>(`/chats/${chatId}`);
-      setChatName(data.name);
-      setSelectedFriends(
-        (
-          await Promise.all(
-            data.chatMembers.map((friend) => getSipmleProfile(friend.id)),
-          )
-        ).filter((profile): profile is SipmleIUser => profile.id !== undefined),
-      );
-    }
+    if (!isCreated) return;
+
+    const { data } = await api.get<IChat>(`/chats/${chatId}`);
+    setChatName(data.name);
+
+    const profiles = await Promise.all(
+      data.chatMembers.map(friend =>
+        getSipmleProfile(friend.id)
+      )
+    );
+
+    setSelectedFriends(
+      profiles.filter((p): p is SipmleIUser => p !== null)
+    );
   };
+
 
   const unSelectFriend = (friend: SipmleIUser) => {
     setSelectedFriends(selectedFriends.filter((item) => item !== friend));
@@ -105,6 +110,7 @@ const ModalChat: FC<ModalChatInviteProps> = ({
     await api.post(`/chats/${chatId}/members`, {
       members: selectedFriends.map((friend) => friend.id),
     });
+    onClose();
   };
   return (
     <Modal onClose={onClose}>
@@ -149,7 +155,15 @@ const ModalChat: FC<ModalChatInviteProps> = ({
             <div className="participants-list">
               {filteredChatList.map((friend) => (
                 <div className="participant-item">
+                  {friend.avatarUrl !== null ? (
+                  <img
+                    src={'http://localhost:8000/' + friend.avatarUrl}
+                    alt="Avatar"
+                    className="participant-avatar"
+                  />
+                    ) : (
                   <div className="participant-avatar">{friend.name[0]}</div>
+                    )}
                   <div className="participant-info">
                     <div className="participant-name">{friend.name}</div>
                   </div>
@@ -168,9 +182,17 @@ const ModalChat: FC<ModalChatInviteProps> = ({
                 <div className="selected-list">
                   {selectedFriends.map((friend) => (
                     <div className="selected-user">
+                      {friend.avatarUrl !== null ? (
+                      <img
+                        src={'http://localhost:8000/' + friend.avatarUrl}
+                        alt="Avatar"
+                        className="selected-user-avatar"
+                      />
+                        ) : (
                       <div className="selected-user-avatar">
                         {friend.name[0]}
                       </div>
+                      )}
                       <div className="selected-user-name">{friend.name}</div>
                       {!isCreated && (
                         <div
