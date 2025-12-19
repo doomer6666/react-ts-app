@@ -132,6 +132,13 @@
         border: 2px solid var(--accent-primary);
         position: relative;
 
+        img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
         &.online::after {
             content: "";
             position: absolute;
@@ -242,6 +249,13 @@
         font-weight: bold;
         color: var(--text-primary);
         border: 2px solid var(--accent-primary);
+
+        img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
     }
 
     .chat-header-name {
@@ -340,6 +354,13 @@
         color: var(--text-primary);
         border: 2px solid var(--accent-primary);
         margin-right: 10px;
+
+        img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
     }
 
     .sent .message-avatar {

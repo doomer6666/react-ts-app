@@ -7,6 +7,7 @@ interface ChatMessageProps {
   message: string;
   time: string;
   imageUrl?: string;
+  avatarUrl?: string;
 }
 const ChatMessage: FC<ChatMessageProps> = ({
   direction,
@@ -14,12 +15,19 @@ const ChatMessage: FC<ChatMessageProps> = ({
   message,
   time,
   imageUrl,
+  avatarUrl,
 }) => {
   const timeAgo = getTimeAgo(time);
 
   return (
     <div className={`message ${direction}`}>
-      <div className="message-avatar">{name[0]}</div>
+      {avatarUrl ? (
+        <div className="message-avatar">
+          <img src={'http://localhost:8000/' + avatarUrl} alt="Avatar" />
+        </div>
+      ) : (
+        <div className="message-avatar">{name[0]}</div>
+      )}
       <div className="message-content">
         <div className="message-text">{message}</div>
         {imageUrl && (

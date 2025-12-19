@@ -33,7 +33,9 @@ const ChatItem: FC<IChatItem> = ({
       className={`chat-item ${activeChatContext.activeChat === id ? 'active' : ''}`}
       onClick={() => activeChatContext.setActiveChat(id)}
     >
-      <div className="chat-avatar">{name[0]}</div>
+      {chatBadge !== null ? (<div className="chat-avatar"><img src={"http://localhost:8000/" + chatBadge} alt="Avatar"/></div>) :
+        (<div className="chat-avatar">{name[0]}</div>)
+      }
       <div className="chat-info">
         <div className="chat-name">{name}</div>
         <div className="chat-preview">{`${preview}: ${timeAgo}`}</div>
@@ -47,7 +49,7 @@ const ChatItem: FC<IChatItem> = ({
         >
           ×
         </button>
-        {chatBadge && <div className="chat-badge">{chatBadge}</div>}
+        {/* {chatBadge && <div className="chat-badge">{chatBadge}</div>} */}
       </div>
       {isOpenModal && (
         <ModalExitLayout

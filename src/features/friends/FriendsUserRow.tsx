@@ -49,7 +49,19 @@ const FriendsUserRow: FC<FriendsUserRowProps> = ({
       {friendList.map((friend, key) => (
         <div className="user-row" key={key}>
           <a href="#" className="user-avatar-link">
-            <div className="user-avatar">{friend.name[0]}</div>
+            <div className="user-avatar">
+              {friend.avatarUrl !== null ? (
+                <img
+                  src={'http://localhost:8000/' + friend.avatarUrl}
+                  alt="Avatar"
+                  className="user-avatar-img"
+                />
+              ) : (
+                <div className="user-avatar">
+                  {friend.name[0]}
+                </div>
+              )}
+            </div>
           </a>
           <div className="user-info">
             <a href="#" className="user-name">

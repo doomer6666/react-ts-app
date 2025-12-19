@@ -34,6 +34,8 @@ const Profile: FC = () => {
   }
 
   const user: IUser = data;
+  const avatarLetter: string = user.name[0];
+  const avatarUrl: string = user.avatarUrl || '';
   const postsSorted = user.posts.toSorted(
     (a, b) => new Date(b.postTime).getTime() - new Date(a.postTime).getTime(),
   );
@@ -49,7 +51,7 @@ const Profile: FC = () => {
         <div className="profile-content">
           <div className="profile-feed">
             {user.userId === userId && (
-              <PostComposer mutate={mutate} AvatarLetter={user.name[0]} />
+              <PostComposer mutate={mutate} AvatarLetter={avatarLetter} AvatarUrl={avatarUrl} />
             )}
 
             <div className="feed">

@@ -32,6 +32,7 @@ const Post: FC<PostProps> = ({ item, mutate, isFromProfile }) => {
   const [isLiked, setIsLiked] = useState<boolean>(item.isLiked || false);
 
   const avatarLetter: string = item.user[0];
+  const avatarUrl: string = item.avatarUrl || '';
   const timeAgo = getTimeAgo(item.postTime);
   const userId = Number(localStorage.getItem('id'));
 
@@ -131,7 +132,11 @@ const Post: FC<PostProps> = ({ item, mutate, isFromProfile }) => {
         className="post-header"
         onClick={() => handleOpenUserModal(item.userId)}
       >
-        <div className="post-avatar">{avatarLetter}</div>
+        {avatarUrl !== '' ? (
+          <img src={"http://localhost:8000/" + avatarUrl} alt="Avatar" className="post-avatar" />
+        ) : (
+          <div className="post-avatar">{avatarLetter}</div>
+        )}
         <div>
           <div className="post-user">{item.user}</div>
           <div className="post-time">{timeAgo}</div>
@@ -177,6 +182,7 @@ const Post: FC<PostProps> = ({ item, mutate, isFromProfile }) => {
               onCancel={cancelEdit}
               submitLabel="Сохранить"
               AvatarLetter={avatarLetter}
+              AvatarUrl={avatarUrl}
             />
             {editError && <div className="error">{editError}</div>}
           </div>
@@ -216,9 +222,13 @@ const Post: FC<PostProps> = ({ item, mutate, isFromProfile }) => {
             {item.comments && item.comments.length > 0 ? (
               item.comments.map((comment) => (
                 <li className="comment-item" key={comment.id}>
-                  <div className="comment-avatar">
-                    {comment.username?.[0] || 'A'}
-                  </div>
+                  {comment.avatarUrl ? (
+                    <img src={"http://localhost:8000/" + comment.avatarUrl} alt="Avatar" className="comment-avatar" />
+                  ) : (
+                    <div className="comment-avatar">
+                      {comment.username?.[0] || 'A'}
+                    </div>
+                  )}
                   <div className="comment-body">
                     <div className="comment-meta">
                       <span className="comment-username">
@@ -245,7 +255,6 @@ const Post: FC<PostProps> = ({ item, mutate, isFromProfile }) => {
             }}
           >
             <div className="comment-input-wrap">
-              <div className="comment-input-avatar">{avatarLetter}</div>
               <input
                 className="comment-input"
                 placeholder="Написать комментарий..."
@@ -274,6 +283,7 @@ const Post: FC<PostProps> = ({ item, mutate, isFromProfile }) => {
           name={item.user}
           authorId={item.userId}
           avatarLetter={avatarLetter}
+          avatarUrl={avatarUrl}
           onClose={() => setOpenModal(false)}
         />
       )}

@@ -5,6 +5,6 @@ export default interface IChatItem {
   name: string;
   preview: string;
   chatTime: string;
-  chatBadge?: number;
+  chatBadge?: string;
   mutate: KeyedMutator<IChatItem[]>;
 }

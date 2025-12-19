@@ -9,9 +9,10 @@ interface UploadResponse {
 
 interface PhotoUploaderProps {
   onUploadComplete: (data: UploadResponse) => void;
+  isPrivate?: boolean;
 }
 
-const PhotoUploader: React.FC<PhotoUploaderProps> = ({ onUploadComplete }) => {
+const PhotoUploader: React.FC<PhotoUploaderProps> = ({ onUploadComplete, isPrivate = true }) => {
   const [preview, setPreview] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -20,11 +21,19 @@ const PhotoUploader: React.FC<PhotoUploaderProps> = ({ onUploadComplete }) => {
     formData.append('file', file);
 
     try {
-      const response = await api.post<UploadResponse>('/image/load', formData, {
+      if (isPrivate) {
+      const response = await api.post<UploadResponse>('/image/load/private', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
-      onUploadComplete(response.data);
+        onUploadComplete(response.data);
+      } else {
+        const response = await api.post<UploadResponse>('/image/load/public', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+
+        onUploadComplete(response.data);
+      }
     } catch (err) {
       console.error('Ошибка загрузки файла:', err);
       alert('Ошибка загрузки файла');

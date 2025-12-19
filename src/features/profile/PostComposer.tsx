@@ -16,6 +16,7 @@ interface PostComposerProps {
   onCancel?: () => void;
   submitLabel?: string;
   AvatarLetter?: string;
+  AvatarUrl: string;
 }
 
 const PostComposer: React.FC<PostComposerProps> = ({
@@ -26,6 +27,7 @@ const PostComposer: React.FC<PostComposerProps> = ({
   onCancel,
   submitLabel,
   AvatarLetter,
+  AvatarUrl,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadedInfo, setUploadedInfo] = useState<{
@@ -93,7 +95,15 @@ const PostComposer: React.FC<PostComposerProps> = ({
     <form className="post-composer" onSubmit={handleSubmit(composerSubmit)}>
       {error && <div>Ошибка. Зайдите позже</div>}
       <div className="composer-header">
-        <div className="composer-avatar">{AvatarLetter || 'A'}</div>
+        {AvatarUrl !== '' ? (
+          <img
+            src={'http://localhost:8000/' + AvatarUrl}
+            alt="Avatar"
+            className="composer-avatar"
+          />
+        ) : (
+          <div className="composer-avatar">{AvatarLetter || 'A'}</div>
+        )}
         <textarea
           className="composer-input"
           placeholder="Что у вас нового?"
@@ -169,6 +179,7 @@ const PostComposer: React.FC<PostComposerProps> = ({
             onUploadComplete={(data) => {
               setUploadedInfo({ filepath: data.filepath });
             }}
+            isPrivate={false}
           />
         </ModalUploader>
       )}
