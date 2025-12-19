@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import api from '../api/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
@@ -7,19 +7,15 @@ import PhotoUploaderCropper from '../features/profile/AvatarUploader';
 import ModalUploader from '../features/profile/ModalUploader';
 
 const Settings = () => {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'light';
+  });
+
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isOpenModalExit, setIsOpenModalExit] = useState<boolean>(false);
   const [isOpenModalAvatar, setIsOpenModalAvatar] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const storedTheme = localStorage.getItem('theme');
-    if (storedTheme) {
-      setTheme(storedTheme);
-    }
-  }, []);
 
   const handleSave = async () => {
     setError(null);
@@ -28,7 +24,7 @@ const Settings = () => {
       const payload = { theme };
       await api.post('/settings', payload);
       localStorage.setItem('theme', theme);
-      navigate('/profile');
+      document.documentElement.setAttribute('data-theme', theme);
     } catch (err) {
       console.error('Failed to save settings:', err);
       setError('Ошибка сохранения настроек');
@@ -44,7 +40,7 @@ const Settings = () => {
       console.error('Ошибка при обновлении аватара:', err);
       alert('Ошибка при обновлении аватара');
     }
-  }
+  };
 
   const handleLogout = async () => {
     await api.post('/auth/logout/');
@@ -75,7 +71,12 @@ const Settings = () => {
           </div>
 
           <div className="avatar-section">
-            <button className="btn-upload-avatar" onClick={() => setIsOpenModalAvatar(true)}>Загрузить аватар</button>
+            <button
+              className="btn-upload-avatar"
+              onClick={() => setIsOpenModalAvatar(true)}
+            >
+              Загрузить аватар
+            </button>
           </div>
 
           <div className="actions-group">
@@ -87,7 +88,10 @@ const Settings = () => {
               {isSubmitting ? 'Сохраняем...' : 'Сохранить'}
             </button>
 
-            <button onClick={() => setIsOpenModalExit(true)} className="btn-logout">
+            <button
+              onClick={() => setIsOpenModalExit(true)}
+              className="btn-logout"
+            >
               Выйти из аккаунта
             </button>
           </div>

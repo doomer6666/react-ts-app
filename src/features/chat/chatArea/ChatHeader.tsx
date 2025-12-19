@@ -1,9 +1,11 @@
-import type { FC } from 'react';
+import { useState, type FC } from 'react';
+import ModalChat from '../../../layouts/ModalChat';
 
-const ChatHeader: FC<{ name: string; chatId: number; chatBadge?: string }> = ({ name, chatBadge }) => {
+const ChatHeader: FC<{ name: string; chatId: number; chatBadge?: string }> = ({ name, chatBadge, chatId }) => {
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   return (
     <div className="chat-header">
-      <div className="chat-header-info">
+      <div className="chat-header-info" onClick={() => setIsOpenModal(true)}>
         {chatBadge !== '' ? (
           <div className="chat-header-avatar">
             <img src={"http://localhost:8000/" + chatBadge} alt="Avatar" />
@@ -15,6 +17,15 @@ const ChatHeader: FC<{ name: string; chatId: number; chatBadge?: string }> = ({ 
           <div className="chat-header-name">{name}</div>
         </div>
       </div>
+      {isOpenModal && (
+        <ModalChat
+          onClose={() => {
+            setIsOpenModal(false);
+          }}
+          isCreated={true}
+          chatId={chatId}
+        />
+      )}
     </div>
   );
 };

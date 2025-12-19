@@ -10,7 +10,6 @@ const NavigationBar: FC<INavigationBar> = ({ activeItem, setActiveItem }) => {
     { key: GlobalTabEnum.FEED, name: 'Лента', icon: '/feed.svg' },
     { key: GlobalTabEnum.MESSAGE, name: 'Сообщения', icon: '/chat.svg' },
     { key: GlobalTabEnum.FRIENDS, name: 'Друзья', icon: '/friends.svg' },
-    { key: GlobalTabEnum.MUSIC, name: 'Музыка', icon: '/music.svg' },
     { key: GlobalTabEnum.SETTINGS, name: 'Настройки', icon: '/setting.svg' },
   ];
 

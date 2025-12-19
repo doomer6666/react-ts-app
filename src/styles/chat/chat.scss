@@ -394,10 +394,8 @@
     }
 
     .message-image {
-
         img {
-            width: 80%;
-            height: auto;
+            max-height: 400px;
             object-fit: cover;
             border-radius: 10px;
             border: 1px solid #34293e;
@@ -516,6 +514,11 @@
 
         &:hover {
             background: var(--accent-light);
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+            background: var(--accent-disabled-alt) !important;
         }
     }
 }
