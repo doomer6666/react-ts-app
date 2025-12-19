@@ -94,7 +94,7 @@ const PhotoUploaderCropper: React.FC<PhotoUploaderCropperProps> = ({
           />
 
           <div className="cropper-actions">
-            <button onClick={handleCropAndUpload}>Обрезать и загрузить</button>
+            <button className='modal-btn confirm' onClick={handleCropAndUpload}>Обрезать и загрузить</button>
           </div>
         </div>
       )}
