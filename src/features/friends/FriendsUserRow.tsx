@@ -49,7 +49,10 @@ const FriendsUserRow: FC<FriendsUserRowProps> = ({
       {friendList.map((friend, key) => (
         <div className="user-row" key={key}>
           <a href="#" className="user-avatar-link">
-            <div className="user-avatar">
+            <div
+              className="user-avatar"
+              onClick={() => navigate(`/profile/${friend.userId}`)}
+            >
               {friend.avatarUrl !== null ? (
                 <img
                   src={'http://localhost:8000/' + friend.avatarUrl}
@@ -57,9 +60,7 @@ const FriendsUserRow: FC<FriendsUserRowProps> = ({
                   className="user-avatar-img"
                 />
               ) : (
-                <div className="user-avatar">
-                  {friend.name[0]}
-                </div>
+                <div className="user-avatar">{friend.name[0]}</div>
               )}
             </div>
           </a>

@@ -8,6 +8,7 @@ import Chat from './pages/Chat.tsx';
 import Friends from './pages/Friends.tsx';
 import Settings from './pages/Settings.tsx';
 import NewsFeed from './pages/NewsFeed.tsx';
+import Gallery from './pages/Gallery.tsx';
 
 function App() {
   useEffect(() => {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/message" element={<Chat />} />
         <Route path="/friends" element={<Friends />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/gallery/:userId" element={<Gallery />} />
       </Routes>
     </BrowserRouter>
   );

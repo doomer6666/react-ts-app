@@ -8,7 +8,7 @@ import api from '../api/axiosInstance';
 import { useState } from 'react';
 import useEnterKey from '../hooks/useKeyDown';
 
-interface LoginResponse {
+export interface LoginResponse {
   id: string;
   username: string;
 }

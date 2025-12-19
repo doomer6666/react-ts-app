@@ -6,7 +6,7 @@ import type ISignUp from '../types/ISignUp';
 import Cubes from '../components/animations/Cubes';
 import useSWRMutation from 'swr/mutation';
 import poster from '../api/poster';
-import type ISignIn from '../types/ISignIn';
+import type { LoginResponse } from './Sign';
 
 const Registration = () => {
   const schema = yup.object({
@@ -19,15 +19,17 @@ const Registration = () => {
       .string()
       .required('Введите почту!')
       .email('Введите корректный email'),
-    password: yup.string().required('Введите пароль!'),
-    // .min(3, 'Минимум 8 символов')
-    // .matches(/[0-9]/, 'Пароль должен содержать хотя бы одну цифру')
-    // .matches(/[A-Z]/, 'Пароль должен содержать хотя бы одну заглавную букву')
-    // .matches(/[a-z]/, 'Пароль должен содержать хотя бы одну строчную букву')
-    // .matches(
-    //   /[^a-zA-Z0-9]/,
-    //   'Пароль должен содержать хотя бы один специальный символ',
-    // )
+    password: yup
+      .string()
+      .required('Введите пароль!')
+      .min(3, 'Минимум 8 символов')
+      .matches(/[0-9]/, 'Пароль должен содержать хотя бы одну цифру')
+      .matches(/[A-Z]/, 'Пароль должен содержать хотя бы одну заглавную букву')
+      .matches(/[a-z]/, 'Пароль должен содержать хотя бы одну строчную букву')
+      .matches(
+        /[^a-zA-Z0-9]/,
+        'Пароль должен содержать хотя бы один специальный символ',
+      ),
     confirmPassword: yup
       .string()
       .required('Подтвердите пароль!')
@@ -41,7 +43,7 @@ const Registration = () => {
   } = useForm<ISignUp>({ resolver: yupResolver(schema) });
 
   const { trigger, isMutating, error } = useSWRMutation<
-    ISignIn,
+    LoginResponse,
     Error,
     string,
     ISignUp
@@ -51,9 +53,9 @@ const Registration = () => {
 
   const onSubmit = async (formData: ISignUp) => {
     try {
-      console.log(formData);
-      await trigger(formData);
+      const response = await trigger(formData);
       navigate('/profile');
+      localStorage.setItem('id', response.id);
     } catch (e) {
       console.error('Error submitting form:', e);
     }
