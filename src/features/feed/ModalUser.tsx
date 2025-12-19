@@ -19,7 +19,7 @@ export interface IChat {
   preview: string;
   chatTime: string;
   chatBadge: number;
-  chatMembers: string[];
+  chatMembers: { id: number; username: string }[];
 }
 
 const ModalUser: FC<ModalUserProps> = ({

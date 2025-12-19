@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ModalChatInvite from '../ModalChatInvite';
+import ModalChat from '../../../layouts/ModalChat';
 
 const ChatEmptyArea = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -11,7 +11,9 @@ const ChatEmptyArea = () => {
       <button className="create-chat-btn" onClick={() => setOpenModal(true)}>
         Создать чат
       </button>
-      {openModal && <ModalChatInvite onClose={() => setOpenModal(false)} />}
+      {openModal && (
+        <ModalChat onClose={() => setOpenModal(false)} isCreated={false} />
+      )}
     </div>
   );
 };
