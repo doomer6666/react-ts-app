@@ -1,5 +1,5 @@
 const settings = {
-  apiBaseUrl: 'http://localhost:8000/',
+  apiBaseUrl: 'https://158.160.168.82:443',
 };
 
 export default settings;

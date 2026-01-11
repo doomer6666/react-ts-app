@@ -95,7 +95,7 @@ const Post: FC<PostProps> = ({ item, mutate, isFromProfile }) => {
     }
     setIsSubmittingComment(true);
     try {
-      await api.post(`/comments`, {
+      await api.post(`/comments/`, {
         postId: item.id,
         content: commentText.trim(),
       });

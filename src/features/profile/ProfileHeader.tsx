@@ -33,7 +33,7 @@ const ProfileHeader: FC<ProfileProps> = ({ user }) => {
           <div
             className="profile-stat"
             onClick={() => {
-              navigate('/friends/');
+              navigate('/friends');
             }}
           >
             <div className="profile-stat-value">{user.friendCount}</div>
@@ -51,7 +51,7 @@ const ProfileHeader: FC<ProfileProps> = ({ user }) => {
           <div
             className="profile-stat"
             onClick={() => {
-              navigate('/friends/');
+              navigate('/friends');
             }}
           >
             <div className="profile-stat-value">{user.subscriberCount}</div>

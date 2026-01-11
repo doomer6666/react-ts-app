@@ -56,7 +56,7 @@ const PostComposer: React.FC<PostComposerProps> = ({
     Error,
     string,
     IPostComposer
-  >('/posts/', poster);
+  >('/posts', poster);
 
   const {
     register,

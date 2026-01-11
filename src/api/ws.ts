@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type WSMessage = { type: string; payload?: any };
 
-const WS_URL = 'ws://localhost:8000/ws';
+const WS_URL = 'ws://158.160.168.82:443/ws';
 
 let socket: WebSocket | null = null;
 const handler = new Set<(msg: WSMessage) => void>();

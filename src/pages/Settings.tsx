@@ -22,7 +22,7 @@ const Settings = () => {
     setIsSubmitting(true);
     try {
       const payload = { theme };
-      await api.post('/settings', payload);
+      await api.post('/settings/', payload);
       localStorage.setItem('theme', theme);
       document.documentElement.setAttribute('data-theme', theme);
     } catch (err) {
@@ -43,7 +43,7 @@ const Settings = () => {
   };
 
   const handleLogout = async () => {
-    await api.post('/auth/logout/');
+    await api.post('/auth/logout');
     localStorage.removeItem('theme');
     navigate('/');
   };

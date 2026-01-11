@@ -1,7 +1,7 @@
 import api from './axiosInstance';
 
 const addFriend = async (authorId: number) => {
-  await api.post('/friend', {
+  await api.post('/friend/', {
     friendId: authorId,
   });
 };

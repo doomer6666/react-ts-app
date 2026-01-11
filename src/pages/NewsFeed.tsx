@@ -9,7 +9,7 @@ const NewsFeed: FC = () => {
   const [activeItem, setActiveItem] = useState('feed');
   const [filterInput, setFilterInput] = useState('');
   const { data, error, isLoading, mutate } = useSWR<IPost[]>(
-    '/posts/',
+    '/posts',
     fetcher,
     {
       revalidateOnFocus: true,

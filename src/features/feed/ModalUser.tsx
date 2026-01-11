@@ -73,25 +73,25 @@ const ModalUser: FC<ModalUserProps> = ({
         </button>
         <div className="profile-header">
           {avatarUrl !== '' ? (
-<         div
-            className="profile-avatar"
-            id="modalAvatar"
-            onClick={() => navigate('/profile/' + authorId)}
-          >
-            <img
-              src={settings.apiBaseUrl + avatarUrl}
-              alt="Avatar"
-              className="profile-avatar-img"
-            />
-          </div>
+            <div
+              className="profile-avatar"
+              id="modalAvatar"
+              onClick={() => navigate('/profile/' + authorId)}
+            >
+              <img
+                src={settings.apiBaseUrl + avatarUrl}
+                alt="Avatar"
+                className="profile-avatar-img"
+              />
+            </div>
           ) : (
-          <div
-            className="profile-avatar"
-            id="modalAvatar"
-            onClick={() => navigate('/profile/' + authorId)}
-          >
-            {avatarLetter}
-          </div>
+            <div
+              className="profile-avatar"
+              id="modalAvatar"
+              onClick={() => navigate('/profile/' + authorId)}
+            >
+              {avatarLetter}
+            </div>
           )}
           <div className="profile-name" id="modalName">
             {name}

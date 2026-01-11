@@ -39,13 +39,13 @@ const Sign = () => {
     handleSubmit(async (formData) => {
       try {
         setIsLoading(true);
-        const response = await api.post('/auth/login/', formData);
+        const response = await api.post('/auth/login', formData);
         const loginResponse: LoginResponse = response.data;
         localStorage.setItem('id', loginResponse.id);
         localStorage.setItem('name', loginResponse.username);
 
         // Fetch user settings after login
-        const settingsResponse = await api.get<SettingsRead>(`/settings`);
+        const settingsResponse = await api.get<SettingsRead>(`/settings/`);
         const settings = settingsResponse.data;
         localStorage.setItem(
           'notifications_enabled',
@@ -53,7 +53,7 @@ const Sign = () => {
         );
         localStorage.setItem('theme', settings.theme);
 
-        navigate('/profile');
+        navigate('/profile/');
       } catch (e) {
         setIsError(true);
         console.error('Error submitting form:', e);

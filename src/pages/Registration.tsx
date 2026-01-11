@@ -47,14 +47,14 @@ const Registration = () => {
     Error,
     string,
     ISignUp
-  >('/auth/register/', poster);
+  >('/auth/register', poster);
 
   const navigate = useNavigate();
 
   const onSubmit = async (formData: ISignUp) => {
     try {
       const response = await trigger(formData);
-      navigate('/profile');
+      navigate('/profile/');
       localStorage.setItem('id', response.id);
     } catch (e) {
       console.error('Error submitting form:', e);
