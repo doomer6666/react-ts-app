@@ -1,8 +1,8 @@
 import { useState, useRef, type FC } from 'react';
 import getTimeAgo from '../utils/getTimeAgo';
-import ModalUser from '../features/feed/ModalUser';
-import ModalUploader from '../features/profile/ModalUploader';
-import PostComposer from '../features/profile/PostComposer';
+import ModalUser from '../modules/feed/ModalUser';
+import ModalUploader from '../modules/profile/ModalUploader';
+import PostComposer from '../modules/profile/PostComposer';
 import api from '../api/axiosInstance';
 import type { IPost } from '../types/IPost';
 import settings from '../api/config';

@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import MainLayout from '../layouts/MainLayout';
-import ChatList from '../features/chat/chatList/ChatList';
-import ChatArea from '../features/chat/chatArea/ChatArea';
+import MainLayout from '../../layouts/MainLayout';
+import ChatList from './chatList/ChatList';
+import ChatArea from './chatArea/ChatArea';
 import { useLocation } from 'react-router-dom';
-import { ChatProvider } from '../context/ChatProvider';
+import { ChatProvider } from '../../context/ChatProvider';
 
 const Chat = () => {
   const location = useLocation();

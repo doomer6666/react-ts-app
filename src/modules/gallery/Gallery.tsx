@@ -1,9 +1,9 @@
 import { useState, type FC } from 'react';
 import useSWR from 'swr';
-import { fetcher } from '../api/fetcher';
-import MainLayout from '../layouts/MainLayout';
 import { useParams } from 'react-router-dom';
-import settings from '../api/config';
+import { fetcher } from '../../api/fetcher';
+import settings from '../../api/config';
+import MainLayout from '../../layouts/MainLayout';
 
 interface IPhoto {
   id: number;

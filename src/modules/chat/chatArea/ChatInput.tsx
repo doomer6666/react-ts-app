@@ -85,7 +85,6 @@ const ChatInput = () => {
           <PhotoUploader
             onUploadComplete={(data) => {
               setUploadedInfo({ filepath: data.filepath });
-              
             }}
             isPrivate={true}
           />

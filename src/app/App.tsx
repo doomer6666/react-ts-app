@@ -1,14 +1,14 @@
 // App.tsx
 import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Sign from './pages/Sign.tsx';
-import Registration from './pages/Registration.tsx';
-import Profile from './pages/Profile.tsx';
-import Chat from './pages/Chat.tsx';
-import Friends from './pages/Friends.tsx';
-import Settings from './pages/Settings.tsx';
-import NewsFeed from './pages/NewsFeed.tsx';
-import Gallery from './pages/Gallery.tsx';
+import Registration from '../modules/signUp/Registration.tsx';
+import Profile from '../modules/profile/Profile.tsx';
+import Chat from '../modules/chat/Chat.tsx';
+import Friends from '../modules/friends/Friends.tsx';
+import NewsFeed from '../modules/feed/NewsFeed.tsx';
+import Gallery from '../modules/gallery/Gallery.tsx';
+import Settings from '../modules/settings/Settings.tsx';
+import Sign from '../modules/signIn/Sign.tsx';
 
 function App() {
   useEffect(() => {

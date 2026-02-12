@@ -1,7 +1,7 @@
 import type { NavigateFunction } from 'react-router-dom';
 import api from '../api/axiosInstance';
 import { getChats } from '../api/getChats';
-import type { IChat } from '../features/feed/ModalUser';
+import type { IChat } from '../modules/feed/ModalUser';
 
 type OpenChatProps = (
   name: string,

@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import MainLayout from '../layouts/MainLayout';
-import FriendsHeader from '../features/friends/FriendsHeader';
-import FriendsUserRow from '../features/friends/FriendsUserRow';
-import { TabEnum, type TabValues } from '../consts/FriendsTabs';
-import type { Friend } from '../utils/getFriendLists';
-import { fetcher } from '../api/fetcher';
+import MainLayout from '../../layouts/MainLayout';
+import FriendsHeader from './FriendsHeader';
+import FriendsUserRow from './FriendsUserRow';
+import { TabEnum, type TabValues } from '../../consts/FriendsTabs';
+import type { Friend } from '../../utils/getFriendLists';
+import { fetcher } from '../../api/fetcher';
 import useSWR from 'swr';
 
 const Friends = () => {

@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import api from '../api/axiosInstance';
 import { useNavigate } from 'react-router-dom';
-import MainLayout from '../layouts/MainLayout';
-import ModalExitLayout from '../layouts/ModalExitLayout';
-import PhotoUploaderCropper from '../features/profile/AvatarUploader';
-import ModalUploader from '../features/profile/ModalUploader';
+import api from '../../api/axiosInstance';
+import MainLayout from '../../layouts/MainLayout';
+import ModalExitLayout from '../../layouts/ModalExitLayout';
+import PhotoUploaderCropper from '../profile/AvatarUploader';
+import ModalUploader from '../profile/ModalUploader';
 
 const Settings = () => {
   const [theme, setTheme] = useState(() => {

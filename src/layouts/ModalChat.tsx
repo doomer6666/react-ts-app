@@ -5,7 +5,7 @@ import { fetcher } from '../api/fetcher';
 import { getSipmleProfile } from '../api/getProfie';
 import Modal from '../components/Modal';
 import type { Friend } from '../utils/getFriendLists';
-import type { IChat } from '../features/feed/ModalUser';
+import type { IChat } from '../modules/feed/ModalUser';
 import settings from '../api/config';
 
 interface ModalChatInviteProps {
@@ -38,12 +38,10 @@ const ModalChat: FC<ModalChatInviteProps> = ({
     if (!data) return;
 
     const profiles = await Promise.all(
-      data.map(friend => getSipmleProfile(friend.friend_id))
+      data.map((friend) => getSipmleProfile(friend.friend_id)),
     );
 
-    setFriendList(
-      profiles.filter((p): p is SipmleIUser => p !== null)
-    );
+    setFriendList(profiles.filter((p): p is SipmleIUser => p !== null));
   };
 
   useEffect(() => {
@@ -75,16 +73,11 @@ const ModalChat: FC<ModalChatInviteProps> = ({
     setChatName(data.name);
 
     const profiles = await Promise.all(
-      data.chatMembers.map(friend =>
-        getSipmleProfile(friend.id)
-      )
+      data.chatMembers.map((friend) => getSipmleProfile(friend.id)),
     );
 
-    setSelectedFriends(
-      profiles.filter((p): p is SipmleIUser => p !== null)
-    );
+    setSelectedFriends(profiles.filter((p): p is SipmleIUser => p !== null));
   };
-
 
   const unSelectFriend = (friend: SipmleIUser) => {
     setSelectedFriends(selectedFriends.filter((item) => item !== friend));
@@ -157,14 +150,14 @@ const ModalChat: FC<ModalChatInviteProps> = ({
               {filteredChatList.map((friend) => (
                 <div className="participant-item">
                   {friend.avatarUrl !== null ? (
-                  <img
-                    src={settings.apiBaseUrl + friend.avatarUrl}
-                    alt="Avatar"
-                    className="participant-avatar"
-                  />
-                    ) : (
-                  <div className="participant-avatar">{friend.name[0]}</div>
-                    )}
+                    <img
+                      src={settings.apiBaseUrl + friend.avatarUrl}
+                      alt="Avatar"
+                      className="participant-avatar"
+                    />
+                  ) : (
+                    <div className="participant-avatar">{friend.name[0]}</div>
+                  )}
                   <div className="participant-info">
                     <div className="participant-name">{friend.name}</div>
                   </div>
@@ -184,15 +177,15 @@ const ModalChat: FC<ModalChatInviteProps> = ({
                   {selectedFriends.map((friend) => (
                     <div className="selected-user">
                       {friend.avatarUrl !== null ? (
-                      <img
-                        src={settings.apiBaseUrl + friend.avatarUrl}
-                        alt="Avatar"
-                        className="selected-user-avatar"
-                      />
-                        ) : (
-                      <div className="selected-user-avatar">
-                        {friend.name[0]}
-                      </div>
+                        <img
+                          src={settings.apiBaseUrl + friend.avatarUrl}
+                          alt="Avatar"
+                          className="selected-user-avatar"
+                        />
+                      ) : (
+                        <div className="selected-user-avatar">
+                          {friend.name[0]}
+                        </div>
                       )}
                       <div className="selected-user-name">{friend.name}</div>
                       {!isCreated && (

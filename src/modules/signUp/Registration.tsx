@@ -1,64 +1,31 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import * as yup from 'yup';
-import type ISignUp from '../types/ISignUp';
-import Cubes from '../components/animations/Cubes';
-import useSWRMutation from 'swr/mutation';
-import poster from '../api/poster';
-import type { LoginResponse } from './Sign';
+import type ISignUp from '../../types/ISignUp';
+import Cubes from '../../components/animations/Cubes';
+import { registrationSchema } from './model/registration.shema';
+import { useAppDispatch, useAppSelector } from '../../shared/redux';
+import { registrationSlice } from './model/registration.slice';
+import { submitRegistration } from './model/submitRegistration';
 
 const Registration = () => {
-  const schema = yup.object({
-    username: yup
-      .string()
-      .required('Введите имя!')
-      .min(3, 'Минимум 3 символа')
-      .max(50, 'Максимум 50 символов'),
-    email: yup
-      .string()
-      .required('Введите почту!')
-      .email('Введите корректный email'),
-    password: yup
-      .string()
-      .required('Введите пароль!')
-      .min(3, 'Минимум 8 символов')
-      .matches(/[0-9]/, 'Пароль должен содержать хотя бы одну цифру')
-      .matches(/[A-Z]/, 'Пароль должен содержать хотя бы одну заглавную букву')
-      .matches(/[a-z]/, 'Пароль должен содержать хотя бы одну строчную букву')
-      .matches(
-        /[^a-zA-Z0-9]/,
-        'Пароль должен содержать хотя бы один специальный символ',
-      ),
-    confirmPassword: yup
-      .string()
-      .required('Подтвердите пароль!')
-      .oneOf([yup.ref('password')], 'Пароли не совппадают'),
-  });
+  const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(registrationSlice.selectors.isLoading);
+  const isError = useAppSelector(registrationSlice.selectors.isError);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ISignUp>({ resolver: yupResolver(schema) });
-
-  const { trigger, isMutating, error } = useSWRMutation<
-    LoginResponse,
-    Error,
-    string,
-    ISignUp
-  >('/auth/register/', poster);
+  } = useForm<ISignUp>({ resolver: yupResolver(registrationSchema) });
 
   const navigate = useNavigate();
 
-  const onSubmit = async (formData: ISignUp) => {
-    try {
-      const response = await trigger(formData);
-      navigate('/profile');
-      localStorage.setItem('id', response.id);
-    } catch (e) {
-      console.error('Error submitting form:', e);
-    }
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    handleSubmit((formData: ISignUp) => {
+      dispatch(submitRegistration(formData));
+    })();
   };
 
   return (
@@ -74,7 +41,7 @@ const Registration = () => {
     >
       <div className="sign-container sing-up-container">
         <div className="logo">ПОДЗЕМЕЛЬЕ</div>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={onSubmit}>
           <div className="form-group">
             <label className="form-label" htmlFor="username">
               Имя пользователя
@@ -140,9 +107,9 @@ const Registration = () => {
           </div>
 
           <button type="submit" className="btn">
-            {!isMutating ? 'ЗАРЕГИСТРИРОВАТЬСЯ' : 'РЕГИСТРАЦИЯ...'}
+            {!isLoading ? 'ЗАРЕГИСТРИРОВАТЬСЯ' : 'РЕГИСТРАЦИЯ...'}
           </button>
-          {error && <div>Ошибка регистрации</div>}
+          {isError && <div>Ошибка регистрации</div>}
           <div className="policy-text">
             Регистрируясь, вы соглашаетесь с{' '}
             <a href="#">Условиями использования</a> и{' '}

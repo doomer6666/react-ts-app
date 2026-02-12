@@ -1,72 +1,35 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import type ISignIn from '../types/ISignIn';
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import Cubes from '../components/animations/Cubes';
-import api from '../api/axiosInstance';
-import { useState } from 'react';
-import useEnterKey from '../hooks/useKeyDown';
-
-export interface LoginResponse {
-  id: string;
-  username: string;
-}
-
-interface SettingsRead {
-  user_id: number;
-  notifications_enabled: boolean;
-  theme: string;
-}
+import Cubes from '../../components/animations/Cubes';
+import useEnterKey from '../../hooks/useKeyDown';
+import type ISignIn from '../../types/ISignIn';
+import { signSchema } from './model/singshema';
+import { signSlice } from './model/sign.slice';
+import { useAppDispatch, useAppSelector } from '../../shared/redux';
+import { submitSign } from './model/submitSign';
 
 const Sign = () => {
-  const schema = yup.object({
-    username: yup.string().required('Введите имя!'),
-    password: yup.string().required('Введите пароль!'),
-  });
+  const dispatch = useAppDispatch();
+
+  const isLoading = useAppSelector(signSlice.selectors.isLoading);
+  const isError = useAppSelector(signSlice.selectors.isError);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ISignIn>({ resolver: yupResolver(schema) });
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  } = useForm<ISignIn>({ resolver: yupResolver(signSchema) });
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    handleSubmit(async (formData) => {
-      try {
-        setIsLoading(true);
-        const response = await api.post('/auth/login/', formData);
-        const loginResponse: LoginResponse = response.data;
-        localStorage.setItem('id', loginResponse.id);
-        localStorage.setItem('name', loginResponse.username);
-
-        // Fetch user settings after login
-        const settingsResponse = await api.get<SettingsRead>(`/settings`);
-        const settings = settingsResponse.data;
-        localStorage.setItem(
-          'notifications_enabled',
-          String(settings.notifications_enabled),
-        );
-        localStorage.setItem('theme', settings.theme);
-
-        navigate('/profile');
-      } catch (e) {
-        setIsError(true);
-        console.error('Error submitting form:', e);
-      } finally {
-        setIsLoading(false);
-      }
+    handleSubmit((data: ISignIn) => {
+      dispatch(submitSign(data));
     })();
   };
 
   const onKeyDown = useEnterKey(onSubmit);
-
   const navigate = useNavigate();
-
   return (
     <Cubes
       gridSize={10}

@@ -1,11 +1,11 @@
 import { useState, type FC } from 'react';
 import useSWR from 'swr';
-import { fetcher } from '../api/fetcher';
-import MainLayout from '../layouts/MainLayout';
-import ProfileHeader from '../features/profile/ProfileHeader';
-import PostComposer from '../features/profile/PostComposer';
-import Post from '../components/Post';
-import type IUser from '../types/IUser';
+import { fetcher } from '../../api/fetcher';
+import MainLayout from '../../layouts/MainLayout';
+import ProfileHeader from './ProfileHeader';
+import PostComposer from './PostComposer';
+import Post from '../../components/Post';
+import type IUser from '../../types/IUser';
 import { useParams } from 'react-router-dom';
 
 const Profile: FC = () => {
@@ -51,7 +51,11 @@ const Profile: FC = () => {
         <div className="profile-content">
           <div className="profile-feed">
             {user.userId === userId && (
-              <PostComposer mutate={mutate} AvatarLetter={avatarLetter} AvatarUrl={avatarUrl} />
+              <PostComposer
+                mutate={mutate}
+                AvatarLetter={avatarLetter}
+                AvatarUrl={avatarUrl}
+              />
             )}
 
             <div className="feed">

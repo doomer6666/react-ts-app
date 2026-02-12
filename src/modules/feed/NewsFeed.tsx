@@ -1,9 +1,10 @@
 import { useMemo, useState, type FC } from 'react';
-import MainLayout from '../layouts/MainLayout';
-import Post from '../components/Post';
+
 import useSWR from 'swr';
-import { fetcher } from '../api/fetcher';
-import type { IPost } from '../types/IPost';
+import { fetcher } from '../../api/fetcher';
+import Post from '../../components/Post';
+import MainLayout from '../../layouts/MainLayout';
+import type { IPost } from '../../types/IPost';
 
 const NewsFeed: FC = () => {
   const [activeItem, setActiveItem] = useState('feed');
